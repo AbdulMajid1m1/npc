@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        
+	<style>
+        @page {
+        size: landscape;
+    }
+		body,
+        html {
+			font-family: DejaVu Sans, sans-serif;
+            padding-left: 2px;
+            color: #042E6A;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+		}
+
+		.p-text {
+			margin: 0;
+			margin-bottom: 5px;
+			font-size: 12px;
+		}
+
+		.table-suply {
+
+			border: none;
+			margin-top: 50px;
+			border-collapse: collapse;
+		}
+
+		.table-suply tr th,
+		.table-suply tr td {
+			text-align: center;
+			padding: 1px;
+
+		}
+
+		.table-suply tr th:last-child,
+		.table-suply tr td:last-child {
+			border-right: none;
+		}
+
+		.p-text-1 {
+			text-decoration: underline;
+			padding-top: 10px;
+		}
+
+		.p-text-2 {
+			padding-top: 10px;
+		}
+
+		.cont-challan-single {
+			float: left;
+			width: 100%;
+			border: 1px solid #000000;
+			padding: 5px 10px;
+			margin-bottom: 20px;
+		}
+
+		.challan-single-title {
+			float: left;
+			width: 50%;
+		}
+
+		.suplier {
+			width: 22%;
+			padding: 5px 0px;
+		}
+
+		.cont-suplier .challan-single-title:last-child {
+			width: 77%;
+			text-align: center;
+			padding: 5px 0px;
+		}
+
+		.cont-challan-single.cont-suplier {
+			padding: 0px 10px;
+		}
+
+		.table-suply.no-border tr td {
+			border-top: none;
+			border-right: none;
+			padding: 0px;
+		}
+
+		.table-suply.no-border tr th {
+			border-right: none;
+		}
+
+		.p-tr td {
+			padding: 0px !important;
+			padding: 3px 8px 3px 3px !important;
+			border-top: 1px solid #000;
+		}
+
+		.invoice-total tr td,
+		.invoice-total tr th {
+			text-align: right;
+		}
+
+		.title {
+			color: gray;
+			font-size: 20px;
+		}
+
+		.tvalue {
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		footer {
+			position: fixed;
+			bottom: -20px;
+			left: 0px;
+			right: 0px;
+			/* height: 70px; */
+			font-size: 12px !important;
+
+			/** Extra personal styles **/
+			background-color: white;
+			color: gray;
+			text-align: center;
+		}
+
+		center {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-image: url("<%= data.BACKEND_URL %>/gs1Images/backend/logo/gln_background.png");
+			background-size: 850px;
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 100%;
+			height: 100%;
+			/* opacity: .1; */
+			z-index: 2;
+		}
+	</style>
+</head>
+
+<body>
+	<footer style="padding-left: 60px; padding-right: 60px;">
+		<!-- Footer content -->
+		<table class="table table-borderless" style="border-top: 5px solid #EF6231; line-height: .5rem; font-size: 10px;">
+			<tr>
+				<td colspan="12" style="font-size: 14px;">
+					<img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/location.png" width="15" height="15"></i>
+					GS1 Saudi Arabia, King Fahad Branch Rd, Al Mutamarat Dist. Federation of Saudi Chambers Building/
+					Mezzanine (M) Floor, P.O.Box 11683, Riyadh 11474
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" class="text-left" style="font-size: 14px;">
+					<img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/mobile.png" height="15" width="15" alt=""></i>
+					+966-11-218 2423
+				</td>
+				<td colspan="3" class="text-left" style="font-size: 14px;">
+					<img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/envelop.png" height="15" width="15" alt=""></i>
+					gs1sa@gs1.org.sa
+				</td>
+				<td colspan="3" class="text-left" style="font-size: 14px;">
+					<img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/website.png" height="15" width="15" alt=""></i>
+					www.gs1.org.sa
+				</td>
+				<td colspan="3" class="text-left" style="font-size: 14px;">
+					<img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/helpline.png" height="15" width="15" alt=""></i>
+					011-2182423
+				</td>
+			</tr>
+		</table>
+	</footer>
+	
+	<center style="margin: 0px auto;">
+		<div class="content-container">
+			<table class="table-suply" cellspacing="0" cellpadding="0"
+				style="border:none; line-height: 1rem;">
+				<tr style="border-bottom: 5px solid #EF6231;">
+					<td width="20%" class="text-left">
+						<img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/logo.png" 
+							style="width: 116.64px; height: 55px;"
+						>
+					</td>
+					<td width="30%" class="text-right">
+						<span style="font-size: 20px; color: gray;">The Global Language of Business</span>
+					</td>
+				</tr>
+			</table>
+			<table class="table-suply" width="80%" cellspacing="0" cellpadding="0"
+				style="border:none; line-height: 2.3rem;">
+				<tr>
+					<td class="text-center" colspan="12"
+						style="color: #EF6231; letter-spacing: 2px; font-family: Arial, Helvetica, sans-serif; font-size: 25px;">
+						GS1 Saudi Arabia Annual License
+					</td>
+				</tr>
+				<br>
+				<tr>
+					<td colspan="12" style="height: 20px;"></td> <!-- Adjust the height as needed -->
+				</tr>
+				<tr>
+					<td rowspan="6" colspan="2"></td>
+					<td class="text-left" colspan="8"> <span class="title">Licensed to:</span> <span class="tvalue"
+							style="color: #EF6231"><%= data.member.company_name_eng %></span>
+					</td>
+					<td rowspan="6" colspan="2"></td>
+				</tr>
+				<tr>
+					<td class="text-left" colspan="8"><span class="title">Location
+							Name:</span> <span class="tvalue" style="color: black"><%= data.user.locationName %></span>
+					</td>
+				</tr>
+				<tr>
+					<td class="text-left" colspan="8"><span class="title">GS1
+							Company Prefix:</span> <span class="tvalue" style="color: #EF6231"><%= data.user.gcpGLNID %></span></td>
+				</tr>
+				<tr>
+					<td colspan="0">
+						<table>
+							<tr>
+								<td class="text-left" style="border-bottom: 0.5pt solid gray;"><span class="title">GPS
+										coordinates: Latitude:</span><br> <span class="tvalue"><%= data.user.latitude %></span> 
+								</td>
+								<td class="" style="border-bottom: 0.5pt solid gray;"><span
+										class="title">Longitude:</span><br> <span
+										class="tvalue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= data.user.longitude %></span></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="0">
+						<table>
+							<tr>
+								<td class="text-left" style="border-bottom: 0.5pt solid gray;"><span class="title">Legal
+										Entity Global Location Number (GLN): </span> <span class="tvalue"
+										style="color: #EF6231"><%= data.user.gln_idenfication %></span> </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="0">
+						<table>
+							<tr style="border-bottom: 0.5pt solid gray;">
+								<td class="text-left"><span class="title">
+										Expires:</span> <span class="tvalue"
+										style="color: #EF6231;"><%= data.Expirydate.day %>/<%= data.Expirydate.month %>/<%= data.Expirydate.year %></span>
+								</td>
+								<td class="text-right"><span class="title">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										Company
+										ID:</span> <span class="tvalue"
+										style="color: #EF6231;"><%= data.user.companyID %></span></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+	
+				<tr>
+					<td class="text-left" colspan="1">
+						<img src="<%= data.qrCodeDataURL %>"
+							style="width: 100px; height: 100px;"
+							alt="QR Code">
+					</td>
+				</tr>
+	
+			</table>
+		</div>
+	</center>
+	
+</body>
+
+</html>

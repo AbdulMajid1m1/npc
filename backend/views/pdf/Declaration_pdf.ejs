@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <title>Data Declaration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 210mm;
+      /* Set width to A4 width */
+      margin: 0 auto;
+      /* Center the container horizontally */
+      padding: 20mm;
+      /* Adjusted padding for content */
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      border-bottom: none;
+      /* Remove the border-bottom */
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      padding-left: 30px;
+      /* Adjusted padding */
+      position: relative;
+      line-height: 1.6;
+    }
+
+    ul li:before {
+      content: "•";
+      position: absolute;
+      left: 15px;
+      /* Adjusted position */
+    }
+
+    .signature {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ff7f0d;
+    }
+
+    .contact-details {
+      margin-left: 5px;
+      padding-left: 20px;
+      border-left: 1px solid #ff7f0d;
+    }
+
+    .signature p {
+      margin-bottom: 10px;
+    }
+
+    .orange-line {
+      height: 10px;
+      background-color: #ff7f0d;
+      /* Orange color */
+      margin-bottom: 20px;
+      /* Adjust margin as needed */
+    }
+
+    .contact-icons {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-icons img {
+      width: 30px;
+      height: 30px;
+      margin: 0 10px;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-container img {
+      width: 45%;
+      height: auto;
+    }
+
+    .contact-info {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-info img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-details p {
+      margin: 5px 0;
+    }
+
+    .signature p {
+      margin: 5px 0;
+      text-align: left;
+      /* Align text to the left */
+    }
+
+    .signature p {
+      /* border-bottom: 1px solid #000000; */
+      /* Add red underscore */
+      width: 300px;
+      /* Set width to control the length of the underscore */
+      display: block;
+      /* Make span behave like a block element */
+    }
+
+    .underscore {
+      border-bottom: 1px solid black;
+      padding: 0 5px;
+      /* Optional: adjust padding as needed */
+      display: inline-block;
+      align-items: center;
+      text-align: center;
+      /* Ensures the underscore line spans the width of the content */
+    }
+
+    .wide {
+      width: 200px;
+      /* Adjust the width as needed */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/service_default_image.jpeg" alt="logo"
+        style="width: 250px; height: 100px; object-fit: contain;">
+      <img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/logo.png"
+        style="width: 250px; height: 100px; object-fit: contain;">
+    </div>
+    <div class="header">
+      <div class="orange-line"></div>
+    </div>
+    <p>I, <span class="underscore wide"> <Strong>
+          <%= data.memberData.membername %>
+        </Strong> </span>, hereby declare and affirm that I understand and acknowledge the following regarding the
+      products data or information that I create or add, as part of the migration process by GS1:</p>
+    <ul>
+      <li><strong>Accuracy of Data:</strong> I understand that it is my responsibility to ensure the accuracy and
+        integrity of
+        the products data that I create or add during the migration process. I will diligently verify and
+        cross-reference all relevant information to ensure its correctness and completeness.</li>
+      <li><strong>Duplication of Products:</strong> I affirm that I will take all necessary measures to prevent the
+        duplication of any product within the database. I will thoroughly review existing data and crosscheck any new
+        additions to avoid redundant entries.</li>
+      <li><strong>Data Maintenance:</strong> I acknowledge that the responsibility for maintaining the accuracy and
+        consistency of the products data rests with me. I will promptly address any identified errors,
+        discrepancies, or outdated information, and take appropriate action to rectify them.</li>
+      <li><strong>Compliance with GS1 Guidelines:</strong> I understand that the migration process follows the GS1
+        guidelines and standards. I will adhere to these guidelines, ensuring that the data structure,
+        attributes, and formats align with the specified requirements.</li>
+      <li><strong>Legal Compliance:</strong> I affirm that the products data or information I create or add complies
+        with all
+        applicable laws, regulations, and industry standards. I will not include any misleading, inaccurate,
+        or deceptive information.</li>
+      <li><strong>Confidentiality and Data Protection:</strong> I acknowledge the confidential nature of the products
+        data
+        and commit to safeguarding its confidentiality and integrity. I will handle the data responsibly
+        and take necessary precautions to prevent unauthorized access, disclosure, or alteration.</li>
+      <li><strong>Collaboration and Communication:</strong> I understand the importance of collaboration and effective
+        communication within the migration process. I will actively engage with other team members,
+        stakeholders, and GS1 representatives to address any data-related concerns, seek clarifications,
+        and ensure a smooth transition.</li>
+    </ul>
+    <p>By signing below, I confirm that I have read and understood this Data Declaration. I acknowledge that I
+      am fully responsible for the accuracy, non-duplication, selection of right category, and maintenance of
+      the products data that I create or add during the GS1 migration process,</p>
+    <div class="signaturessd">
+      <div class="flex" style="display: flex;">
+        <p style="width: 80px;">Signature:</p>
+         <p style="border-bottom: 1px solid #000000;width: 200px;"></p>
+      </div>
+      <div class="flex" style="display: flex;">
+        <p style="width: 80px;">Date:
+        </p>
+         <p style="border-bottom: 1px solid #000000;width: 200px;"> <%= data.memberData.date %></p>
+      </div>
+      <div class="flex" style="display: flex;">
+        <p style="width: 80px;">Name:
+        </p>
+         <p style="border-bottom: 1px solid #000000;width: 200px;"> <%= data.memberData.membername %></p>
+      </div>
+      <hr style="border-color: #ff7f0d;">
+      
+    </div>
+    <div class="contact-info">
+      <img src="<%= data.memberData.qrcode %>" alt="Screenshot-2024-04-23-154519" alt="Phone"
+        style="width: 150px; height: 100px; object-fit: contain;">
+      <div class="contact-details">
+        <p><i class="fas fa-phone" style="margin-right: 10px;" aria-hidden="true"></i>+966-11-218-2423</p>
+        <p><i class="fas fa-envelope" style="margin-right: 10px;" aria-hidden="true"></i>gs1sa@gs1.org.sa</p>
+        <p>King Fahad Branch Road, AlMoatamarat Dist. P.O.Box 16683 Riyadh 11474, Saudi Arabia</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

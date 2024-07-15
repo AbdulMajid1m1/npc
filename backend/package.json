@@ -1,0 +1,45 @@
+{
+  "name": "gs1",
+  "version": "1.0.0",
+  "description": "Gs1 supply chain tracebility",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "update:schema": "npm install && cd ./ && npx prisma generate && cd prismaOldGs1Db && npx prisma generate && cd ../prisma/gs1dl && npx prisma generate && cd ../wtrace && npx prisma generate && cd ../laravelDb && npx prisma generate && cd ../../ && npm start"
+  },
+  "keywords": [
+    "gs1"
+  ],
+  "author": "Abdul Majid",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "axios": "^1.6.7",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "exceljs": "^4.4.0",
+    "expess": "^0.0.1-security",
+    "express": "^4.18.2",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.7",
+    "papaparse": "^5.4.1",
+    "php-serialize": "^4.1.1",
+    "puppeteer": "^21.5.2",
+    "qrcode": "^1.5.3",
+    "slugify": "^1.6.6",
+    "socket.io": "^4.7.4",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "prisma": "^5.12.1"
+  }
+}

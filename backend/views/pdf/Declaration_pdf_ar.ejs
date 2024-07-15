@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <title>Data Declaration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 210mm;
+      /* Set width to A4 width */
+      margin: 0 auto;
+      /* Center the container horizontally */
+      padding: 20mm;
+      /* Adjusted padding for content */
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      border-bottom: none;
+      /* Remove the border-bottom */
+    }
+
+    ul {
+      /* list-style-type:decimal; */
+      padding-left: 0;
+      text-align: right;
+      direction: rtl;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      padding-left: 30px;
+      /* Adjusted padding */
+      position: relative;
+      line-height: 1.6;
+      /* text-align: right;
+      direction: ltr; */
+    }
+
+    /* ul li:before {
+      content: "•";
+      position: absolute;
+      left: 15px;
+    } */
+
+    .signature {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ff7f0d;
+    }
+
+    .contact-details {
+      margin-left: 5px;
+      padding-left: 20px;
+      /* border-left: 1px solid #ff7f0d; */
+    }
+
+    .signature p {
+      margin-bottom: 10px;
+    }
+
+    .orange-line {
+      height: 10px;
+      background-color: #ff7f0d;
+      /* Orange color */
+      margin-bottom: 20px;
+      /* Adjust margin as needed */
+    }
+
+    .contact-icons {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-icons img {
+      width: 30px;
+      height: 30px;
+      margin: 0 10px;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-container img {
+      width: 45%;
+      height: auto;
+    }
+
+    .contact-info {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .contact-info img {
+      width: 30px;
+      height: 30px;
+      margin-left: 10px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .contact-details p {
+      margin: 5px 0;
+    }
+
+    .signature p {
+      margin: 5px 0;
+      text-align: right;
+      direction: ltr;
+    }
+
+    .signature p {
+      border-bottom: 1px solid #000000;
+      /* Add red underscore */
+      width: 300px;
+      /* Set width to control the length of the underscore */
+      display: block;
+      /* Make span behave like a block element */
+    }
+
+    .underscore {
+      border-bottom: 1px solid black;
+      padding: 0 5px;
+      /* Optional: adjust padding as needed */
+      display: inline-block;
+      align-items: center;
+      text-align: center;
+      /* Ensures the underscore line spans the width of the content */
+    }
+
+    .wide {
+      width: 200px;
+      /* Adjust the width as needed */
+    }
+
+    .icon::before {
+      margin-right: 5px;
+      /* Adjust spacing between icon and text */
+    }
+
+    .email-icon::before {
+      content: "\2709";
+      /* Unicode for email icon */
+    }
+
+    .phone-icon::before {
+      content: "\260E";
+    }
+
+    .location-icon::before {
+      content: "\1F4CD";
+    }
+
+    .container,
+    .header,
+    ul,
+    p {
+      direction: rtl;
+    }
+    .footerarea{
+ direction: ltr;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/logo.png"
+        style="width: 250px; height: 100px; object-fit: contain;">
+      <img src="<%= data.BACKEND_URL %>/gs1Images/backend/logo/service_default_image.jpeg" alt="logo"
+        style="width: 250px; height: 100px; object-fit: contain;">
+      
+    </div>
+    <div class="header">
+      <div class="orange-line"></div>
+    </div>
+    <p>أنا/نحن, <span class="underscore wide"> <Strong>
+          <%= data.memberData.membername %>
+        </Strong> </span>, بموجب هذا اإلفصاح أؤكد ب
+      ن ي
+      يل أن قرأت فيما
+      وأقر بما ي
+      يتعلق ببيانات المنتجات أو والخدمات و أقوم بإنشائها أو
+      ن ي
+      المعلومات ال إضافتها ، كجزء من عملية نقل البيانات من خالل
+      GS1 Saudi Arabia أنظمة قيم السعودي:</p>
+    <ul>
+      <li><strong>دقة البيانات:</strong> : أقوم بإنشائها أو إضافتها أثناء عملية
+        ن ي ضمان دقة وسالمة بيانات المنتجات ال
+        أفهم أنه من مسؤولي
+        نقل البيانات.كما سأقوم بالتحقق من جميع المعلومات ذات الصلة وإحالتها بجدية للتأكد من صحتها واكتمالها.</li>
+      <li><strong>تكرار المنتجات:</strong> أؤكد أن قاعدة البيانات ن ي  تكرار المنتجات: سأتخذ جميع التدابرتا
+        ي
+
+        لالزمة لمنع تكرار أي منتج ف .سوف أقوم
+        بمراجعة البيانات الموجودة والمدخلة سابقا بدقة والتحقق من أي إضافات جديدة لتجنب اإلدخاالت المكررة.</li>
+      <li><strong>صيانة البيانات:</strong> أقر بأن مسؤولية الحفاظ عل دقة واتساق بيانات المنتجات تقع عل عاتق .سأعالج عل
+        الفور أي
+        أخطاء أو تناقضات أو معلومات قديمة، وسأتخذ اإلجراء المناسب لتصحيحها.
+      </li>
+      <li><strong>االمتثال إلرشادات SA 1GS:</strong> حيل تتبع إرشادات ومعايرت
+
+        أفهم أن عملية الت 1GS. و م بهذه
+
+        سألت اإلرشادات، مع
+        ضمان توافق بنية البيانات والسمات واألشكال مع المتطلبات المحددة.</li>
+      <li><strong>المتثال القانون:</strong> قوم بإنشائها أو إضافتها تتوافق مع جميع القوانر
+        أؤكد أن بيانات المنتجات أو المعلومات ال
+        واللوائح المعمول بها و المعايرتالصناعية .لن أدرج أي معلومات مضللة أو غرتدقيقة أو خادعة.</li>
+      <li><strong>الرسية وحماية البيانات:</strong> بالحفاظ عل رسيتها وسالمت
+
+        أقر بالطبيعة الرسية لبيانات المنتجات وألت ها. سأتعامل مع
+        البيانات بمسؤولية وأتخذ االحتياطات الالزمة لمنع الوصول غرتالمرصح به أو الكشف أو التغيرت.</li>
+      <li><strong>التعاون والتواصل:</strong> أفهم أهمية التعاون والتواصل الفعال ف يل للبيانات. سأشارك بفاعلية مع أعضاء
+        يل الفريق اآلخرين، وأصحاب المصلحة،
+        وممث 1GS لمعالجة أي مخاوف تتعلق بالبيانات، وطلب اإليضاحات،
+        وضمان انتقال سلس.</li>
+    </ul>
+    <p style="text-align: end;direction: ltr;">بالتوقيع أدناه، أؤكد أن افصاح البيانات هذا. وأ مسؤول مسؤولية كاملة عن دقة بيانات المنتجات ن ي
+      ي
+      قر بأن
+      ال باختيارها وعدم تكرار البيانات أثناء عملية ال ح ن ي والفئة الصحيحة أقوم
+
+      ت يل.</p>
+    <!-- <div class="signature">
+      <p>:التوقيع</p>
+      <p>التاري خ: <%= data.memberData.date %>
+      </p>
+      <p>
+        <%= data.memberData.membername %> :االسم
+      </p>
+    </div> -->
+
+    <div class="signaturessd">
+      <div class="flex" style="display: flex;">
+        <p style="width: 80px;">التوقيع:</p>
+        <p style="border-bottom: 1px solid #000000;width: 200px;text-align: end;direction: ltr;"></p>
+      </div>
+      <div class="flex" style="display: flex;">
+        <p style="width: 80px;"> تاريخ: </p>
+         <p style="border-bottom: 1px solid #000000;width: 200px;text-align: end;text-align: end;direction: ltr;"> <%= data.memberData.date %></p>
+      </div>
+      <div class="flex" style="display: flex;">
+        <p style="width: 80px;">االسم:
+        </p>
+         <p style="border-bottom: 1px solid #000000;width: 200px;text-align: end;direction: ltr;"> <%= data.memberData.membername %></p>
+      </div>
+      <hr style="border-color: #ff7f0d;">
+      
+    </div>
+
+
+
+    <div class="contact-info">
+      <img src="<%= data.memberData.qrcode %>" alt="Screenshot-2024-04-23-154519" alt="Phone"
+        style="width: 150px; height: 100px; object-fit: contain;">
+      <div class="contact-details">
+        <p class=" footerarea"> <i class="fas fa-phone" style="margin-right: 10px;" aria-hidden="true"></i>+966-11-218-2423</p>
+        <p class=" footerarea"><i class="fas fa-envelope" style="margin-right: 10px;" aria-hidden="true"></i>gs1sa@gs1.org.sa</p>
+        <p class=" footerarea"> King Fahad Branch Road, AlMoatamarat Dist. P.O.Box 16683 Riyadh 11474, Saudi Arabia</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
