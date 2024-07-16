@@ -23,6 +23,10 @@ import Roles from "./Pages/AdminPages/MasterData/Roles/Roles"
 import AddRoles from "./Pages/AdminPages/MasterData/Roles/AddRoles";
 import UpdateRoles from "./Pages/AdminPages/MasterData/Roles/UpdateRoles";
 import Units from "./Pages/AdminPages/MasterData/Units/Units.jsx";
+import Documents from "./Pages/AdminPages/MasterData/document/document.jsx";
+import ProductPackaging from "./Pages/AdminPages/MasterData/productPackaging/productPackaging.jsx";
+import Other_products from "./Pages/AdminPages/MasterData/other_product/other_product.jsx";
+
 
 const App = () =>
 {
@@ -72,6 +76,9 @@ const App = () =>
                 <Route path="update-roles/:id" element={<UpdateRoles />} />
 
                 <Route path="Units" element={<Units />} />
+                <Route path="Documents" element={<Documents />} />
+                <Route path="ProductPackaging" element={<ProductPackaging />} />
+                <Route path="Other_products" element={<Other_products />} />
               </Routes>
             </BrowserRouter>
           </div>

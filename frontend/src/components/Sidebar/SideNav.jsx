@@ -15,6 +15,10 @@ import MasterData from "../../Images/master data.png";
 import language from "../../Images/language.png";
 import roleimg from "../../Images/roleicon.png"
 import unitsimg from "../../Images/Unit.png";
+import Documentsimage from "../../Images/documenticon.png";
+import ProductPackagingimage from "../../Images/productpackaging.png";
+import otherProductimage from "../../Images/otherproducts.png";
+
 import { useTranslation } from "react-i18next";
 
 function SideNav({ children }) {
@@ -49,8 +53,9 @@ function SideNav({ children }) {
         <div className="body-content" x-data="{ open: true }">
           <div className="relative lg:block navbar-menu">
             <nav
-              className={`fixed top-0 transition-all bg-dashboard-color lg:mt-0 mt-16  bottom-0 flex flex-col shadow bg-primary-sidebar overflow-hidden z-50 ${isOpen ? "w-[280px]" : "w-0"
-                } ${i18n.language==='ar'?'right-0':'left-0'}`}
+              className={`fixed top-0 transition-all bg-dashboard-color lg:mt-0 mt-16  bottom-0 flex flex-col shadow bg-primary-sidebar overflow-hidden z-50 ${
+                isOpen ? "w-[280px]" : "w-0"
+              } ${i18n.language === "ar" ? "right-0" : "left-0"}`}
               id="sidenav"
             >
               <div className="flex items-center w-full px-4 pt-4 pb-4 border-b border-gray-300 ">
@@ -63,10 +68,14 @@ function SideNav({ children }) {
                   <li>
                     <Link
                       to="/dashboard"
-                      className={`flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}
+                      className={`flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
                     >
                       <span
-                        className={`drop-shadow-lg flex h-8 w-8 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${i18n.language==='ar'?'ml-2':"mr-2 "}`}
+                        className={`drop-shadow-lg flex h-8 w-8 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2 "
+                        }`}
                       >
                         <AiOutlineDashboard className="w-5 h-5" />
                       </span>
@@ -76,12 +85,16 @@ function SideNav({ children }) {
 
                   <li>
                     <div
-                       className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
                       onClick={handleToggleMange}
                     >
                       <span
-                         className={`drop-shadow-lg flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center xl:p-2.5 ${i18n.language==='ar'?'ml-2':"mr-2 "}`}
-                       >
+                        className={`drop-shadow-lg flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center xl:p-2.5 ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2 "
+                        }`}
+                      >
                         <img
                           src={identify}
                           alt="logo"
@@ -91,25 +104,49 @@ function SideNav({ children }) {
                       <span className="font-sans font-semibold  my-auto">
                         {t("IDENTIFY")}
                       </span>
-                      <span className={`inline-block  my-auto sidenav-arrow ${i18n.language==='ar'?'mr-auto':'ml-auto'}`}>
+                      <span
+                        className={`inline-block  my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
                         {isMangeOpen ? <FaChevronUp /> : <FaChevronDown />}
                       </span>
                     </div>
                     {isMangeOpen && (
-                      <div className={`transition border-gray-500 dropdown-section nested-menu ${i18n.language==='ar'?'pr-3 mr-3 ':"pl-3 ml-3 "}`}>
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
                         <ul className="text-sm">
                           <li>
                             <Link
                               to="/gtin"
-                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={identify}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className={`text-secondary font-semibold text-xl ${i18n.language==='ar'?'text-end':'text-start'}`}>
+                                <span
+                                  className={`text-secondary font-semibold text-xl ${
+                                    i18n.language === "ar"
+                                      ? "text-end"
+                                      : "text-start"
+                                  }`}
+                                >
                                   {t("GTIN")}
                                 </span>
                               </div>
@@ -118,15 +155,31 @@ function SideNav({ children }) {
                           <li>
                             <Link
                               to="/gtin"
-                             className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={ngln}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className={`text-secondary font-semibold text-xl ${i18n.language==='ar'?'text-end':'text-start'}`}>
+                                <span
+                                  className={`text-secondary font-semibold text-xl ${
+                                    i18n.language === "ar"
+                                      ? "text-end"
+                                      : "text-start"
+                                  }`}
+                                >
                                   {t("GLN")}
                                 </span>
                               </div>
@@ -135,15 +188,31 @@ function SideNav({ children }) {
                           <li>
                             <Link
                               to="/gtin"
-                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={nsscc}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className={`text-secondary font-semibold text-xl ${i18n.language==='ar'?'text-end':'text-start'}`}>
+                                <span
+                                  className={`text-secondary font-semibold text-xl ${
+                                    i18n.language === "ar"
+                                      ? "text-end"
+                                      : "text-start"
+                                  }`}
+                                >
                                   {t("SSCC")}
                                 </span>
                               </div>
@@ -156,11 +225,15 @@ function SideNav({ children }) {
 
                   <li>
                     <div
-                       className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
                       onClick={handleToggleMangemasterdata}
                     >
                       <span
-                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${i18n.language==='ar'?'ml-2':"mr-2"}`}
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
                       >
                         <img
                           src={MasterData}
@@ -171,8 +244,12 @@ function SideNav({ children }) {
                       <span className="font-sans font-semibold my-auto">
                         {t("Master Data")}
                       </span>
-                     <span className={`inline-block  my-auto sidenav-arrow ${i18n.language==='ar'?'mr-auto':'ml-auto'}`}>
-                       {MasterDatadropdown ? (
+                      <span
+                        className={`inline-block  my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {MasterDatadropdown ? (
                           <FaChevronUp />
                         ) : (
                           <FaChevronDown />
@@ -180,14 +257,28 @@ function SideNav({ children }) {
                       </span>
                     </div>
                     {MasterDatadropdown && (
-                      <div className={`transition border-gray-500 dropdown-section nested-menu ${i18n.language==='ar'?'pr-3 mr-3 ':"pl-3 ml-3 "}`}>
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
                         <ul className={`text-sm`}>
                           <li>
                             <Link
                               to="/Language/Dynamic"
-                               className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={language}
                                   alt="logo"
@@ -202,9 +293,19 @@ function SideNav({ children }) {
                           <li>
                             <Link
                               to="/Users"
-                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div  className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={usersicon}
                                   alt="logo"
@@ -219,26 +320,46 @@ function SideNav({ children }) {
                           <li>
                             <Link
                               to="/Role"
-                               className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div  className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={roleimg}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span className="text-secondary font-semibold text-xl">
-                                  {t('Role')}
+                                  {t("Role")}
                                 </span>
                               </div>
                             </Link>
                           </li>
-                           <li>
+                          <li>
                             <Link
                               to="/units"
-                               className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
-                             >
-                              <div  className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
                                 <img
                                   src={unitsimg}
                                   alt="logo"
@@ -246,6 +367,90 @@ function SideNav({ children }) {
                                 />
                                 <span className="text-secondary font-semibold text-xl">
                                   {t("Units")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/Documents"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={Documentsimage}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Documents")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/ProductPackaging"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={ProductPackagingimage}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Product Packaging")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/Other_products"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={otherProductimage}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Other Products")}
                                 </span>
                               </div>
                             </Link>
@@ -259,12 +464,15 @@ function SideNav({ children }) {
                     <Link
                       to="/"
                       // className="flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100"
-                       className={`flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}
-                    
+                      className={`flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
                     >
                       <span
-                         className={`drop-shadow-lg flex h-8 w-8 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${i18n.language==='ar'?'ml-2':"mr-2 "}`}
-                       >
+                        className={`drop-shadow-lg flex h-8 w-8 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2 "
+                        }`}
+                      >
                         <AiOutlineDashboard className="w-5 h-5" />
                       </span>
                       <span className="font-semibold">{t("Log-out")}</span>
@@ -277,14 +485,19 @@ function SideNav({ children }) {
         </div>
         {/* top nav */}
         <div
-          className={`mx-auto transition-all content-wrapper ${isOpen ? `${i18n.language==="ar"? 'lg:mr-[280px]' :'lg:ml-[280px]'}` : "lg:ml-0"}`}
+          className={`mx-auto transition-all content-wrapper ${
+            isOpen
+              ? `${i18n.language === "ar" ? "lg:mr-[280px]" : "lg:ml-[280px]"}`
+              : "lg:ml-0"
+          }`}
           id="dash"
         >
-          <section className="sticky top-0 z-40 px-3 py-0 bg-[#1F0567] shadow text-gray-100 lg:px-5">
+          <section className="sticky top-0 z-20 px-3 py-0 bg-[#1F0567] shadow text-gray-100 lg:px-5">
             <nav className="relative">
               <div
-                className={`flex items-center ${i18n.language === "ar" ? "justify-end" : "justify-start"
-                  }`}
+                className={`flex items-center ${
+                  i18n.language === "ar" ? "justify-end" : "justify-start"
+                }`}
               >
                 <button onClick={toggleSideNav} className="px-2 py-3 ">
                   <RxHamburgerMenu className="text-white h-auto w-6" />
