@@ -24,7 +24,7 @@ const Adddocumment = ({ isVisible, setVisibility, refreshBrandData }) =>
         status: 1,
       });
 
-      toast.success(`name ${name} has been added successfully.`, {
+      toast.success(`Name ${name} has been added successfully.`, {
         position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
@@ -83,7 +83,7 @@ const Adddocumment = ({ isVisible, setVisibility, refreshBrandData }) =>
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     >
-                      {t("document name")}
+                      {t("Document name")}
                     </label>
                     <input
                       type="text"
