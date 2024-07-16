@@ -299,7 +299,7 @@ export const getdocumentTypeById = async (req, res, next) => {
             where: { id: id },
         });
         if (!cr) {
-            return next(createError(404, 'documents not found'));
+            return next(createError(404, 'documentType not found'));
         }
         return res.json(cr);
     } catch (error) {
