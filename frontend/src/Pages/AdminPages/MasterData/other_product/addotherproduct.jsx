@@ -60,8 +60,6 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
         progress: undefined,
         theme: 'light',
       });
-
-
       // console.log(error);
     }
 

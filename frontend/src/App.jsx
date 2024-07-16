@@ -26,7 +26,16 @@ import Units from "./Pages/AdminPages/MasterData/Units/Units.jsx";
 import Documents from "./Pages/AdminPages/MasterData/document/document.jsx";
 import ProductPackaging from "./Pages/AdminPages/MasterData/productPackaging/productPackaging.jsx";
 import Other_products from "./Pages/AdminPages/MasterData/other_product/other_product.jsx";
-
+import Gcp_type from "./Pages/AdminPages/MasterData/gcp_type/gcp_type.jsx";
+import CountryofSales from "./Pages/AdminPages/MasterData/countryofsale/countryofsale";
+import Hscode from "./Pages/AdminPages/MasterData/hscode/hscode";
+import UNSPCS from "./Pages/AdminPages/MasterData/UNSPCS/UNSPCS";
+import Cities from "./Pages/AdminPages/MasterData/city/cities";
+import State from "./Pages/AdminPages/MasterData/state/state";
+import Country from "./Pages/AdminPages/MasterData/country/country";
+import Crnumber from "./Pages/AdminPages/MasterData/crnumber/crnumber";
+import Document_type from "./Pages/AdminPages/MasterData/documentype/documenttype";
+import AdminNewsLetter from "./Pages/AdminPages/MasterData/NewsLetter/NewsLetter.jsx";
 
 const App = () =>
 {
@@ -79,6 +88,16 @@ const App = () =>
                 <Route path="Documents" element={<Documents />} />
                 <Route path="ProductPackaging" element={<ProductPackaging />} />
                 <Route path="Other_products" element={<Other_products />} />
+                <Route path="Gcp_type" element={<Gcp_type />} />
+                <Route path="CountryofSales" element={<CountryofSales />} />
+                <Route path="Hscode" element={<Hscode />} />
+                <Route path="UNSPCS" element={<UNSPCS />} />
+                <Route path="Cities" element={<Cities />} />
+                <Route path="State" element={<State />} />
+                <Route path="Country" element={<Country />} />
+                <Route path="crnumber" element={<Crnumber />} />
+                <Route path="documenttype" element={<Document_type />} />
+                <Route path="news-letter" element={<AdminNewsLetter />} />
               </Routes>
             </BrowserRouter>
           </div>

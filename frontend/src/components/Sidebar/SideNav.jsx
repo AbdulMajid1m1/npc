@@ -18,6 +18,16 @@ import unitsimg from "../../Images/Unit.png";
 import Documentsimage from "../../Images/documenticon.png";
 import ProductPackagingimage from "../../Images/productpackaging.png";
 import otherProductimage from "../../Images/otherproducts.png";
+import gcptype from "../../Images/gcptype.png";
+import countryofsale from "../../Images/countryofsale.png";
+import hscode from "../../Images/hscode.png";
+import unspcs from "../../Images/unspcs.png";
+import cities from "../../Images/cities.png";
+import state from "../../Images/state.png";
+import country from "../../Images/country.png";
+import Crnumber from "../../Images/Crnumber.png";
+import documentIcon from "../../Images/document.png";
+import newslettericon from "../../Images/newslettericon.png";
 
 import { useTranslation } from "react-i18next";
 
@@ -451,6 +461,286 @@ function SideNav({ children }) {
                                 />
                                 <span className="text-secondary font-semibold text-xl">
                                   {t("Other Products")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/Gcp_type"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={gcptype}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Gcp Type")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/CountryofSales"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={countryofsale}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Country Of Sales")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/Hscode"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={hscode}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Hs Code")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/UNSPCS"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={unspcs}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("UNSPCS")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/Cities"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={cities}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Cities")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/State"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={state}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("State")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/Country"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={country}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Country")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/crnumber"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={Crnumber}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Cr Number")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/documenttype"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={documentIcon}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Document Type")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+
+                          <li>
+                            <Link
+                              to="/news-letter"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={newslettericon}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("NewsLetter")}
                                 </span>
                               </div>
                             </Link>
