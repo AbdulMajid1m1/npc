@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { document} from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import newRequest ,{newRequestnpc} from '../../../../utils/userRequest'
 import { CSVLink } from "react-csv";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Swal from 'sweetalert2';
@@ -48,7 +48,7 @@ const Documents = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/getAllcr_documents",);
+        const response = await newRequestnpc.get("/master-data/getallcr_documents");
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -67,7 +67,7 @@ const Documents = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAllcr_documents",);
+      const response = await newRequestnpc.get("/master-data/getallcr_documents");
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -97,7 +97,7 @@ const Documents = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deletecr_documents/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deletecr_documents/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('Document')} ${t('Delete')} ${t('successfully')}!`, {
               position: "top-right",
@@ -170,7 +170,7 @@ const Documents = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/createdocument`, {
+          newRequestnpc.post(`/master-data/createdocument`, {
             name: item.name, // Adjust property names as needed
             status: 1,
           })

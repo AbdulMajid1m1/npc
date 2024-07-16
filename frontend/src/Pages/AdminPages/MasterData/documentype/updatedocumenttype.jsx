@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import { newRequestnpc } from "../../../../utils/userRequest";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -24,7 +24,7 @@ const Updatedocumenttype = ({ isVisible, setVisibility, refreshBrandData }) => {
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/updatedocumentType/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updatedocumenttype/${updateBrandData?.id}`, {
         file_name: file_name,
         status: Number(status),
       });

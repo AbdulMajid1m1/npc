@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
@@ -20,7 +20,7 @@ const Addunit = ({ isVisible, setVisibility, refreshBrandData }) =>
   {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post('/units/', {
+      const response = await newRequestnpc.post("/master-data/createunit/", {
         unit_code: unit_code,
         unit_name: unit_name,
         status: 1,

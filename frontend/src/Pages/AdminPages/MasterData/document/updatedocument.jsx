@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
-import { I18nextProvider, useTranslation } from "react-i18next";
-import i18n from "../../../../i18n";
-import LanguageSwitcher from "../../../../switer";
+import {  useTranslation } from "react-i18next";
 const Updatedocument = ({ isVisible, setVisibility, refreshBrandData }) =>
 {
   const { t, i18n } = useTranslation();
@@ -32,12 +30,12 @@ const Updatedocument = ({ isVisible, setVisibility, refreshBrandData }) =>
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/updatecr_documents/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updatecr_documents/${updateBrandData?.id}`, {
         name: name,
         status: Number(status),
       });
 
-      toast.success(response?.data?.message || 'document updated successfully', {
+      toast.success(response?.data?.message || 'Document updated successfully', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -48,12 +46,12 @@ const Updatedocument = ({ isVisible, setVisibility, refreshBrandData }) =>
         theme: "light",
       });
 
-      // console.log(response.data);
+      console.log(response.data);
       refreshBrandData();
       handleCloseUpdatePopup();
 
     } catch (error) {
-      toast.error(error?.response?.data?.message || 'Something went wrong!', {
+      toast.error(error?.response?.data?.error || 'Something went wrong!', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -64,7 +62,7 @@ const Updatedocument = ({ isVisible, setVisibility, refreshBrandData }) =>
         theme: "light",
       });
 
-      // console.log(error);
+      console.log(error);
     }
     finally {
       setLoading(false);

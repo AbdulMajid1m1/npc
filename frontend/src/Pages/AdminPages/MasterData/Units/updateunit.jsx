@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -33,7 +33,7 @@ const Updateunit = ({ isVisible, setVisibility, refreshBrandData }) =>
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/updateunit/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updateunit/${updateBrandData?.id}`, {
         unit_code: unit_code,
         unit_name: unit_name,
         status: Number(status),

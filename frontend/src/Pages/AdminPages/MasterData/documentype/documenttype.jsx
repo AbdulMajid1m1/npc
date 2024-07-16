@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { document_type, paymentSlipColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -53,7 +53,7 @@ const DocumentType = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/getAlldocumentType",);
+        const response = await newRequestnpc.get("/master-data/getalldocumenttype",);
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -72,7 +72,7 @@ const DocumentType = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAlldocumentType",);
+      const response = await newRequestnpc.get("/master-data/deletedocumenttype");
 
       // console.log(response.data);
       setData(response?.data || []);

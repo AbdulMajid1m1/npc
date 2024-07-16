@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import { newRequestnpc } from "../../../../utils/userRequest";
 import { useTranslation } from 'react-i18next';
 
 const Adddocumenttype = ({ isVisible, setVisibility, refreshBrandData }) => {
@@ -16,7 +16,7 @@ const Adddocumenttype = ({ isVisible, setVisibility, refreshBrandData }) => {
   const handleAddCompany = async () => {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post('/createdocumentType/', {
+      const response = await newRequestnpc.post('/master-data/createdocumenttype', {
         file_name: file_name,
         status: 1,
       });

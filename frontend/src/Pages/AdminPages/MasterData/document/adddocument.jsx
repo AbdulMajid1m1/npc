@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import newRequest ,{newRequestnpc} from '../../../../utils/userRequest';
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
@@ -19,7 +19,7 @@ const Adddocumment = ({ isVisible, setVisibility, refreshBrandData }) =>
   {
 
     try {
-      const response = await newRequest.post('/createdocument/', {
+      const response = await newRequestnpc.post("/master-data/createdocument/", {
         name: name,
         status: 1,
       });

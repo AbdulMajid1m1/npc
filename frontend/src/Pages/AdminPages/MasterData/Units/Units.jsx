@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { masterDataColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import newRequest ,{newRequestnpc} from '../../../../utils/userRequest'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import Addunit from './addunit';
@@ -44,14 +44,14 @@ const Units = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAllunit",);
+      const response = await newRequestnpc.get("/master-data/getallunit");
 
-      // console.log(response.data);
+      console.log(response);
       setData(response?.data || []);
       setIsLoading(false)
 
     } catch (err) {
-      // console.log(err);
+      console.log(err);
       setIsLoading(false)
     }
   };
@@ -76,7 +76,7 @@ const Units = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deleteunit/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteunit/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('Unit code')} ${t('Delete')} ${t('successfully')}!`, {
               position: "top-right",
@@ -151,7 +151,7 @@ const Units = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/units`, {
+          newRequestnpc.post(`/units`, {
             unit_code: item.unit_code, // Adjust property names as needed
             unit_name: item.unit_name,
             status: 1
