@@ -9,9 +9,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import identify from "../../Images/identify.png";
 import ngln from "../../Images/ngln.png";
 import nsscc from "../../Images/nsscc.png";
+import usersicon from "../../Images/usersicon.png";
 import DashboardHeader from "../DashboardRightHeader/DashboardHeader";
 import MasterData from "../../Images/master data.png";
 import language from "../../Images/language.png";
+import roleimg from "../../Images/roleicon.png"
+import unitsimg from "../../Images/Unit.png";
 import { useTranslation } from "react-i18next";
 
 function SideNav({ children }) {
@@ -198,34 +201,51 @@ function SideNav({ children }) {
                           </li>
                           <li>
                             <Link
-                              to="/gtin"
+                              to="/Users"
                               className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
                              >
                               <div  className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
                                 <img
-                                  src={ngln}
+                                  src={usersicon}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span className="text-secondary font-semibold text-xl">
-                                  {t("GLN")}
+                                  {t("Users")}
                                 </span>
                               </div>
                             </Link>
                           </li>
                           <li>
                             <Link
-                              to="/gtin"
+                              to="/Role"
                                className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
                              >
                               <div  className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
                                 <img
-                                  src={nsscc}
+                                  src={roleimg}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span className="text-secondary font-semibold text-xl">
-                                  SSCC
+                                  {t('Role')}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                           <li>
+                            <Link
+                              to="/units"
+                               className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${i18n.language==='ar'?'pr-3 pl-4 justify-end':"pl-3 pr-4 justify-start"}`}
+                             >
+                              <div  className={`flex justify-center items-center gap-3 ${i18n.language==='ar'?'flex-row-reverse':"flex-row"}`}>
+                                <img
+                                  src={unitsimg}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Units")}
                                 </span>
                               </div>
                             </Link>

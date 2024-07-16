@@ -16,6 +16,13 @@ import StatusSearchScreen from "./Pages/MemberPages/StatusSearchScreen/StatusSea
 import AdvanceSearch from "./Pages/MemberPages/StatusSearchScreen/AdvanceSearch.jsx";
 import SearchProfile from "./Pages/MemberPages/StatusSearchScreen/SearchProfile.jsx";
 import LaanguageChange from "./Pages/AdminPages/MasterData/LanguageChange/LaanguageChange"
+import Users from "./Pages/AdminPages/MasterData/Users/Users";
+import AddUsers from "./Pages/AdminPages/MasterData/Users/AddUsers";
+import UpdateUsers from "./Pages/AdminPages/MasterData/Users/UpdateUsers";
+import Roles from "./Pages/AdminPages/MasterData/Roles/Roles"
+import AddRoles from "./Pages/AdminPages/MasterData/Roles/AddRoles";
+import UpdateRoles from "./Pages/AdminPages/MasterData/Roles/UpdateRoles";
+import Units from "./Pages/AdminPages/MasterData/Units/Units.jsx";
 
 const App = () =>
 {
@@ -54,7 +61,17 @@ const App = () =>
                 <Route path="advance-search" element={<AdvanceSearch />} />
                 <Route path="search-profile" element={<SearchProfile />} />
 
+                {/* Master Data */}
                 <Route path="Language/Dynamic" element={<LaanguageChange />} />
+                <Route path="Users" element={<Users />} />
+                <Route path="add-users" element={<AddUsers />} />
+                <Route path="update-users/:id" element={<UpdateUsers />} />
+
+                <Route path="Role" element={<Roles />} />
+                <Route path="add-roles" element={<AddRoles />} />
+                <Route path="update-roles/:id" element={<UpdateRoles />} />
+
+                <Route path="Units" element={<Units />} />
               </Routes>
             </BrowserRouter>
           </div>

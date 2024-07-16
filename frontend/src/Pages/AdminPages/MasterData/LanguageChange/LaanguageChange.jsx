@@ -67,7 +67,7 @@ const LaanguageChange = () => {
         <SideNav />
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
-            <div className="h-auto w-[97%] px-0 pt-4">
+            <div className="h-auto w-[97%] px-0  pt-4">
               <div className="h-auto w-full  mb-3 bg-white shadow-xl rounded-md">
                 {/* </div> */}
                 <div
