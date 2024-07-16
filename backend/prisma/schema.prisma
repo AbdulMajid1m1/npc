@@ -195,7 +195,7 @@ model languages {
 }
 
 model cr_documents {
-  id         BigInt    @id(map: "PK_cr_documents") @default(autoincrement())
+    id       String    @id @default(cuid())
   name       String?   @db.NVarChar(Max)
   status     Int?
   created_at DateTime? @db.DateTime
