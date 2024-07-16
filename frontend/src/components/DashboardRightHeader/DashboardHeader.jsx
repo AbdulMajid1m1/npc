@@ -16,14 +16,13 @@ import i18ns from '../../i18n';
 
 const DashboardHeader = () => {
   const navigate = useNavigate();
-  
   const { t,i18n } = useTranslation();
   return (
     <div className="p-3 bg-dashboard-color h-auto">
       {/* dashboard Data */}
       <div className="h-auto w-full rounded-md bg-[#FFFFFF] shadow-xl pb-5 mt-3">
-        <div className={`w-full flex justify-between items-center flex-col sm:flex-row px-3 sm:mb-0 mb-3 ${i18n.language==='ar'? 'flex-row-reverse':'flex-row'}`}>
-          <div className="w-full">
+        <div className={`w-full flex justify-between items-center flex-col  px-3 sm:mb-0 mb-3 ${i18n.language==='ar'? 'sm:flex-row-reverse':'sm:flex-row'}`}>
+          <div className={`flex ${i18n.language==='ar'? 'justify-end': 'justify-start'} w-full`}>
             <img
               src={gs1v2logo}
               onClick={() => navigate("/dashboard")}

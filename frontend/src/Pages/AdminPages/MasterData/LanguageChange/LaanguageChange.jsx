@@ -64,7 +64,7 @@ const LaanguageChange = () => {
    
     return (
       <div>
-        <SideNav />
+        <SideNav>
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0  pt-4">
@@ -121,6 +121,7 @@ const LaanguageChange = () => {
                     <UpdataLanguageChange isVisible={isUpdatePopupVisible} setVisibility={setUpdatePopupVisibility} refreshBrandData={refreshcitiesData} />
                 )}
         </div>
+        </SideNav>
       </div>
     );
 }

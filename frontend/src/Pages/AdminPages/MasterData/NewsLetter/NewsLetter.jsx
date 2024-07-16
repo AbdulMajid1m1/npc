@@ -58,69 +58,70 @@ const AdminNewsLetter = () =>
 
   return (
     <div>
-      <SideNav />
-      <div className={`p-0 h-full bg-dashboard-color`}>
-        <div className="flex justify-center items-center">
-          <div className="h-auto w-[97%] px-0 pt-4">
-            <div className="h-auto w-full p-0 bg-white shadow-xl rounded-md">
-              <div
-                className={`flex  sm:justify-start items-center flex-wrap gap-2 py-7 px-3 ${
-                  i18n.language === "ar"
-                    ? "flex-row-reverse justify-start"
-                    : "flex-row justify-start"
-                }`}
-              >
-                <button
-                  onClick={handleShowCreatePopup}
-                  className="rounded-full bg-secondary font-body px-5 py-1 text-sm text-white transition duration-200 hover:bg-primary"
+      <SideNav>
+        <div className={`p-0 h-full bg-dashboard-color`}>
+          <div className="flex justify-center items-center">
+            <div className="h-auto w-[97%] px-0 pt-4">
+              <div className="h-auto w-full p-0 bg-white shadow-xl rounded-md">
+                <div
+                  className={`flex  sm:justify-start items-center flex-wrap gap-2 py-7 px-3 ${
+                    i18n.language === "ar"
+                      ? "flex-row-reverse justify-start"
+                      : "flex-row justify-start"
+                  }`}
                 >
-                  <i className="fas fa-paper-plane mr-2"></i>
-                  {t("Send Newsletter Email")}
-                </button>
-              </div>
+                  <button
+                    onClick={handleShowCreatePopup}
+                    className="rounded-full bg-secondary font-body px-5 py-1 text-sm text-white transition duration-200 hover:bg-primary"
+                  >
+                    <i className="fas fa-paper-plane mr-2"></i>
+                    {t("Send Newsletter Email")}
+                  </button>
+                </div>
 
-              {/* DataGrid */}
-              <div style={{ marginLeft: "-11px", marginRight: "-11px" }}>
-                <DataTable
-                  data={data}
-                  title={`${t("News Letter")}`}
-                  columnsName={newsLetterColumn(t)}
-                  loading={isLoading}
-                  secondaryColor="secondary"
-                  checkboxSelection="disabled"
-                  actionColumnVisibility={false}
-                  handleRowClickInParent={handleRowClickInParent}
-                  dropDownOptions={
-                    [
-                      // {
-                      //   label: `${t('View')}`,
-                      //   icon: (
-                      //     <VisibilityIcon
-                      //       fontSize="small"
-                      //       color="action"
-                      //       style={{ color: "rgb(37 99 235)" }}
-                      //     />
-                      //   ),
-                      //   action: handleView,
-                      // },
-                    ]
-                  }
-                  uniqueId="gtinMainTableId"
-                />
+                {/* DataGrid */}
+                <div style={{ marginLeft: "-11px", marginRight: "-11px" }}>
+                  <DataTable
+                    data={data}
+                    title={`${t("News Letter")}`}
+                    columnsName={newsLetterColumn(t)}
+                    loading={isLoading}
+                    secondaryColor="secondary"
+                    checkboxSelection="disabled"
+                    actionColumnVisibility={false}
+                    handleRowClickInParent={handleRowClickInParent}
+                    dropDownOptions={
+                      [
+                        // {
+                        //   label: `${t('View')}`,
+                        //   icon: (
+                        //     <VisibilityIcon
+                        //       fontSize="small"
+                        //       color="action"
+                        //       style={{ color: "rgb(37 99 235)" }}
+                        //     />
+                        //   ),
+                        //   action: handleView,
+                        // },
+                      ]
+                    }
+                    uniqueId="gtinMainTableId"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* AddNewsLetter component with handleShowCreatePopup prop */}
-        {isCreatePopupVisible && (
-          <AddNewsLetterPopUp
-            isVisible={isCreatePopupVisible}
-            setVisibility={setCreatePopupVisibility}
-            refreshNewsLetter={fetchData}
-          />
-        )}
-      </div>
+          {/* AddNewsLetter component with handleShowCreatePopup prop */}
+          {isCreatePopupVisible && (
+            <AddNewsLetterPopUp
+              isVisible={isCreatePopupVisible}
+              setVisibility={setCreatePopupVisibility}
+              refreshNewsLetter={fetchData}
+            />
+          )}
+        </div>
+      </SideNav>
     </div>
   );
 }

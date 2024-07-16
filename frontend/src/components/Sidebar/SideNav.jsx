@@ -64,7 +64,7 @@ function SideNav({ children }) {
           <div className="relative lg:block navbar-menu">
             <nav
               className={`fixed top-0 transition-all bg-dashboard-color lg:mt-0 mt-16  bottom-0 flex flex-col shadow bg-primary-sidebar overflow-hidden z-50 ${
-                isOpen ? "w-[280px]" : "w-0"
+                isOpen ? "w-[320px]" : "w-0"
               } ${i18n.language === "ar" ? "right-0" : "left-0"}`}
               id="sidenav"
             >
@@ -572,7 +572,7 @@ function SideNav({ children }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span className="text-secondary font-semibold text-xl">
-                                  {t("UNSPCS")}
+                                  {t("UNSPCS")} 
                                 </span>
                               </div>
                             </Link>
@@ -740,7 +740,7 @@ function SideNav({ children }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span className="text-secondary font-semibold text-xl">
-                                  {t("NewsLetter")}
+                                  {t("News Letter")}
                                 </span>
                               </div>
                             </Link>
@@ -777,7 +777,7 @@ function SideNav({ children }) {
         <div
           className={`mx-auto transition-all content-wrapper ${
             isOpen
-              ? `${i18n.language === "ar" ? "lg:mr-[280px]" : "lg:ml-[280px]"}`
+              ? `${i18n.language === "ar" ? "lg:mr-[320px]" : "lg:ml-[320px]"}`
               : "lg:ml-0"
           }`}
           id="dash"

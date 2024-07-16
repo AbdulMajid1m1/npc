@@ -107,98 +107,99 @@ const AddRoles = () => {
         </div>
       )}
 
-      <SideNav />
-      <div className={`p-0 h-full bg-dashboard-color`}>
-        <div className="flex justify-center items-center">
-          <div className="h-auto w-[97%] px-0 pt-4">
-            <div className="h-auto w-full p-6 bg-white shadow-xl rounded-md mb-6">
-              <form onSubmit={handleFormSubmit}>
-                {/* <form> */}
-                <div className="flex flex-col gap-8 sm:flex-row sm:justify-between sm:mt-0 mt-4">
-                  <div className="sm:w-[40%] h-20 w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      htmlFor="fields1"
-                      className={`text-secondary font-semibold ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      {" "}
-                      {t("Role Name")}
-                    </label>
-                    <input
-                      type="text"
-                      id="fields1"
-                      value={roleName}
-                      onChange={(e) => setRoleName(e.target.value)}
-                      required
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      placeholder={`${t("Role Name")}`}
-                    />
-                  </div>
-
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      className={`text-secondary font-semibold ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      htmlFor="SelectRoles"
-                    >
-                      {" "}
-                      {t("Select Permission")}
-                    </label>
-                    <Autocomplete
-                      multiple
-                      id="SelectRoles"
-                      options={rolesTypes}
-                      getOptionLabel={(option) => option.name}
-                      value={selectedRoles}
-                      onChange={handleRolesTypesChange}
-                      filterSelectedOptions
-                      renderInput={(params) => (
-                        <TextField
-                          autoComplete="off"
-                          {...params}
-                          label={`${t("Select Permission")}`}
-                          placeholder={`${t("Select Permission")}`}
-                          variant="outlined"
-                        />
-                      )}
-                      required
-                    />
-                    <div className="">
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={selectAll}
-                          onChange={handleSelectAllChange}
-                        />
-                        {t("Select All")}
+      <SideNav>
+        <div className={`p-0 h-full bg-dashboard-color`}>
+          <div className="flex justify-center items-center">
+            <div className="h-auto w-[97%] px-0 pt-4">
+              <div className="h-auto w-full p-6 bg-white shadow-xl rounded-md mb-6">
+                <form onSubmit={handleFormSubmit}>
+                  {/* <form> */}
+                  <div className="flex flex-col gap-8 sm:flex-row sm:justify-between sm:mt-0 mt-4">
+                    <div className="sm:w-[40%] h-20 w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        htmlFor="fields1"
+                        className={`text-secondary font-semibold ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        {" "}
+                        {t("Role Name")}
                       </label>
+                      <input
+                        type="text"
+                        id="fields1"
+                        value={roleName}
+                        onChange={(e) => setRoleName(e.target.value)}
+                        required
+                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        placeholder={`${t("Role Name")}`}
+                      />
+                    </div>
+
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        className={`text-secondary font-semibold ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        htmlFor="SelectRoles"
+                      >
+                        {" "}
+                        {t("Select Permission")}
+                      </label>
+                      <Autocomplete
+                        multiple
+                        id="SelectRoles"
+                        options={rolesTypes}
+                        getOptionLabel={(option) => option.name}
+                        value={selectedRoles}
+                        onChange={handleRolesTypesChange}
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                          <TextField
+                            autoComplete="off"
+                            {...params}
+                            label={`${t("Select Permission")}`}
+                            placeholder={`${t("Select Permission")}`}
+                            variant="outlined"
+                          />
+                        )}
+                        required
+                      />
+                      <div className="">
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={selectAll}
+                            onChange={handleSelectAllChange}
+                          />
+                          {t("Select All")}
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {/*Add Button  */}
-                <div
-                  className={`flex mt-10 ${
-                    i18n.language === "ar"
-                      ? "flex-row-reverse justify-start"
-                      : "flex-row justify-start"
-                  }`}
-                >
-                  <button
-                    type="submit"
-                    className="bg-secondary px-8 py-2 text-white font-semibold text-sm rounded-sm p-2 mt-2 hover:bg-primary transition duration-200"
+                  {/*Add Button  */}
+                  <div
+                    className={`flex mt-10 ${
+                      i18n.language === "ar"
+                        ? "flex-row-reverse justify-start"
+                        : "flex-row justify-start"
+                    }`}
                   >
-                    {t("Create")}
-                  </button>
-                </div>
-              </form>
+                    <button
+                      type="submit"
+                      className="bg-secondary px-8 py-2 text-white font-semibold text-sm rounded-sm p-2 mt-2 hover:bg-primary transition duration-200"
+                    >
+                      {t("Create")}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </SideNav>
       {/* </div> */}
     </div>
     // </div>

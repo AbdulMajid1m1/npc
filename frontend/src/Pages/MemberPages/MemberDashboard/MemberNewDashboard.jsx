@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import gs1v2logo from "../../../Images/gs1logowhite.png"
 import SideNav from '../../../components/Sidebar/SideNav';
-import DashboardHeader from '../../../components/DashboardRightHeader/DashboardHeader';
+import { I18nextProvider, useTranslation } from "react-i18next";
 
 const MemberNewDashboard = () => {
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     // auto scroll to bottom
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -18,8 +19,8 @@ const MemberNewDashboard = () => {
           <div className='ml-3 flex sm:justify-start justify-center items-center flex-wrap 3xl:gap-24 2xl:gap-24 xl:gap-24 lg:gap-24 md:gap-10 gap-4'>
             <img onClick={() => navigate('/')} src={gs1v2logo} className='sm:h-20 h-auto w-auto cursor-pointer' alt='' />
             <div className=''>
-              <p className='text-secondary font-bold font-sans sm:text-4xl text-2xl'>National Product Catalouge </p>
-              <p className='text-secondary font-sans mt-[2px]'>A Service of GS1 Saudi Arabia Barcode Center</p>
+              <p className='text-secondary font-bold font-sans sm:text-4xl text-2xl'>{t("National Product Catalouge")} </p>
+              <p className='text-secondary font-sans mt-[2px]'>{t("A Service of GS1 Saudi Arabia Barcode Center")}</p>
             </div>
           </div>
             
@@ -29,8 +30,8 @@ const MemberNewDashboard = () => {
         {/* Dashboard Header */}
         <div className='3xl:h-32 2xl:h-32 xl:h-32 lg:h-32 md:h-32 h-auto w-full flex sm:justify-start items-center rounded-md bg-[#FFFFFF] shadow-xl mt-6'>
             <div className='flex sm:justify-between justify-center items-center flex-wrap w-full'>
-              <p className='text-secondary font-medium font-sans text-4xl sm:py-0 py-6 ml-3'>Dashboard</p>
-              <p className='text-secondary font-sans mr-3 mt-6'>Report Creation Date: 10/05/2024  10:15 </p>
+              <p className='text-secondary font-medium font-sans text-4xl sm:py-0 py-6 ml-3'>{t("Dashboard")}</p>
+              <p className='text-secondary font-sans mr-3 mt-6'>{t("Report Creation Date")}: 10/05/2024  10:15 </p>
             </div>    
         </div>
 

@@ -94,68 +94,69 @@ useEffect(() => {
 
   return (
     <div>
-      <SideNav />
-      <div className={`p-0 h-full bg-dashboard-color`}>
-        <div className="flex justify-center items-center">
-          <div className="h-auto w-[97%] px-0 pt-4">
-            <div className="h-auto w-full p-4 bg-white shadow-xl rounded-md">
-              <div
-                className={`flex px-3 ${
-                  i18n.language === "ar"
-                    ? "flex-row-reverse justify-start"
-                    : "flex-row justify-start"
-                }`}
-              >
-                <button
-                  onClick={() => navigate("/add-roles")}
-                  className="rounded-full bg-secondary font-body px-5 py-1 text-sm mb-3 text-white transition duration-200 hover:bg-primary"
+      <SideNav>
+        <div className={`p-0 h-full bg-dashboard-color`}>
+          <div className="flex justify-center items-center">
+            <div className="h-auto w-[97%] px-0 pt-4">
+              <div className="h-auto w-full p-4 bg-white shadow-xl rounded-md">
+                <div
+                  className={`flex px-3 ${
+                    i18n.language === "ar"
+                      ? "flex-row-reverse justify-start"
+                      : "flex-row justify-start"
+                  }`}
                 >
-                  <i className="fas fa-plus mr-2"></i> {t("Add Role")}
-                </button>
-              </div>
+                  <button
+                    onClick={() => navigate("/add-roles")}
+                    className="rounded-full bg-secondary font-body px-5 py-1 text-sm mb-3 text-white transition duration-200 hover:bg-primary"
+                  >
+                    <i className="fas fa-plus mr-2"></i> {t("Add Role")}
+                  </button>
+                </div>
 
-              {/* DataGrid */}
-              <div style={{ marginLeft: "-11px", marginRight: "-11px" }}>
-                <DataTable
-                  data={data}
-                  title={`${t("Roles")}`}
-                  columnsName={AdminRolesColumn(t)}
-                  loading={isLoading}
-                  secondaryColor="secondary"
-                  checkboxSelection={"disabled"}
-                  // actionColumnVisibility={false}
-                  handleRowClickInParent={handleRowClickInParent}
-                  dropDownOptions={[
-                    {
-                      label: `${t("Edit")}`,
-                      icon: (
-                        <EditIcon
-                          fontSize="small"
-                          color="action"
-                          style={{ color: "rgb(37 99 235)" }}
-                        />
-                      ),
-                      action: handleEdit,
-                    },
-                    {
-                      label: `${t("Delete")}`,
-                      icon: (
-                        <DeleteIcon
-                          fontSize="small"
-                          color="action"
-                          style={{ color: "rgb(37 99 235)" }}
-                        />
-                      ),
-                      action: handleDelete,
-                    },
-                  ]}
-                  uniqueId="gtinMainTableId"
-                />
+                {/* DataGrid */}
+                <div style={{ marginLeft: "-11px", marginRight: "-11px" }}>
+                  <DataTable
+                    data={data}
+                    title={`${t("Roles")}`}
+                    columnsName={AdminRolesColumn(t)}
+                    loading={isLoading}
+                    secondaryColor="secondary"
+                    checkboxSelection={"disabled"}
+                    // actionColumnVisibility={false}
+                    handleRowClickInParent={handleRowClickInParent}
+                    dropDownOptions={[
+                      {
+                        label: `${t("Edit")}`,
+                        icon: (
+                          <EditIcon
+                            fontSize="small"
+                            color="action"
+                            style={{ color: "rgb(37 99 235)" }}
+                          />
+                        ),
+                        action: handleEdit,
+                      },
+                      {
+                        label: `${t("Delete")}`,
+                        icon: (
+                          <DeleteIcon
+                            fontSize="small"
+                            color="action"
+                            style={{ color: "rgb(37 99 235)" }}
+                          />
+                        ),
+                        action: handleDelete,
+                      },
+                    ]}
+                    uniqueId="gtinMainTableId"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </SideNav>
     </div>
   );
 }

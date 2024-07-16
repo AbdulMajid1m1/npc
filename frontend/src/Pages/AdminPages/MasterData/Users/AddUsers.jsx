@@ -125,228 +125,229 @@ const AddUsers = () => {
         </div>
       )}
 
-      <SideNav />
-      <div className={`p-0 h-full bg-dashboard-color`}>
-        <div className="flex justify-center items-center">
-          <div className="h-auto w-[97%] px-0 pt-4">
-            <div className="h-auto w-full p-6 mb-10 bg-white shadow-xl rounded-md ">
-              <form onSubmit={handleFormSubmit}>
-                {/* <form> */}
-                <div className="flex flex-col gap-8 sm:flex-row sm:justify-between sm:mt-0 mt-4">
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      htmlFor="fields1"
-                      className={`text-secondary font-semibold  ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      {" "}
-                      {t("Email")}
-                    </label>
-                    <input
-                      type="email"
-                      id="fields1"
-                      name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      placeholder={`${t("Email")}`}
-                    />
-                  </div>
+      <SideNav>
+        <div className={`p-0 h-full bg-dashboard-color`}>
+          <div className="flex justify-center items-center">
+            <div className="h-auto w-[97%] px-0 pt-4">
+              <div className="h-auto w-full p-6 mb-10 bg-white shadow-xl rounded-md ">
+                <form onSubmit={handleFormSubmit}>
+                  {/* <form> */}
+                  <div className="flex flex-col gap-8 sm:flex-row sm:justify-between sm:mt-0 mt-4">
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        htmlFor="fields1"
+                        className={`text-secondary font-semibold  ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        {" "}
+                        {t("Email")}
+                      </label>
+                      <input
+                        type="email"
+                        id="fields1"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        placeholder={`${t("Email")}`}
+                      />
+                    </div>
 
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      htmlFor="fields1"
-                      className={`text-secondary font-semibold  ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      {" "}
-                      {t("User Name")}
-                    </label>
-                    <input
-                      type="text"
-                      id="fields1"
-                      name="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      placeholder={`${t("User Name")}`}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-8 sm:flex-row sm:justify-between mt-4">
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      htmlFor="fields1"
-                      className={`text-secondary font-semibold  ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      {" "}
-                      {t("Password")}
-                    </label>
-                    <input
-                      type="password"
-                      id="fields1"
-                      name="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      placeholder={`${t("Password")}`}
-                    />
-                  </div>
-
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      htmlFor="fields1"
-                      className={`text-secondary font-semibold  ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      {" "}
-                      {t("Mobile")}
-                    </label>
-                    <input
-                      type="text"
-                      id="fields1"
-                      name="mobile"
-                      value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
-                      required
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      placeholder={`${t("Mobile")}`}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-8 sm:flex-row sm:justify-between mt-4">
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      htmlFor="fields1"
-                      className={`text-secondary font-semibold  ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      {" "}
-                      {t("Is Super")}
-                    </label>
-                    <select
-                      id="fields1"
-                      name="is_super_admin"
-                      value={isSuper}
-                      onChange={(e) => setIsSuper(e.target.value)}
-                      required
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      <option value="">-{t("select")}-</option>
-                      <option value="true">Super Admin</option>
-                      <option value="false">GS1 User</option>
-                    </select>
-                  </div>
-
-                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
-                    <label
-                      className={`text-secondary font-semibold  ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                      htmlFor="SelectRoles"
-                    >
-                      {" "}
-                      {t("Select Roles")}
-                    </label>
-                    <Autocomplete
-                      multiple
-                      id="SelectRoles"
-                      options={rolesTypes}
-                      getOptionLabel={(option) => option.name}
-                      value={selectedRoles}
-                      onChange={handleRolesTypesChange}
-                      filterSelectedOptions
-                      renderInput={(params) => (
-                        <TextField
-                          autoComplete="off"
-                          {...params}
-                          label={`${t("Select Roles")}`}
-                          placeholder={`${t("Select Roles")}`}
-                          variant="outlined"
-                        />
-                      )}
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Image container */}
-                <div className="flex justify-between items-center gap-7 flex-wrap mt-10">
-                  <div>
-                    <span className="text-secondary font-body sm:text-base text-sm">
-                      {" "}
-                      {t("Profile Image")}
-                    </span>
-                    <div className="border-2 border-dashed h-56 w-56 relative flex justify-center">
-                      <div className="absolute -bottom-4 flex justify-center items-center h-10 w-3/4 bg-secondary text-white font-body">
-                        <label
-                          htmlFor="imageInput"
-                          className="cursor-pointer whitespace-nowrap"
-                        >
-                          {t("Select Image")}
-                          <input
-                            type="file"
-                            id="imageInput"
-                            // accept="image/*"
-                            onChange={handleImageChange}
-                            style={{ display: "none" }}
-                          />
-                        </label>
-                      </div>
-                      {selectedImage && (
-                        <div className="h-56 flex justify-center items-center object-contain w-auto">
-                          <img
-                            src={selectedImage}
-                            className="h-56 w-56"
-                            alt="Selected Image"
-                          />
-                        </div>
-                      )}
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        htmlFor="fields1"
+                        className={`text-secondary font-semibold  ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        {" "}
+                        {t("User Name")}
+                      </label>
+                      <input
+                        type="text"
+                        id="fields1"
+                        name="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        placeholder={`${t("User Name")}`}
+                      />
                     </div>
                   </div>
-                </div>
 
-                {/*Add Button  */}
-                <div
-                  className={`flex mt-10 ${
-                    i18n.language === "ar"
-                      ? "flex-row-reverse justify-start"
-                      : "flex-row justify-end"
-                  }`}
-                >
-                  <button
-                    type="submit"
-                    className="bg-secondary px-8 py-2 text-white font-semibold text-sm rounded-sm p-2 mt-2 hover:bg-primary transition duration-200"
+                  <div className="flex flex-col gap-8 sm:flex-row sm:justify-between mt-4">
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        htmlFor="fields1"
+                        className={`text-secondary font-semibold  ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        {" "}
+                        {t("Password")}
+                      </label>
+                      <input
+                        type="password"
+                        id="fields1"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        placeholder={`${t("Password")}`}
+                      />
+                    </div>
+
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        htmlFor="fields1"
+                        className={`text-secondary font-semibold  ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        {" "}
+                        {t("Mobile")}
+                      </label>
+                      <input
+                        type="text"
+                        id="fields1"
+                        name="mobile"
+                        value={mobile}
+                        onChange={(e) => setMobile(e.target.value)}
+                        required
+                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        placeholder={`${t("Mobile")}`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-8 sm:flex-row sm:justify-between mt-4">
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        htmlFor="fields1"
+                        className={`text-secondary font-semibold  ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        {" "}
+                        {t("Is Super")}
+                      </label>
+                      <select
+                        id="fields1"
+                        name="is_super_admin"
+                        value={isSuper}
+                        onChange={(e) => setIsSuper(e.target.value)}
+                        required
+                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        <option value="">-{t("select")}-</option>
+                        <option value="true">Super Admin</option>
+                        <option value="false">GS1 User</option>
+                      </select>
+                    </div>
+
+                    <div className="w-full font-body sm:text-base text-sm flex flex-col gap-1">
+                      <label
+                        className={`text-secondary font-semibold  ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                        htmlFor="SelectRoles"
+                      >
+                        {" "}
+                        {t("Select Roles")}
+                      </label>
+                      <Autocomplete
+                        multiple
+                        id="SelectRoles"
+                        options={rolesTypes}
+                        getOptionLabel={(option) => option.name}
+                        value={selectedRoles}
+                        onChange={handleRolesTypesChange}
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                          <TextField
+                            autoComplete="off"
+                            {...params}
+                            label={`${t("Select Roles")}`}
+                            placeholder={`${t("Select Roles")}`}
+                            variant="outlined"
+                          />
+                        )}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image container */}
+                  <div className="flex justify-between items-center gap-7 flex-wrap mt-10">
+                    <div>
+                      <span className="text-secondary font-body sm:text-base text-sm">
+                        {" "}
+                        {t("Profile Image")}
+                      </span>
+                      <div className="border-2 border-dashed h-56 w-56 relative flex justify-center">
+                        <div className="absolute -bottom-4 flex justify-center items-center h-10 w-3/4 bg-secondary text-white font-body">
+                          <label
+                            htmlFor="imageInput"
+                            className="cursor-pointer whitespace-nowrap"
+                          >
+                            {t("Select Image")}
+                            <input
+                              type="file"
+                              id="imageInput"
+                              // accept="image/*"
+                              onChange={handleImageChange}
+                              style={{ display: "none" }}
+                            />
+                          </label>
+                        </div>
+                        {selectedImage && (
+                          <div className="h-56 flex justify-center items-center object-contain w-auto">
+                            <img
+                              src={selectedImage}
+                              className="h-56 w-56"
+                              alt="Selected Image"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*Add Button  */}
+                  <div
+                    className={`flex mt-10 ${
+                      i18n.language === "ar"
+                        ? "flex-row-reverse justify-start"
+                        : "flex-row justify-end"
+                    }`}
                   >
-                    {t("Add Admin")}
-                  </button>
-                </div>
-              </form>
+                    <button
+                      type="submit"
+                      className="bg-secondary px-8 py-2 text-white font-semibold text-sm rounded-sm p-2 mt-2 hover:bg-primary transition duration-200"
+                    >
+                      {t("Add Admin")}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </SideNav>
     </div>
   );
 }
