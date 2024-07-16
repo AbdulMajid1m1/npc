@@ -12,17 +12,17 @@ import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../switer";
-import i18n from '../../i18n';
+import i18ns from '../../i18n';
 
 const DashboardHeader = () => {
   const navigate = useNavigate();
   
-  const { t } = useTranslation();
+  const { t,i18n } = useTranslation();
   return (
     <div className="p-3 bg-dashboard-color h-auto">
       {/* dashboard Data */}
       <div className="h-auto w-full rounded-md bg-[#FFFFFF] shadow-xl pb-5 mt-3">
-        <div className="w-full flex justify-between items-center flex-col sm:flex-row px-3 sm:mb-0 mb-3">
+        <div className={`w-full flex justify-between items-center flex-col sm:flex-row px-3 sm:mb-0 mb-3 ${i18n.language==='ar'? 'flex-row-reverse':'flex-row'}`}>
           <div className="w-full">
             <img
               src={gs1v2logo}
@@ -32,7 +32,7 @@ const DashboardHeader = () => {
             />
           </div>
 
-          <div className="flex w-full">
+          <div className={`flex w-full ${i18n.language==='ar'? 'flex-row-reverse':'flex-row'}`}>
             <select className="ml-3 font-sans border border-[#B6BAD6] text-[#643ECF] placeholder:text-[#643ECF] rounded-sm px-2 py-1">
               <option value="option1">{t("Items")}</option>
               <option value="option2">{t("Option 2")}</option>
@@ -41,7 +41,7 @@ const DashboardHeader = () => {
             <input
               type="text"
               placeholder={t("Search GTIN, Name, Description, Type")}
-              className="ml-3 w-full font-sans border border-[#B6BAD6] font-medium placeholder:text-[#643ECF] rounded-sm px-2 py-1"
+              className={`"ml-3 w-full font-sans border border-[#B6BAD6] font-medium placeholder:text-[#643ECF] rounded-sm px-2 py-1 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
             />
             <button className="ml-3 bg-[#D9D9D9] rounded-sm px-3 py-1">
               <BiSearch className="text-xl" />
@@ -82,7 +82,7 @@ const DashboardHeader = () => {
 
           <div className={`flex  justify-end gap-5 ${i18n.language==='ar'?'flex-wrap-reverse':"flex-wrap"}`}>
             <div className="flex items-center gap-1">
-              <I18nextProvider i18n={i18n}>
+              <I18nextProvider i18n={i18ns}>
                 <LanguageSwitcher />
               </I18nextProvider>
             </div>

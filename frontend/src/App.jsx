@@ -15,6 +15,7 @@ import ItemSearchScreen from "./Pages/MemberPages/ItemSearchScreen/ItemSearchScr
 import StatusSearchScreen from "./Pages/MemberPages/StatusSearchScreen/StatusSearchScreen.jsx";
 import AdvanceSearch from "./Pages/MemberPages/StatusSearchScreen/AdvanceSearch.jsx";
 import SearchProfile from "./Pages/MemberPages/StatusSearchScreen/SearchProfile.jsx";
+import LaanguageChange from "./Pages/AdminPages/MasterData/LanguageChange/LaanguageChange"
 
 const App = () =>
 {
@@ -33,28 +34,31 @@ const App = () =>
     <>
       {/* <AuthProvider> */}
       <LanguageProvider>
-          <DataTableProvider>
-    
-              <div>
-                <BrowserRouter>
-                  <Routes>
+        <DataTableProvider>
+          <div>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<MemberLogin />} />
+                <Route path="/select-gln" element={<SelectGln />} />
 
-                    <Route path="/" element={<MemberLogin />} />
-                    <Route path="/select-gln" element={<SelectGln />} />
-                   
-                    <Route path="dashboard" element={<MemberNewDashboard />} />
-                    <Route path="gtin" element={<GTIN />} />
-                    <Route path="Item-Search-Screen" element={<ItemSearchScreen />} />
-                    <Route path="Status-Search-Screen" element={<StatusSearchScreen />} />
-                    <Route path="advance-search" element={<AdvanceSearch />} />
-                    <Route path="search-profile" element={<SearchProfile />} />
+                <Route path="dashboard" element={<MemberNewDashboard />} />
+                <Route path="gtin" element={<GTIN />} />
+                <Route
+                  path="Item-Search-Screen"
+                  element={<ItemSearchScreen />}
+                />
+                <Route
+                  path="Status-Search-Screen"
+                  element={<StatusSearchScreen />}
+                />
+                <Route path="advance-search" element={<AdvanceSearch />} />
+                <Route path="search-profile" element={<SearchProfile />} />
 
-
-                  </Routes>
-
-                </BrowserRouter>
-              </div>
-          </DataTableProvider>
+                <Route path="Language/Dynamic" element={<LaanguageChange />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </DataTableProvider>
       </LanguageProvider>
       {/* </AuthProvider> */}
     </>
