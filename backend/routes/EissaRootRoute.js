@@ -13,9 +13,20 @@ import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     createUNSPSC,getAllUNSPSC,getUNSPSCById,updateUNSPSC,deleteUNSPSC,
     getAllCountries,getAllCountriesName,createCountries,getCountriesById,updateCountries,deleteCountries,
     getAllStates,getAllStatesName,createStates,getStatesById,updateStates,deleteStates,
-    getAllCities,createCities,getCitiesById,updateCities,deleteCities
+    getAllCities,createCities,getCitiesById,updateCities,deleteCities,
+    translations,translations_table,translations_put,translations_post
 
 } from "../controllers/masterDataController.js";
+
+//----------------------------translate----------------------------------------------------
+router.get('/translations', translations)
+router.get("/translations_table",translations_table)
+router.put("/translations_put/:id", translations_put)
+router.post("/translations_post", translations_post)
+
+
+
+
 //--------------------------------Cities--------------------------------
 
 router.post('/createCities', createCities)
