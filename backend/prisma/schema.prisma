@@ -349,7 +349,7 @@ model gtin_subscription_histories {
 }
 
 model gcp_types {
-  id              BigInt    @id(map: "PK__gcp_type__3213E83FD86DB395") @default(autoincrement())
+   id             String    @id @default(cuid())
   gcp_code        String    @db.NVarChar(255)
   gcp_description String?   @db.NVarChar(Max)
   created_at      DateTime? @db.DateTime
