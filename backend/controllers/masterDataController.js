@@ -1223,12 +1223,12 @@ const countrySchema = Joi.object({
 const stateSchema = Joi.object({
     name: Joi.string().max(255).required(),
     name_ar: Joi.string().max(255),
-    country_id: Joi.number().required(),
+    country_id: Joi.string().required(),
 });
 const citiesSchema = Joi.object({
     name: Joi.string().max(255).required(),
     name_ar: Joi.string().max(255),
-    state_id: Joi.number().required(),
+    state_id: Joi.string().required(),
 });
 //--------------------Country---------------------------------------
 export const getAllCountries = async (req, res, next) => {
