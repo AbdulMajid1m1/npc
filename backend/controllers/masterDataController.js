@@ -1,7 +1,7 @@
 import prisma from "../prismaClient.js";
 import Joi from "joi";
 import { gs1Prisma } from "../prismaMultiClinets.js";
-
+import { createError } from '../utils/createError.js';
 const unitSchema = Joi.object({
     unit_code: Joi.string().max(255).required(),
     unit_name: Joi.string().max(255).required(),
