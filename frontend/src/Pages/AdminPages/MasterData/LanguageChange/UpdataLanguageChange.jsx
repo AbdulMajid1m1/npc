@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { backendUrl } from '../../../../utils/config';
+import { baseUrlnpc } from '../../../../utils/config';
 
 const UpdataLanguageChange = ({ isVisible, setVisibility, refreshBrandData }) => {
     // get this session data
@@ -23,7 +23,7 @@ const UpdataLanguageChange = ({ isVisible, setVisibility, refreshBrandData }) =>
         setLoading(true);
 
         try {
-            const response = await axios.put(backendUrl + `/api/translations/${updateBrandData?.id}`, {
+            const response = await axios.put(baseUrlnpc + `/master-data/translations_put/${updateBrandData?.id}`, {
                 'value': category_name_ar,
             });
 

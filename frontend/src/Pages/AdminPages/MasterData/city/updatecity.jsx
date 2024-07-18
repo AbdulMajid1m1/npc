@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -28,7 +28,7 @@ const Updatecity = ({ isVisible, setVisibility, refreshBrandData }) => {
   useEffect(() => {
     const getDocuments = async () => {
       try {
-        const response = await newRequest.get('/address/getAllStatesName');
+        const response = await newRequestnpc.get("/master-data/getAllStates");
         // console.log(response.data);
         setDocuments(response.data);
       } catch (error) {
@@ -51,10 +51,10 @@ const Updatecity = ({ isVisible, setVisibility, refreshBrandData }) => {
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/address/updateCities/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updateCities/${updateBrandData?.id}`, {
         name: name,
         name_ar: name_ar,
-        state_id: Number(selectedDocuments?.id),
+        state_id: selectedDocuments?.id,
       });
 
       toast.success(response?.data?.message || `${t('Cities')} ${t('has been')} ${t('Updated Successfully')}.`, {

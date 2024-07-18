@@ -28,6 +28,7 @@ import country from "../../Images/country.png";
 import Crnumber from "../../Images/Crnumber.png";
 import documentIcon from "../../Images/document.png";
 import newslettericon from "../../Images/newslettericon.png";
+import EmailConfigure from "../../Images/emailicons.png";
 
 import { useTranslation } from "react-i18next";
 
@@ -273,6 +274,33 @@ function SideNav({ children }) {
                         }`}
                       >
                         <ul className={`text-sm`}>
+                          <li>
+                            <Link
+                              to="/EmailConfigure"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={EmailConfigure}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-xl">
+                                  {t("Email Settings")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
                           <li>
                             <Link
                               to="/Language/Dynamic"
@@ -572,7 +600,7 @@ function SideNav({ children }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span className="text-secondary font-semibold text-xl">
-                                  {t("UNSPCS")} 
+                                  {t("UNSPCS")}
                                 </span>
                               </div>
                             </Link>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import { Autocomplete, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 const AddState = ({ isVisible, setVisibility, refreshBrandData }) => {
@@ -16,7 +16,7 @@ const AddState = ({ isVisible, setVisibility, refreshBrandData }) => {
   useEffect(() => {
     const getDocuments = async () => {
       try {
-        const response = await newRequest.get('/address/getAllCountriesName');
+        const response = await newRequestnpc.get('/master-data/getAllCountries');
         // console.log(response.data);
         setDocuments(response.data);
       } catch (error) {
@@ -37,7 +37,7 @@ const AddState = ({ isVisible, setVisibility, refreshBrandData }) => {
   const handleAddCompany = async () => {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post("/address/createStates/", {
+      const response = await newRequestnpc.post("/master-data/createStates/", {
         name: name,
         country_id: SelectedCountryId,
         name_ar: name_ar,

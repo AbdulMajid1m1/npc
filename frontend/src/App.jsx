@@ -36,6 +36,7 @@ import Country from "./Pages/AdminPages/MasterData/country/country";
 import Crnumber from "./Pages/AdminPages/MasterData/crnumber/crnumber";
 import Document_type from "./Pages/AdminPages/MasterData/documentype/documenttype";
 import AdminNewsLetter from "./Pages/AdminPages/MasterData/NewsLetter/NewsLetter.jsx";
+import EmailConfigure from "./Pages/AdminPages/MasterData/EmailSettings/EmailConfigure.jsx";
 
 const App = () =>
 {
@@ -98,6 +99,7 @@ const App = () =>
                 <Route path="crnumber" element={<Crnumber />} />
                 <Route path="documenttype" element={<Document_type />} />
                 <Route path="news-letter" element={<AdminNewsLetter />} />
+                <Route path="EmailConfigure" element={<EmailConfigure />} />
               </Routes>
             </BrowserRouter>
           </div>

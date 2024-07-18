@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -35,7 +35,7 @@ const Updatehscode = ({ isVisible, setVisibility, refreshBrandData }) =>
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/updateHsCode/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updateHsCode/${updateBrandData?.id}`, {
         CNKEY: CNKEY,
         HSCODES: HSCODES,
         DescriptionEN: DescriptionEN,

@@ -8,7 +8,7 @@ import DataTable from "../../../../components/Datatable/Datatable";
 import AddLanguageChange from './AddLanguageChange';
 import UpdataLanguageChange from './UpdataLanguageChange';
 import axios from 'axios';
-import { backendUrl } from "../../../../utils/config";
+import { baseUrlnpc } from "../../../../utils/config";
 import SideNav from '../../../../components/Sidebar/SideNav';
 const LaanguageChange = () => {
     const { t, i18n } = useTranslation();
@@ -32,7 +32,7 @@ const LaanguageChange = () => {
 
     const refreshcitiesData = async () => {
         try {
-            const response = await axios.get(backendUrl + "/api/translations_table");
+            const response = await axios.get(baseUrlnpc + "/master-data/translations_table");
             // const dataArray = Object.entries(response.data);
             const resdata = response?.data;
             setData(resdata);

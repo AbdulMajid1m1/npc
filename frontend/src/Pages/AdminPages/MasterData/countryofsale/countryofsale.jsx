@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import visitFrontend from "../../../Images/visitFrontend.png"
-// import profileICon from "../../../Images/profileICon.png"
 import DataTable from '../../../../components/Datatable/Datatable'
 import { useNavigate } from 'react-router-dom'
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { counrty_sales, paymentSlipColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import {newRequestnpc} from '../../../../utils/userRequest'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import EditIcon from "@mui/icons-material/Edit";
@@ -18,8 +16,6 @@ import * as XLSX from 'xlsx';
 import { CSVLink } from "react-csv";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { I18nextProvider, useTranslation } from "react-i18next";
-import i18n from "../../../../i18n";
-import LanguageSwitcher from "../../../../switer";
 import SideNav from '../../../../components/Sidebar/SideNav';
 
 const CountryofSales = () =>
@@ -55,7 +51,7 @@ const CountryofSales = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/getAllcountryofsale",);
+        const response = await newRequestnpc.get("/master-data/getAllcountryofsale",);
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -73,7 +69,7 @@ const CountryofSales = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAllcountryofsale",);
+      const response = await newRequestnpc.get("/master-data/getAllcountryofsale",);
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -104,7 +100,7 @@ const CountryofSales = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deletecountryofsale/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deletecountryofsale/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('counrty of sale')} ${t('Delete')} ${t('successfully')}!`, {
               position: "top-right",
@@ -179,7 +175,7 @@ const CountryofSales = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/createcountryofsale`, {
+          newRequestnpc.post(`/master-data/createcountryofsale`, {
             Alpha2: item.Alpha2, // Adjust property names as needed
             Alpha3: item.Alpha3,
             country_code_numeric3: item.country_code_numeric3,

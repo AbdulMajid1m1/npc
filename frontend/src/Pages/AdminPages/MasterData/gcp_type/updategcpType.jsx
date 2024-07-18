@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -29,7 +29,7 @@ const UpdategcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/updategpctype/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updategpctype/${updateBrandData?.id}`, {
         gcp_code: gcp_code,
         gcp_description: gcp_description,
       });
@@ -50,6 +50,7 @@ const UpdategcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
       handleCloseUpdatePopup();
 
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message || 'Something went wrong!', {
         position: "top-right",
         autoClose: 5000,

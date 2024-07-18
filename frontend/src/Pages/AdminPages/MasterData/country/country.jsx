@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import DataTable from '../../../../components/Datatable/Datatable'
 import { useNavigate } from 'react-router-dom'
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { country__, paymentSlipColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import {newRequestnpc} from '../../../../utils/userRequest'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -46,7 +45,7 @@ const Country = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/address/getAllCountries",);
+        const response = await newRequestnpc.get("/master-data/getAllCountries",);
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -64,7 +63,7 @@ const Country = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/address/getAllCountries",);
+      const response = await newRequestnpc.get("/master-data/getAllCountries");
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -91,7 +90,7 @@ const Country = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/address/deleteCountries/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteCountries/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('Country')}  ${t('has been deleted')} ${t('successfully')}!`, {
               position: "top-right",
@@ -170,7 +169,7 @@ const Country = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/address/createCountries`, {
+          newRequestnpc.post(`/master-data/createCountries`, {
             name_en: item.name_en, // Adjust property names as needed
             name_ar: item.name_ar,
             country_code: item.country_code,

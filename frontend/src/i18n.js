@@ -3,9 +3,7 @@ import {
   initReactI18next
 } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import enTranslation from './english.json';
-import arTranslation from './arabic.json';
-import { backendUrl } from './utils/config';
+import { baseUrlnpc } from './utils/config';
 
 const storedLanguage = sessionStorage.getItem('selectedLanguaged');
 const initialLanguage = storedLanguage || 'ar';
@@ -18,7 +16,7 @@ const dynamicTranslations = {
 // Function to fetch translations
 const fetchTranslations = async () => {
   try {
-    const response = await fetch(backendUrl + '/api/translations');
+    const response = await fetch(baseUrlnpc + '/master-data/translations');
     const data = await response.json();
     if (data) {
       const dataArray = Object.entries(data);
