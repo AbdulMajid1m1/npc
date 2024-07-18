@@ -7329,7 +7329,23 @@ export const memberActivityReportColumn = (t, i18n) => [
 ];
 
 
-
+export const newsLetterColumn = (t, i18n) => [
+  {
+    field: "email",
+    headerName: t("Email"),
+    width: 280,
+  },
+  {
+    field: "createdAt",
+    headerName: t("Created At"),
+    width: 180,
+    type: "dateTime",
+    valueGetter: (params) => {
+      // Convert the string date to a Date object
+      return params.value ? new Date(params.value) : null;
+    },
+  },
+];
 
 export const expiredMemberColumn = (t, i18n) => [
   // {
