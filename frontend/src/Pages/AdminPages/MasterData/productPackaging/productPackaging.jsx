@@ -14,7 +14,7 @@ import * as XLSX from 'xlsx';
 import { CSVLink } from "react-csv";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { I18nextProvider, useTranslation } from "react-i18next";
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 const ProductPackaging = () =>
 {
   const { t, i18n } = useTranslation();
@@ -210,7 +210,7 @@ const ProductPackaging = () =>
   };
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -339,7 +339,7 @@ const ProductPackaging = () =>
             />
           )}
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import AddLanguageChange from './AddLanguageChange';
 import UpdataLanguageChange from './UpdataLanguageChange';
 import axios from 'axios';
 import { backendUrl } from "../../../../utils/config";
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 const LaanguageChange = () => {
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
@@ -64,7 +64,7 @@ const LaanguageChange = () => {
    
     return (
       <div>
-        <SideNav>
+        {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0  pt-4">
@@ -121,7 +121,7 @@ const LaanguageChange = () => {
                     <UpdataLanguageChange isVisible={isUpdatePopupVisible} setVisibility={setUpdatePopupVisibility} refreshBrandData={refreshcitiesData} />
                 )}
         </div>
-        </SideNav>
+        {/* </SideNav> */}
       </div>
     );
 }

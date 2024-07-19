@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import logo from "../../../Images/logo.png";
 import { QRCodeSVG } from 'qrcode.react'
 import { DataTableContext } from '../../../Contexts/DataTableContext';
-import DashboardRightHeader from '../../../components/DashboardRightHeader/DashboardRightHeader';
+// import DashboardRightHeader from '../../../components/DashboardRightHeader/DashboardRightHeader';
 import newRequest from '../../../utils/userRequest';
 import MapEvents from '../../../components/Maps/MapEvents';
 import { toast } from 'react-toastify';
@@ -163,19 +163,7 @@ const GLN = () => {
   return (
     <div>
 
-      {message && <CustomSnakebar message={message} severity="success" onClose={resetSnakeBarMessages} />}
-      {error && <CustomSnakebar message={error} severity="error" onClose={resetSnakeBarMessages} />}
-
-      <div className={`p-0 h-full ${i18n.language === 'ar' ? 'sm:mr-72' : 'sm:ml-72'}`}>
-        {/* <div className='h-auto w-full'>
-          <div className='h-16 w-full shadow-xl flex justify-start items-center px-5 border-l-2 border-t-2 border-r-2 border-[#e49515]'>
-            <p className='sm:text-2xl text-sm font-body'>View GLN</p>
-          </div>
-        </div> */}
-        <div>
-          <DashboardRightHeader title={`${t('GLN')}`} />
-        </div>
-
+      <div className={`p-0 h-full ${i18n.language === 'ar' ? 'sm:mr-0' : 'sm:ml-0'}`}>
         <div className='flex justify-center items-center'>
           <div className="h-auto w-[97%] px-0 pt-4">
             <div className="h-auto w-full p-0 bg-white shadow-xl rounded-md">

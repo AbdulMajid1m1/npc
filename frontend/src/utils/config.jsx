@@ -1,4 +1,5 @@
-export const baseUrl = 'http://localhost:3091/api';
+// export const baseUrl = 'http://localhost:3091/api';
+export const baseUrl = 'http://localhost:3082/api';
 export const phpUrl = 'https://gs1ksa.org/api';
 
 export const baseUrlnpc = "http://localhost:3082/api";

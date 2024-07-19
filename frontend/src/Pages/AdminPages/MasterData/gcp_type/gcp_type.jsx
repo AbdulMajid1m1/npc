@@ -20,7 +20,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 
 const Gcp_type = () =>
 {
@@ -218,7 +218,7 @@ const Gcp_type = () =>
   };
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -327,7 +327,7 @@ const Gcp_type = () =>
             />
           )}
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }

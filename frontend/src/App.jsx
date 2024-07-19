@@ -1,12 +1,7 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import Sidebar from "./components/Sidebar/Sidebar";
+import React, { useState } from "react";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import DataTableProvider from "./Contexts/DataTableContext";
 import GTIN from "./Pages/MemberPages/GTIN/GTIN";
-import GTINAddProducts from "./Pages/MemberPages/GTINAddProducts/GTINAddProducts";
-import GTINUpdateProducts from "./Pages/MemberPages/GTINAddProducts/GTINUpdateProducts";
-import GTINViewProduct from "./Pages/MemberPages/GTINAddProducts/GTINViewProduct";
-import MapProvider from "./Contexts/EventMapContext";
 import { LanguageProvider } from "./Contexts/LanguageContext.jsx";
 import MemberLogin from "./Pages/MemberPages/MemberLogin/EmailAddress/MemberLogin.jsx";
 import SelectGln from "./Pages/MemberPages/MemberLogin/EmailAddress/SelectGln.jsx";
@@ -15,11 +10,11 @@ import ItemSearchScreen from "./Pages/MemberPages/ItemSearchScreen/ItemSearchScr
 import StatusSearchScreen from "./Pages/MemberPages/StatusSearchScreen/StatusSearchScreen.jsx";
 import AdvanceSearch from "./Pages/MemberPages/StatusSearchScreen/AdvanceSearch.jsx";
 import SearchProfile from "./Pages/MemberPages/StatusSearchScreen/SearchProfile.jsx";
-import LaanguageChange from "./Pages/AdminPages/MasterData/LanguageChange/LaanguageChange"
+import LaanguageChange from "./Pages/AdminPages/MasterData/LanguageChange/LaanguageChange";
 import Users from "./Pages/AdminPages/MasterData/Users/Users";
 import AddUsers from "./Pages/AdminPages/MasterData/Users/AddUsers";
 import UpdateUsers from "./Pages/AdminPages/MasterData/Users/UpdateUsers";
-import Roles from "./Pages/AdminPages/MasterData/Roles/Roles"
+import Roles from "./Pages/AdminPages/MasterData/Roles/Roles";
 import AddRoles from "./Pages/AdminPages/MasterData/Roles/AddRoles";
 import UpdateRoles from "./Pages/AdminPages/MasterData/Roles/UpdateRoles";
 import Units from "./Pages/AdminPages/MasterData/Units/Units.jsx";
@@ -36,74 +31,188 @@ import Country from "./Pages/AdminPages/MasterData/country/country";
 import Crnumber from "./Pages/AdminPages/MasterData/crnumber/crnumber";
 import Document_type from "./Pages/AdminPages/MasterData/documentype/documenttype";
 import AdminNewsLetter from "./Pages/AdminPages/MasterData/NewsLetter/NewsLetter.jsx";
+import SideNav from "./components/Sidebar/SideNav.jsx";
+import HeaderChange from "./components/Header/HeaderChange.jsx";
+import GLN from "./Pages/MemberPages/GLN/GLN.jsx";
+import AdminSidebar from "./components/AdminSidebar/AdminSidebar.jsx";
+import Dashboard from "./Pages/AdminPages/Dashboard/Dashboard.jsx";
+import AdminLogin from "./Pages/AdminPages/AdminLogin/AdminLogin.jsx";
 
-const App = () =>
-{
-  // const MainLayout = ({ children }) =>
-  // {
-  //   return (
-  //     <div className="main-layout-container">
-  //       <Sidebar />
-  //       <span className="right-layout">{children}</span>
-  //     </div>
-  //   );
-  // };
+const App = () => {
+  const MainLayout = ({ children }) => {
+    const [isOpen, setIsOpen] = useState(false);
 
+    const toggleSideNav = () => {
+      setIsOpen(!isOpen);
+    };
+
+    return (
+      <div className="main-layout-container">
+        <SideNav isOpen={isOpen} toggleSideNav={toggleSideNav} />
+        <div
+          className={`transition-all duration-300 ${
+            isOpen ? "lg:ml-[300px]" : "lg:ml-0"
+          }`}
+        >
+          {children}
+        </div>
+      </div>
+    );
+  };
+
+  const UserLayout = () => {
+    return (
+      <div>
+        <div className="sticky top-0 z-50 bg-white">
+          <HeaderChange />
+        </div>
+        <main className="mx-auto flex max-w-[1760px] flex-col justify-center">
+          <Outlet /> {/* Nested routes will render here */}
+        </main>
+      </div>
+    );
+  };
+
+  const AdminMainLayout = ({ children }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleSideNav = () => {
+      setIsOpen(!isOpen);
+    };
+
+    return (
+      <div className="main-layout-container">
+        <AdminSidebar isOpen={isOpen} toggleSideNav={toggleSideNav} />
+        <div
+          className={`transition-all duration-300 ${
+            isOpen ? "lg:ml-[300px]" : "lg:ml-0"
+          }`}
+        >
+          {children}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
-      {/* <AuthProvider> */}
       <LanguageProvider>
         <DataTableProvider>
           <div>
             <BrowserRouter>
+              <Routes>  
+                <Route element={<UserLayout />}>
+                  <Route path="/" element={<MemberLogin />} />
+                  <Route path="/select-gln" element={<SelectGln />} />
+
+                  <Route
+                      path="/admin-login"
+                      element={
+                          <AdminLogin />
+                      }
+                    />
+                </Route>
+              </Routes>
               <Routes>
-                <Route path="/" element={<MemberLogin />} />
-                <Route path="/select-gln" element={<SelectGln />} />
-
-                <Route path="dashboard" element={<MemberNewDashboard />} />
-                <Route path="gtin" element={<GTIN />} />
+                {/* Member Routes */}
                 <Route
-                  path="Item-Search-Screen"
-                  element={<ItemSearchScreen />}
+                  path="/member/*"
+                  element={
+                    <MainLayout>
+                      <Routes>
+                        <Route
+                          path="dashboard"
+                          element={<MemberNewDashboard />}
+                        />
+                        <Route path="gtin" element={<GTIN />} />
+                        <Route path="gln" element={<GLN />} />
+                        <Route
+                          path="Item-Search-Screen"
+                          element={<ItemSearchScreen />}
+                        />
+                        <Route
+                          path="Status-Search-Screen"
+                          element={<StatusSearchScreen />}
+                        />
+                        <Route
+                          path="advance-search"
+                          element={<AdvanceSearch />}
+                        />
+                        <Route
+                          path="search-profile"
+                          element={<SearchProfile />}
+                        />
+                      </Routes>
+                    </MainLayout>
+                  }
                 />
+              </Routes>
+
+              <Routes>
+                {/* Admin Routes */}
                 <Route
-                  path="Status-Search-Screen"
-                  element={<StatusSearchScreen />}
+                  path="/admin/*"
+                  element={
+                    <AdminMainLayout>
+                      <Routes>
+                        <Route path="dashboard" element={<Dashboard />} />
+                        {/* Master Data */}
+                        <Route
+                          path="Language/Dynamic"
+                          element={<LaanguageChange />}
+                        />
+                        <Route path="Users" element={<Users />} />
+                        <Route path="add-users" element={<AddUsers />} />
+                        <Route
+                          path="update-users/:id"
+                          element={<UpdateUsers />}
+                        />
+
+                        <Route path="Role" element={<Roles />} />
+                        <Route path="add-roles" element={<AddRoles />} />
+                        <Route
+                          path="update-roles/:id"
+                          element={<UpdateRoles />}
+                        />
+
+                        <Route path="Units" element={<Units />} />
+                        <Route path="Documents" element={<Documents />} />
+                        <Route
+                          path="ProductPackaging"
+                          element={<ProductPackaging />}
+                        />
+                        <Route
+                          path="Other_products"
+                          element={<Other_products />}
+                        />
+                        <Route path="Gcp_type" element={<Gcp_type />} />
+                        <Route
+                          path="CountryofSales"
+                          element={<CountryofSales />}
+                        />
+                        <Route path="Hscode" element={<Hscode />} />
+                        <Route path="UNSPCS" element={<UNSPCS />} />
+                        <Route path="Cities" element={<Cities />} />
+                        <Route path="State" element={<State />} />
+                        <Route path="Country" element={<Country />} />
+                        <Route path="crnumber" element={<Crnumber />} />
+                        <Route
+                          path="documenttype"
+                          element={<Document_type />}
+                        />
+                        <Route
+                          path="news-letter"
+                          element={<AdminNewsLetter />}
+                        />
+                      </Routes>
+                    </AdminMainLayout>
+                  }
                 />
-                <Route path="advance-search" element={<AdvanceSearch />} />
-                <Route path="search-profile" element={<SearchProfile />} />
-
-                {/* Master Data */}
-                <Route path="Language/Dynamic" element={<LaanguageChange />} />
-                <Route path="Users" element={<Users />} />
-                <Route path="add-users" element={<AddUsers />} />
-                <Route path="update-users/:id" element={<UpdateUsers />} />
-
-                <Route path="Role" element={<Roles />} />
-                <Route path="add-roles" element={<AddRoles />} />
-                <Route path="update-roles/:id" element={<UpdateRoles />} />
-
-                <Route path="Units" element={<Units />} />
-                <Route path="Documents" element={<Documents />} />
-                <Route path="ProductPackaging" element={<ProductPackaging />} />
-                <Route path="Other_products" element={<Other_products />} />
-                <Route path="Gcp_type" element={<Gcp_type />} />
-                <Route path="CountryofSales" element={<CountryofSales />} />
-                <Route path="Hscode" element={<Hscode />} />
-                <Route path="UNSPCS" element={<UNSPCS />} />
-                <Route path="Cities" element={<Cities />} />
-                <Route path="State" element={<State />} />
-                <Route path="Country" element={<Country />} />
-                <Route path="crnumber" element={<Crnumber />} />
-                <Route path="documenttype" element={<Document_type />} />
-                <Route path="news-letter" element={<AdminNewsLetter />} />
               </Routes>
             </BrowserRouter>
           </div>
         </DataTableProvider>
       </LanguageProvider>
-      {/* </AuthProvider> */}
     </>
   );
 };

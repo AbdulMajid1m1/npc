@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import gs1v2logo from "../../../Images/gs1logowhite.png"
-import SideNav from '../../../components/Sidebar/SideNav';
+// import SideNav from '../../../components/Sidebar/SideNav';
 import { I18nextProvider, useTranslation } from "react-i18next";
 
 const MemberNewDashboard = () => {
@@ -12,8 +12,8 @@ const MemberNewDashboard = () => {
   return (
     <>
     {/* <DashboardHeader /> */}
-    <SideNav>
-    <div className='mb-20 bg-dashboard-color'>
+    {/* <SideNav> */}
+    <div className='mb-20 bg-dashboard-color p-3'>
         {/* dashboard Data */}
         <div className='3xl:h-32 2xl:h-32 xl:h-32 lg:h-32 md:h-32 h-auto w-full flex sm:justify-start items-center rounded-md bg-[#FFFFFF] shadow-xl mt-3'>
           <div className='ml-3 flex sm:justify-start justify-center items-center flex-wrap 3xl:gap-24 2xl:gap-24 xl:gap-24 lg:gap-24 md:gap-10 gap-4'>
@@ -147,7 +147,7 @@ const MemberNewDashboard = () => {
 
         </div>
     </div>
-    </SideNav>
+    {/* </SideNav> */}
     </>
   )
 }

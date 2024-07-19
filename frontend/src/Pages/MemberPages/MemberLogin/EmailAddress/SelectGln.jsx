@@ -31,14 +31,14 @@ const SelectGln = () => {
     setLoading(true);
     
     try {
-      const response = await newRequest.post("/loginGtrackgln", {
+      const response = await newRequest.post("/users/verifyGln", {
         user_id: glnData?.user_id,
         GLNBarcodeNumber: selectedGlnList?.gln,
         // email: glnData?.email,
         // password: glnData?.password,
       });
         // console.log(response?.data);
-        navigate("/dashboard");
+        navigate("/member/dashboard");
         toast.success(response?.data?.message || "Login Successful");
     } catch (error) {
       console.log(error);
@@ -49,9 +49,9 @@ const SelectGln = () => {
 
   return (
     <div>
-      <div className="sticky top-0 z-50 bg-white">
+      {/* <div className="sticky top-0 z-50 bg-white">
         <HeaderChange />
-      </div>
+      </div> */}
 
       <div className="flex justify-center items-center mt-5 mb-10">
         <div className="sm:h-[725px] h-auto sm:py-0 py-10 w-[85%] border border-primary rounded-md shadow-xl">
