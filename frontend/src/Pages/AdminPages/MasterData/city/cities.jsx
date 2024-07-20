@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { city } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import AddCity from './AddCity';
@@ -21,7 +21,6 @@ const Cities = () =>
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const [brandsData, setBrandsData] = useState([]);
-
   const [isCreatePopupVisible, setCreatePopupVisibility] = useState(false);
 
   const handleShowCreatePopup = () =>
@@ -40,11 +39,11 @@ const Cities = () =>
   {
     try {
       // Fetch cities data
-      const citiesResponse = await newRequest.get("/address/getAllCities");
+      const citiesResponse = await newRequestnpc.get("/master-data/getAllCities");
       const citiesData = citiesResponse?.data || [];
 
       
-      const statesResponse = await newRequest.get('/address/getAllStatesName');
+      const statesResponse = await newRequestnpc.get('/master-data/getAllStates');
       const statesData = statesResponse?.data || [];
 
       
@@ -75,7 +74,7 @@ const Cities = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/address/getAllCities",);
+      const response = await newRequestnpc.get("/master-data/getAllCities");
 
    
       setData(response?.data || []);
@@ -101,7 +100,7 @@ const Cities = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/address/deleteCities/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteCities/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('Cities')}  ${t('has been deleted')} ${t('successfully')}!`, {
               position: "top-right",
@@ -174,7 +173,7 @@ const Cities = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/address/createCities`, {
+          newRequestnpc.post(`/master-data/createCities`, {
             name: item.name, // Adjust property names as needed
             state_id: 0
           })

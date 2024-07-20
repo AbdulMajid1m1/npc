@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -26,7 +26,7 @@ const Updatestate = ({ isVisible, setVisibility, refreshBrandData }) => {
   useEffect(() => {
     const getDocuments = async () => {
       try {
-        const response = await newRequest.get('/address/getAllCountriesName');
+        const response = await newRequestnpc.get('/master-data/getAllCountries');
         // console.log(response.data);
         setDocuments(response.data);
       } catch (error) {
@@ -47,9 +47,9 @@ const Updatestate = ({ isVisible, setVisibility, refreshBrandData }) => {
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/address/updateStates/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updateStates/${updateBrandData?.id}`, {
         name: name,
-        country_id: Number(selectedDocuments?.id),
+        country_id: selectedDocuments?.id,
         name_ar: name_ar,
       });
 

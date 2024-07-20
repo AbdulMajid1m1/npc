@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import { useTranslation } from 'react-i18next';
 
 const Addcountry = ({ isVisible, setVisibility, refreshBrandData }) =>
@@ -20,7 +20,7 @@ const Addcountry = ({ isVisible, setVisibility, refreshBrandData }) =>
   {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post('/address/createCountries/', {
+      const response = await newRequestnpc.post('/master-data/createCountries/', {
         name_en: name_en,
         name_ar: name_ar,
         country_code: country_code,

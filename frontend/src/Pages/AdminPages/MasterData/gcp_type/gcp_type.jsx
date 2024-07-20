@@ -8,7 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { Gcp_types, paymentSlipColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import {newRequestnpc} from '../../../../utils/userRequest'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -55,7 +55,7 @@ const Gcp_type = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/getAllgpctype",);
+        const response = await newRequestnpc.get("/master-data/getallgpctype");
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -71,7 +71,7 @@ const Gcp_type = () =>
   }, []); // Empty array dependency ensures this useEffect runs once on component mount
 
   // const { isLoading, error, data, isFetching } = useQuery("fetchPaymentSlip", async () => {
-  //   const response = await newRequest.get("/bankslip",);
+  //   const response = await newRequestnpc.get("/bankslip",);
   //   return response?.data || [];
   //   console.log(response.data);
 
@@ -79,7 +79,7 @@ const Gcp_type = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAllgpctype",);
+      const response = await newRequestnpc.get("/master-data/getallgpctype");
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -106,7 +106,7 @@ const Gcp_type = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deletegpctype/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deletegpctype/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('GPC Type')} ${t('Delete')} ${t('successfully')}!`, {
               position: "top-right",
@@ -185,7 +185,7 @@ const Gcp_type = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/creategpctype`, {
+          newRequestnpc.post(`/master-data/creategpctype`, {
             gcp_description: item.gcp_description, // Adjust property names as needed
             gcp_code: item.gcp_code,
           })

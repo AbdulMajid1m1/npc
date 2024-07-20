@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
+import helmet from 'helmet';
+import morgan from'morgan';
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import rootRoute from "./routes/RootRoute.js";
@@ -69,7 +71,8 @@ app.use(express.json());
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(helmet()); // Set security-related HTTP headers
+app.use(morgan('dev')); // HTTP request logger
 // set the view engine to ejs
 app.set("view engine", "ejs");
 
@@ -104,7 +107,9 @@ app.get("/test", async (req, res) => {
     console.error("Error running daily reminder email task:", error);
   }
 });
-
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});
 app.get("/renderGlnCertificate", async (req, res) => {
   // Define your dummy data here
   const qrCodeDataURL = await QRCode.toDataURL("http://www.gs1.org.sa");

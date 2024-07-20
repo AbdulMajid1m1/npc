@@ -349,7 +349,7 @@ model gtin_subscription_histories {
 }
 
 model gcp_types {
-  id              BigInt    @id(map: "PK__gcp_type__3213E83FD86DB395") @default(autoincrement())
+   id             String    @id @default(cuid())
   gcp_code        String    @db.NVarChar(255)
   gcp_description String?   @db.NVarChar(Max)
   created_at      DateTime? @db.DateTime
@@ -390,7 +390,7 @@ model cities {
   id         String   @id @default(cuid())
   name       String?  @db.NVarChar(Max)
   name_ar    String?  @db.NVarChar(Max)
-  state_id   Int?
+  state_id   String?
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
@@ -399,7 +399,7 @@ model states {
   id         String   @id @default(cuid())
   name       String?  @db.NVarChar(Max)
   name_ar    String?  @db.NVarChar(Max)
-  country_id Int?
+  country_id String?
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }

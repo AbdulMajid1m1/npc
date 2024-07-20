@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import { newRequestnpc } from "../../../../utils/userRequest";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';
@@ -32,7 +32,7 @@ const Updateunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
     setLoading(true);
 
     try {
-      const response = await newRequest.put(`/updateUNSPSC/${updateBrandData?.id}`, {
+      const response = await newRequestnpc.put(`/master-data/updateUNSPSC/${updateBrandData?.id}`, {
         commodity: Number(commodity),
         title: title,
         definition: definition,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
@@ -17,7 +17,7 @@ const AdddcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
   const handleAddCompany = async () => {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post('/creategpctype', {
+      const response = await newRequestnpc.post("/master-data/creategpctype", {
         gcp_code: gcp_code,
         gcp_description: gcp_description,
       });

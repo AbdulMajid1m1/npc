@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
@@ -21,7 +21,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
   const handleAddCompany = async () => {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post("/createotherProduct/", {
+      const response = await newRequestnpc.post("/master-data/createotherproduct/", {
         product_name: product_name,
         name_ar: name_ar,
         total_no_of_barcodes: total_no_of_barcodes,

@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { product_packaging } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import {newRequestnpc} from '../../../../utils/userRequest'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import Addproduct from './addproductpack';
@@ -36,7 +36,7 @@ const ProductPackaging = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/getAllproductPackag",);
+        const response = await newRequestnpc.get("/master-data/getallproductPackagSchema",);
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -52,7 +52,7 @@ const ProductPackaging = () =>
   }, []); // Empty array dependency ensures this useEffect runs once on component mount
 
   // const { isLoading, error, data, isFetching } = useQuery("fetchPaymentSlip", async () => {
-  //   const response = await newRequest.get("/bankslip",);
+  //   const response = await newRequestnpc.get("/bankslip",);
   //   return response?.data || [];
   //   console.log(response.data);
 
@@ -60,7 +60,7 @@ const ProductPackaging = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAllproductPackag",);
+      const response = await newRequestnpc.get("/master-data/getallproductPackagSchema",);
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -101,7 +101,7 @@ const ProductPackaging = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deleteproductPackag/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteproductPackagSchema/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('Product Package')} ${t('Delete')} ${t('successfully')}!`, {
               position: "top-right",
@@ -113,8 +113,7 @@ const ProductPackaging = () =>
               progress: undefined,
               theme: "light",
             });
-
-
+           
             // filter out the deleted user from the data
             const filteredData = brandsData.filter((item) => item?.id !== row?.id);
             setBrandsData(filteredData);
@@ -134,7 +133,6 @@ const ProductPackaging = () =>
 
           }
         } catch (error) {
-          // Handle any error that occurred during the deletion
           console.error("Error deleting user:", error);
           toast.error(`${t('Product Package')} ${t('has been not deleted')}!`, {
             position: "top-right",
@@ -176,7 +174,7 @@ const ProductPackaging = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/createproductpackag`, {
+          newRequestnpc.post(`/master-data/createProductPackag`, {
             name: item.name, // Adjust property names as needed
 
             status: 1

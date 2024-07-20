@@ -3,12 +3,125 @@ import express, { Router } from "express";
 const router = express.Router();
 import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     createdocument,getAllcr_documents,getcr_documentsById,updatecr_documents,deletecr_documents,
-    createdocumentType,getAlldocumentType,getAlldocumentTypename,updatedocumentType,deletedocumentType,getdocumentTypeById
+    createdocumentType,getAlldocumentType,getAlldocumentTypename,updatedocumentType,deletedocumentType,getdocumentTypeById,
+    createotherproduct,getAllotherproduct,getotherproductById,updateotherproduct,deleteotherproduct,
+    creategpctype,getAllgpctype,getgpctypeById,updategpctype,deletegpctype,
+    createProductPackag,getAllproductPackagSchema,getproductPackagSchemaById,updateproductPackagSchema,deleteproductPackagSchema,
+    createemailsetting,getAllemailsetting,getemailsettingById,updateemailsetting,deleteemailsetting,
+    createcountryofsale,getAllcountryofsale,getcountryof_saleById,updatecountryofsale,deletecountryofsale,
+    createHsCode,getAllHsCode,getHsCodeById,updateHsCode,deleteHsCode,
+    createUNSPSC,getAllUNSPSC,getUNSPSCById,updateUNSPSC,deleteUNSPSC,
+    getAllCountries,getAllCountriesName,createCountries,getCountriesById,updateCountries,deleteCountries,
+    getAllStates,getAllStatesName,createStates,getStatesById,updateStates,deleteStates,
+    getAllCities,createCities,getCitiesById,updateCities,deleteCities,
+    translations,translations_table,translations_put,translations_post
 
 } from "../controllers/masterDataController.js";
 
+//----------------------------translate----------------------------------------------------
+router.get('/translations', translations)
+router.get("/translations_table",translations_table)
+router.put("/translations_put/:id", translations_put)
+router.post("/translations_post", translations_post)
 
 
+
+
+//--------------------------------Cities--------------------------------
+
+router.post('/createCities', createCities)
+router.get('/getAllCities', getAllCities)
+router.get('/getCitiesById/:id', getCitiesById)
+router.put('/updateCities/:id', updateCities)
+router.delete('/deleteCities/:id', deleteCities)
+
+
+//----------------------------------state--------------------------------
+
+router.post('/createStates', createStates)
+router.get('/getAllStates', getAllStates)
+router.get('/getAllStatesName', getAllStatesName)
+router.get('/getStatesById/:id', getStatesById)
+router.put('/updateStates/:id', updateStates)
+router.delete('/deleteStates/:id', deleteStates)
+
+//----------------------------------Country--------------------------------
+
+router.post('/createCountries', createCountries)
+router.get('/getAllCountries', getAllCountries)
+router.get('/getAllCountriesName', getAllCountriesName)
+router.get('/getCountriesById/:id', getCountriesById)
+router.put('/updateCountries/:id', updateCountries)
+router.delete('/deleteCountries/:id', deleteCountries)
+//----------------------------------UNSPSC--------------------------------
+
+router.post('/createUNSPSC', createUNSPSC)
+router.get('/getAllUNSPSC', getAllUNSPSC)
+router.get('/getUNSPSCById/:id', getUNSPSCById)
+router.put('/updateUNSPSC/:id', updateUNSPSC)
+router.delete('/deleteUNSPSC/:id', deleteUNSPSC)
+
+
+
+//-----------------------------hscode-------------------------------------
+router.post('/createHsCode',createHsCode)
+router.get('/getAllHsCode', getAllHsCode)
+router.get('/getHsCodeById/:id', getHsCodeById)
+router.put('/updateHsCode/:id', updateHsCode)
+router.delete('/deleteHsCode/:id',deleteHsCode)
+
+
+//----------------------------------------------------------------countryofsale----------------
+
+router.post("/createcountryofsale", createcountryofsale);
+router.get("/getAllcountryofsale", getAllcountryofsale);
+router.get("/getcountryof_saleById/:id", getcountryof_saleById);
+router.put("/updatecountryofsale/:id", updatecountryofsale);
+router.delete("/deletecountryofsale/:id", deletecountryofsale);
+
+
+//--------------------------------createemailsetting------------------------------
+
+router.post('/createemailsetting', createemailsetting);
+router.get('/getAllemailsetting', getAllemailsetting)
+router.get('/getemailsettingById/:id', getemailsettingById)
+router.put("/updateemailsetting/:id", updateemailsetting)
+router.delete("/deleteemailsetting/:id", deleteemailsetting)
+
+
+
+
+
+//------------------------productpacakging----------------------------------
+
+router.post("/createProductPackag", createProductPackag);
+router.get("/getallproductPackagSchema", getAllproductPackagSchema);
+router.get("/getproductPackagSchemabyid/:id", getproductPackagSchemaById);
+router.put("/updateproductPackagSchema/:id", updateproductPackagSchema);
+router.delete("/deleteproductPackagSchema/:id", deleteproductPackagSchema);
+
+
+
+
+//------------------------------creategpctype------------------------------
+
+router.post("/creategpctype", creategpctype);
+router.get("/getallgpctype", getAllgpctype);
+router.get("/getgpctypebyid/:id", getgpctypeById);
+router.put("/updategpctype/:id", updategpctype);
+router.delete("/deletegpctype/:id", deletegpctype);
+
+
+//------------------------------Other_products----------------
+
+router.post("/createotherproduct", createotherproduct);
+router.get("/getallotherproduct", getAllotherproduct);
+router.get("/getotherproductbyid/:id", getotherproductById);
+router.put("/updateotherproduct/:id", updateotherproduct);
+router.delete("/deleteotherproduct/:id", deleteotherproduct);
+
+
+//------------------------------units
 router.post("/createunit", createunit);
 router.get("/getallunit", getAllunit);
 router.get("/getunitbyid/:id", getunitById);
