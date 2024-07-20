@@ -14,10 +14,31 @@ import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     getAllCountries,getAllCountriesName,createCountries,getCountriesById,updateCountries,deleteCountries,
     getAllStates,getAllStatesName,createStates,getStatesById,updateStates,deleteStates,
     getAllCities,createCities,getCitiesById,updateCities,deleteCities,
-    translations,translations_table,translations_put,translations_post
+    translations,translations_table,translations_put,translations_post,addAdmin,updateAdmin,getAllAdmins,deleteAdmin,createRole,
+    getRoles,updateRole,getRole,deleteRole
 
 } from "../controllers/masterDataController.js";
-
+//----------------------------Roles------------------------
+router.delete('/role/:id', deleteRole)
+router.get('/role/:id', getRole)
+router.put('/role/:id',updateRole )
+router.get('/role', getRoles)
+router.post("/role", createRole)
+//--------------------------admin-------------------------------------
+router.get("/admin", getAllAdmins)
+router.delete("/admin/:adminId", deleteAdmin)
+router.post("/admin",  upload([
+    {
+      name: "image",
+      path: "public/uploads/documents/adminProfilePictures",
+    },
+  ]), addAdmin)
+  router.put("/admin/:adminId", upload([
+    {
+      name: "image",
+      path: "public/uploads/documents/adminProfilePictures",
+    },
+  ]), updateAdmin)
 //----------------------------translate----------------------------------------------------
 router.get('/translations', translations)
 router.get("/translations_table",translations_table)
