@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-
+import { upload } from "../configs/multerConfig.js";
 const router = express.Router();
 import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     createdocument,getAllcr_documents,getcr_documentsById,updatecr_documents,deletecr_documents,
