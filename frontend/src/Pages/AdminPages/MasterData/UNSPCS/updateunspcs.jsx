@@ -99,7 +99,7 @@ const Updateunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setcommodity(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter commodity')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>
@@ -114,7 +114,7 @@ const Updateunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => settitle(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter title')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>
@@ -129,7 +129,7 @@ const Updateunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setdefinition(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter definition')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>
@@ -144,7 +144,7 @@ const Updateunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setaddedBy(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter addedBy')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>

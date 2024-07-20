@@ -83,7 +83,7 @@ const Addhscode = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={CNKEY}
                       onChange={(e) => setCNKEY(e.target.value)}
                       placeholder={t('Enter CNKEY')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -96,7 +96,7 @@ const Addhscode = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={HSCODES}
                       onChange={(e) => setHSCODES(e.target.value)}
                       placeholder={t('Enter HSCODES')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -109,7 +109,7 @@ const Addhscode = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={DescriptionEN}
                       onChange={(e) => setDescriptionEN(e.target.value)}
                       placeholder={t('Enter Description')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>

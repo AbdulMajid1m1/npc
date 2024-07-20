@@ -109,7 +109,7 @@ const Updatecrnumber = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={handleInputChange}
                       //   readOnly
                       placeholder={`${t('Enter')} ${t('Cr Number')} `}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                     {error && <p className="text-red-500 text-xs">{error}</p>}
@@ -125,7 +125,7 @@ const Updatecrnumber = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setactivity(e.target.value)}
                       //   readOnly
                       placeholder={`${t('Enter')} ${t('Cr Activity')} `}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
 
@@ -139,7 +139,7 @@ const Updatecrnumber = ({ isVisible, setVisibility, refreshBrandData }) => {
                       id="status"
                       value={status}
                       onChange={(e) => setstatus(e.target.value)}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     >
                       <option value="0">{t('Inactive')}</option>

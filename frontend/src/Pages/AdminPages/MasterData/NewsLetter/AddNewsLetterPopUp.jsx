@@ -91,7 +91,7 @@ const AddNewsLetterPopUp = ({
                       id="status"
                       value={slug}
                       onChange={(e) => setSlug(e.target.value)}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     >
@@ -122,7 +122,7 @@ const AddNewsLetterPopUp = ({
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                       placeholder={`${t("Enter")} ${t("Subject")}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -143,7 +143,7 @@ const AddNewsLetterPopUp = ({
                       value={emailBody}
                       onChange={(e) => setEmailBody(e.target.value)}
                       placeholder={`${t("Enter")} ${t("Email Body")}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />

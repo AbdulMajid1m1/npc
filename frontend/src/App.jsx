@@ -37,8 +37,11 @@ import GLN from "./Pages/MemberPages/GLN/GLN.jsx";
 import AdminSidebar from "./components/AdminSidebar/AdminSidebar.jsx";
 import Dashboard from "./Pages/AdminPages/Dashboard/Dashboard.jsx";
 import AdminLogin from "./Pages/AdminPages/AdminLogin/AdminLogin.jsx";
+import { useTranslation } from "react-i18next";
 
 const App = () => {
+  
+    const { t, i18n } = useTranslation();
   const MainLayout = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -51,8 +54,8 @@ const App = () => {
         <SideNav isOpen={isOpen} toggleSideNav={toggleSideNav} />
         <div
           className={`transition-all duration-300 ${
-            isOpen ? "lg:ml-[300px]" : "lg:ml-0"
-          }`}
+            isOpen ? `${i18n.language==='ar'?'lg:mr-[300px]':'lg:ml-[300px]'}` : "lg:ml-0"
+          } `}
         >
           {children}
         </div>
@@ -85,7 +88,7 @@ const App = () => {
         <AdminSidebar isOpen={isOpen} toggleSideNav={toggleSideNav} />
         <div
           className={`transition-all duration-300 ${
-            isOpen ? "lg:ml-[300px]" : "lg:ml-0"
+            isOpen ? `${i18n.language==='ar'?'lg:mr-[300px]':'lg:ml-[300px]'}` : "lg:ml-0"
           }`}
         >
           {children}

@@ -81,7 +81,7 @@ const Addunit = ({ isVisible, setVisibility, refreshBrandData }) =>
                       value={unit_code}
                       onChange={(e) => setunit_code(e.target.value)}
                       placeholder={t('Enter Unit code')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     />
                   </div>
 
@@ -93,7 +93,7 @@ const Addunit = ({ isVisible, setVisibility, refreshBrandData }) =>
                       value={unit_name}
                       onChange={(e) => setunit_name(e.target.value)}
                       placeholder={t('Enter Unit name')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     />
                   </div>
                 </div>

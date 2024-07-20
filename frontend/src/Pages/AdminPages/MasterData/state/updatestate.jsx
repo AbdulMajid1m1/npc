@@ -123,7 +123,7 @@ const Updatestate = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setname(e.target.value)}
                       //   readOnly
                       placeholder={`${t("Enter")} ${t("state name")}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -146,7 +146,7 @@ const Updatestate = ({ isVisible, setVisibility, refreshBrandData }) => {
                       placeholder={`${t("Enter")} ${t("State")} ${t(
                         "Name Arabic"
                       )}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
