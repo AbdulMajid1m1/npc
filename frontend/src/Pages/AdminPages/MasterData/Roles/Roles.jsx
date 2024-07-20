@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import newRequest from '../../../../utils/userRequest';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 
 const Roles = () => {
   const { t, i18n } = useTranslation();
@@ -94,7 +94,7 @@ useEffect(() => {
 
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -156,7 +156,7 @@ useEffect(() => {
             </div>
           </div>
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import newRequest from '../../../../utils/userRequest';
+import {newRequestnpc} from '../../../../utils/userRequest';
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
@@ -19,7 +19,7 @@ const Addhscode = ({ isVisible, setVisibility, refreshBrandData }) => {
   const handleAddCompany = async () => {
     //  integrate the post api in try catch blcck
     try {
-      const response = await newRequest.post('/createHsCode/', {
+      const response = await newRequestnpc.post("/master-data/createHsCode/", {
         CNKEY: CNKEY,
         HSCODES: HSCODES,
         DescriptionEN: DescriptionEN,

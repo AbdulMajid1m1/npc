@@ -48,6 +48,7 @@ const allowedOrigins = [
   "https://gs1ksa.org:83",
   "https://api.gs1ksa.org",
   "https://www.api.gs1ksa.org",
+  "http://gs1ksa.org:3087",
 ];
 
 app.use(

@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { Other_Products } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import {newRequestnpc} from '../../../../utils/userRequest'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ import * as XLSX from 'xlsx';
 import { CSVLink } from "react-csv";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { I18nextProvider, useTranslation } from "react-i18next";
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 
 const Other_products = () =>
 {
@@ -48,7 +48,7 @@ const Other_products = () =>
     const fetchData = async () =>
     {
       try {
-        const response = await newRequest.get("/getAllotherproduct",);
+        const response = await newRequestnpc.get("/master-data/getallotherproduct",);
 
         // console.log(response.data);
         setData(response?.data || []);
@@ -64,7 +64,7 @@ const Other_products = () =>
   }, []); // Empty array dependency ensures this useEffect runs once on component mount
 
   // const { isLoading, error, data, isFetching } = useQuery("fetchPaymentSlip", async () => {
-  //   const response = await newRequest.get("/bankslip",);
+  //   const response = await newRequestnpc.get("/bankslip",);
   //   return response?.data || [];
   //   console.log(response.data);
 
@@ -72,7 +72,7 @@ const Other_products = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/getAllotherproduct",);
+      const response = await newRequestnpc.get("/master-data/getallotherproduct",);
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -100,7 +100,7 @@ const Other_products = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deleteotherproduct/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteotherproduct/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('Other Products')} ${t('Delete')} ${t('successfully')}!`, {
               position: "top-right",
@@ -180,7 +180,7 @@ const Other_products = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/createotherProduct`, {
+          newRequestnpc.post(`/master-data/createotherproduct`, {
             product_name: item.product_name, // Adjust property names as needed
             total_no_of_barcodes: item.total_no_of_barcodes,
             product_subscription_fee: item.product_subscription_fee,
@@ -219,7 +219,7 @@ const Other_products = () =>
   // console.log(t('Other Products'));
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -325,7 +325,7 @@ const Other_products = () =>
             />
           )}
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }

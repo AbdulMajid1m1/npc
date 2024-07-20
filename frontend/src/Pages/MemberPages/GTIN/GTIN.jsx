@@ -410,7 +410,7 @@ const Gtin = () => {
   return (
     <div>
 
-      <SideNav>
+      {/* <SideNav> */}
       <div className={`p-0 h-full bg-dashboard-color`}>
         {/* <div>
           <DashboardRightHeader title={'GTIN'} />
@@ -605,7 +605,7 @@ const Gtin = () => {
           </div>
         </div>
       </div>
-    </SideNav>
+    {/* </SideNav> */}
     </div>
   )
 }

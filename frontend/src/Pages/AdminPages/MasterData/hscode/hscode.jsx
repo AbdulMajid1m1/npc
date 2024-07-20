@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { Hs_code, paymentSlipColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import { newRequestnpc } from "../../../../utils/userRequest";
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../../../../i18n";
 import LanguageSwitcher from "../../../../switer";
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 
 const Hscode = () =>
 {
@@ -27,40 +27,38 @@ const Hscode = () =>
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [brandsData, setBrandsData] = useState([]);
-  const { rowSelectionModel, setRowSelectionModel,
-    tableSelectedRows, setTableSelectedRows } = useContext(DataTableContext);
+  const {
+    rowSelectionModel,
+    setRowSelectionModel,
+    tableSelectedRows,
+    setTableSelectedRows,
+  } = useContext(DataTableContext);
   const [filteredData, setFilteredData] = useState([]);
   const [isCreatePopupVisible, setCreatePopupVisibility] = useState(false);
 
-  const handleShowCreatePopup = () =>
-  {
+  const handleShowCreatePopup = () => {
     setCreatePopupVisibility(true);
   };
 
-
   const [isUpdatePopupVisible, setUpdatePopupVisibility] = useState(false);
 
-  const handleShowUpdatePopup = (row) =>
-  {
+  const handleShowUpdatePopup = (row) => {
     setUpdatePopupVisibility(true);
     // console.log(row)
-    // save this row data in session storage 
+    // save this row data in session storage
     sessionStorage.setItem("updateBrandData", JSON.stringify(row));
   };
-  useEffect(() =>
-  {
-    const fetchData = async () =>
-    {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const response = await newRequest.get("/getAllHsCode",);
+        const response = await newRequestnpc.get("/master-data/getAllHsCode");
 
         // console.log(response.data);
         setData(response?.data || []);
-        setIsLoading(false)
-
+        setIsLoading(false);
       } catch (err) {
         // console.log(err);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     };
 
@@ -68,62 +66,62 @@ const Hscode = () =>
   }, []); // Empty array dependency ensures this useEffect runs once on component mount
 
   // const { isLoading, error, data, isFetching } = useQuery("fetchPaymentSlip", async () => {
-  //   const response = await newRequest.get("/bankslip",);
+  //   const response = await newRequestnpc.get("/bankslip",);
   //   return response?.data || [];
   //   console.log(response.data);
 
   // });
-  const refreshcitiesData = async () =>
-  {
+  const refreshcitiesData = async () => {
     try {
-      const response = await newRequest.get("/getAllHsCode",);
+      const response = await newRequestnpc.get("/master-data/getAllHsCode");
 
       // console.log(response.data);
       setData(response?.data || []);
-      setIsLoading(false)
-
+      setIsLoading(false);
     } catch (err) {
       // console.log(err);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
-  const handleDelete = async (row) =>
-  {
+  const handleDelete = async (row) => {
     Swal.fire({
-      title: `${t('Are you sure to delete this record?')}!`,
-      text: `${t('You will not be able to recover this')} ${t('HsCode')}!`,
-      icon: 'warning',
+      title: `${t("Are you sure to delete this record?")}!`,
+      text: `${t("You will not be able to recover this")} ${t("HsCode")}!`,
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: `${t('Yes')} , ${t('Delete')}!`,
-      cancelButtonText: `${t('No, keep it')}!`,
+      confirmButtonText: `${t("Yes")} , ${t("Delete")}!`,
+      cancelButtonText: `${t("No, keep it")}!`,
       // changes the color of the confirm button to red
-      confirmButtonColor: '#1E3B8B',
-      cancelButtonColor: '#FF0032',
-    }).then(async (result) =>
-    {
+      confirmButtonColor: "#1E3B8B",
+      cancelButtonColor: "#FF0032",
+    }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/deleteHsCode/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteHsCode/" + row?.id);
           if (isDeleted) {
-            toast.success(`${t('HsCode')} ${t('Delete')} ${t('successfully')}!`, {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-
+            toast.success(
+              `${t("HsCode")} ${t("Delete")} ${t("successfully")}!`,
+              {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              }
+            );
 
             // filter out the deleted user from the data
-            const filteredData = brandsData.filter((item) => item?.id !== row?.id);
+            const filteredData = brandsData.filter(
+              (item) => item?.id !== row?.id
+            );
             setBrandsData(filteredData);
-            refreshcitiesData()
+            refreshcitiesData();
           } else {
             // Handle any additional logic if the user was not deleted successfully
-            toast.error('Failed to delete user', {
+            toast.error("Failed to delete user", {
               position: "top-right",
               autoClose: 2000,
               hideProgressBar: false,
@@ -133,12 +131,11 @@ const Hscode = () =>
               progress: undefined,
               theme: "light",
             });
-
           }
         } catch (error) {
           // Handle any error that occurred during the deletion
           console.error("Error deleting user:", error);
-          toast.error(`${t('HsCode')} ${t('has been not deleted')}!`, {
+          toast.error(`${t("HsCode")} ${t("has been not deleted")}!`, {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -154,72 +151,55 @@ const Hscode = () =>
       }
     });
   };
-  const handleView = (row) =>
-  {
+  const handleView = (row) => {
     // console.log(row);
-  }
+  };
 
-  const handleRowClickInParent = (item) =>
-  {
+  const handleRowClickInParent = (item) => {
     if (!item || item?.length === 0) {
-      setTableSelectedRows(data)
-      setFilteredData(data)
-      return
+      setTableSelectedRows(data);
+      setFilteredData(data);
+      return;
     }
-
-  }
-  const handleFileUpload = (e) =>
-  {
+  };
+  const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       // console.log(file.type);
       const reader = new FileReader();
-      reader.onload = (e) =>
-      {
+      reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+        const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0]; // Assuming you have data in the first sheet
         const sheet = workbook.Sheets[sheetName];
         const json = XLSX.utils.sheet_to_json(sheet);
-        json.forEach((item) =>
-        {
-          newRequest.post(`/createHsCode`, {
-            CNKEY: item.CNKEY, // Adjust property names as needed
-            HSCODES: item.HSCODES,
-            DescriptionEN: item.DescriptionEN,
-            addBy: 1
-
-          })
-            .then((res) =>
-            {
+        json.forEach((item) => {
+          newRequestnpc
+            .post(`/master-data/createHsCode`, {
+              CNKEY: item.CNKEY, // Adjust property names as needed
+              HSCODES: item.HSCODES,
+              DescriptionEN: item.DescriptionEN,
+              addBy: 1,
+            })
+            .then((res) => {
               // console.log('Add', res.data);
 
-              Swal.fire(
-                'Add!',
-                `HsCode has been created`,
-                'success'
-              )
-              refreshcitiesData()
+              Swal.fire("Add!", `HsCode has been created`, "success");
+              refreshcitiesData();
             })
-            .catch((err) =>
-            {
+            .catch((err) => {
               // console.log(err);
-              Swal.fire(
-                'Error!',
-                `Some HsCode already exist`,
-                'error'
-              )
+              Swal.fire("Error!", `Some HsCode already exist`, "error");
               // Handle errors
             });
         });
       };
       reader.readAsArrayBuffer(file);
-
     }
   };
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -349,7 +329,7 @@ const Hscode = () =>
             />
           )}
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }

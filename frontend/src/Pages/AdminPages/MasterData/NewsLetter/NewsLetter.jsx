@@ -7,7 +7,7 @@ import { newsLetterColumn } from '../../../../utils/datatablesource'
 import newRequest from '../../../../utils/userRequest'
 import { useTranslation } from 'react-i18next';
 import AddNewsLetterPopUp from './AddNewsLetterPopUp';
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 
 const AdminNewsLetter = () =>
 {
@@ -58,7 +58,7 @@ const AdminNewsLetter = () =>
 
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -121,7 +121,7 @@ const AdminNewsLetter = () =>
             />
           )}
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }

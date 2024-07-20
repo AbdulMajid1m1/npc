@@ -8,7 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataTableContext } from '../../../../Contexts/DataTableContext'
 import { state, paymentSlipColumn } from '../../../../utils/datatablesource'
-import newRequest from '../../../../utils/userRequest'
+import {newRequestnpc} from '../../../../utils/userRequest'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ import * as XLSX from 'xlsx';
 import { CSVLink } from "react-csv";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { useTranslation } from 'react-i18next';
-import SideNav from '../../../../components/Sidebar/SideNav';
+// import SideNav from '../../../../components/Sidebar/SideNav';
 
 const State = () =>
 {
@@ -47,10 +47,10 @@ const State = () =>
   const fetchData = async () =>
   {
     try {
-      const response = await newRequest.get("/address/getAllStates",);
+      const response = await newRequestnpc.get("/master-data/getAllStates");
       const citiesData = response?.data || [];
 
-      const statesResponse = await newRequest.get('/address/getAllCountriesName');
+      const statesResponse = await newRequestnpc.get('/master-data/getAllCountries');
       const statesData = statesResponse?.data || [];
 
       const stateIdToNameMap = {};
@@ -80,7 +80,7 @@ const State = () =>
   }, []); // Empty array dependency ensures this useEffect runs once on component mount
 
   // const { isLoading, error, data, isFetching } = useQuery("fetchPaymentSlip", async () => {
-  //   const response = await newRequest.get("/bankslip",);
+  //   const response = await newRequestnpc.get("/bankslip",);
   //   return response?.data || [];
   //   console.log(response.data);
 
@@ -88,7 +88,7 @@ const State = () =>
   const refreshcitiesData = async () =>
   {
     try {
-      const response = await newRequest.get("/address/getAllStates",);
+      const response = await newRequestnpc.get("/master-data/getAllStates");
 
       // console.log(response.data);
       setData(response?.data || []);
@@ -115,7 +115,7 @@ const State = () =>
     {
       if (result.isConfirmed) {
         try {
-          const isDeleted = await newRequest.delete("/address/deleteStates/" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/deleteStates/" + row?.id);
           if (isDeleted) {
             toast.success(`${t('State')}  ${t('has been deleted')} ${t('successfully')}!`, {
               position: "top-right",
@@ -194,7 +194,7 @@ const State = () =>
         const json = XLSX.utils.sheet_to_json(sheet);
         json.forEach((item) =>
         {
-          newRequest.post(`/address/createStates`, {
+          newRequestnpc.post(`/address/createStates`, {
             name: item.name, // Adjust property names as needed
             country_id: 0
 
@@ -228,7 +228,7 @@ const State = () =>
   };
   return (
     <div>
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -335,7 +335,7 @@ const State = () =>
             />
           )}
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }
