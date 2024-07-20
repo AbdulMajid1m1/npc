@@ -16,8 +16,8 @@ const MemberNewDashboard = () => {
     <div className='mb-20 bg-dashboard-color p-3'>
         {/* dashboard Data */}
         <div className={`3xl:h-32 2xl:h-32 xl:h-32 lg:h-32 md:h-32 h-auto w-full flex  items-center rounded-md bg-[#FFFFFF] shadow-xl mt-3 ${i18n.language==='ar'? 'sm:justify-end':'sm:justify-start'}`}>
-          <div className={`flex sm:justify-start justify-center items-center 3xl:gap-24 2xl:gap-24 xl:gap-24 lg:gap-24 md:gap-10 gap-4 ${i18n.language==='ar'? 'mr-3 flex-row-reverse':'ml-3 flex-row'}`}>
-            <img onClick={() => navigate('/')} src={gs1v2logo} className='sm:h-20 h-auto w-auto cursor-pointer' alt='' />
+          <div className={`flex sm:justify-start justify-center items-center flex-wrap 3xl:gap-24 2xl:gap-24 xl:gap-24 lg:gap-24 md:gap-10 gap-4 ${i18n.language==='ar'? 'mr-3 flex-row-reverse':'ml-3 flex-row'}`}>
+            <img onClick={() => navigate('/')} src={gs1v2logo} className='sm:h-20 h-auto sm:w-auto w-36 cursor-pointer' alt='' />
             <div className=''>
               <p className='text-secondary font-bold font-sans sm:text-4xl text-2xl'>{t("National Product Catalouge")} </p>
               <p className={`text-secondary font-sans mt-[2px] ${i18n.language==='ar'?'text-right':'text-left'}`}>{t("A Service of GS1 Saudi Arabia Barcode Center")}</p>
