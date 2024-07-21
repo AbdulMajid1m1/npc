@@ -31,7 +31,7 @@ const AddUsers = () => {
     
       const fetchAllRolesTypes = async () => {
           try {
-              const response = await newRequest.get('/roles');
+              const response = await newRequestnpc.get("/master-data/role");
               // only get name and id from the response
               const data = response.data;
               const rolesTypes = data.map((roles) => ({

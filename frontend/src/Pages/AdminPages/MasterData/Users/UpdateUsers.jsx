@@ -36,9 +36,9 @@ const UpdateUsers = () => {
       setIsLoading(true);
       try {
         const response = await newRequestnpc.get(`/admin/getAdminById?adminId=${id}`);
-        const responseAllRoles = await newRequest.get('/roles');
-        // console.log(response.data);
+        const responseAllRoles = await newRequestnpc.get("/master-data/role");
         const data = responseAllRoles.data;
+        console.log(data);
         
         const roles = response.data?.roles.map((role) => ({
           id: role.roleId,
