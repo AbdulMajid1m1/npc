@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from 'react-router-dom';
 import { AdminUsersColumn } from "../../../../utils/datatablesource";
-import newRequest from "../../../../utils/userRequest";
+import newRequest ,{newRequestnpc} from "../../../../utils/userRequest";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 
@@ -21,7 +21,7 @@ const Users = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await newRequest.get('/admin/getAdmins');
+      const response = await newRequestnpc.get("/master-data/admin");
       // console.log(response.data);
       setData(response?.data || []);
       setIsLoading(false)
@@ -39,7 +39,7 @@ const Users = () => {
 
   const handleEdit = (row) => {
     // sessionStorage.setItem("selectedUserData", JSON.stringify(row));
-    navigate("/update-users/" + row?.id)
+    navigate("/Admin/update-users/" + row?.id)
   }
 
   const handleDelete = async (row) =>
@@ -58,7 +58,7 @@ const Users = () => {
     {
       if (result.isConfirmed) {
         try { 
-          const isDeleted = await newRequest.delete("/admin/deleteAdmin?adminId=" + row?.id);
+          const isDeleted = await newRequestnpc.delete("/master-data/admin/" + row?.id);
           if (isDeleted) {
             toast.success(`User ${t('has been deleted')} ${t('successfully')}!`);
 
@@ -106,7 +106,7 @@ const Users = () => {
                   }`}
                 >
                   <button
-                    onClick={() => navigate("/add-users")}
+                    onClick={() => navigate("/Admin/add-users")}
                     className="rounded-full bg-secondary font-body px-5 py-1 text-sm mb-3 text-white transition duration-200 hover:bg-primary"
                   >
                     <i className="fas fa-plus mr-2"></i> {t("Add User")}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { Autocomplete, TextField } from '@mui/material';
-import newRequest from '../../../../utils/userRequest';
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import { toast } from 'react-toastify';
 import { DotLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ const AddRoles = () => {
     // Search GPC Api
     const fetchAllRolesTypes = async () => {
         try {
-            const response = await newRequest.get('/permissions');
+            const response = await newRequest.get("/permissions");
             // only get name and id from the response
             const data = response.data;
             const rolesTypes = data.map((roles) => ({
@@ -61,7 +61,7 @@ const AddRoles = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await newRequest.post('/roles', {
+      const response = await newRequestnpc.post("/master-data/role", {
         name: roleName,
         permissions: selectedRoles.map((role) => role.id),
       });
@@ -107,7 +107,7 @@ const AddRoles = () => {
         </div>
       )}
 
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -131,7 +131,7 @@ const AddRoles = () => {
                         value={roleName}
                         onChange={(e) => setRoleName(e.target.value)}
                         required
-                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 ${
+                        className={`border w-full rounded-sm border-[#8E9CAB] p-2 ${
                           i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                         placeholder={`${t("Role Name")}`}
@@ -199,7 +199,7 @@ const AddRoles = () => {
             </div>
           </div>
         </div>
-      </SideNav>
+      {/* </SideNav> */}
       {/* </div> */}
     </div>
     // </div>

@@ -103,17 +103,12 @@ const App = () => {
         <DataTableProvider>
           <div>
             <BrowserRouter>
-              <Routes>  
+              <Routes>
                 <Route element={<UserLayout />}>
                   <Route path="/" element={<MemberLogin />} />
                   <Route path="/select-gln" element={<SelectGln />} />
 
-                  <Route
-                      path="/admin-login"
-                      element={
-                          <AdminLogin />
-                      }
-                    />
+                  <Route path="/admin-login" element={<AdminLogin />} />
                 </Route>
               </Routes>
               <Routes>
