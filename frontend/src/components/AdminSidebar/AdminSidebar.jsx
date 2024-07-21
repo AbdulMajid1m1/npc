@@ -6,11 +6,7 @@ import { FaChevronDown, FaChevronUp, FaUsers } from "react-icons/fa";
 import Images from "../../Images/gs1logowhite.png";
 import { useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
-import identify from "../../Images/identify.png";
-import ngln from "../../Images/ngln.png";
-import nsscc from "../../Images/nsscc.png";
 import usersicon from "../../Images/usersicon.png";
-import DashboardHeader from "../DashboardRightHeader/DashboardHeader";
 import MasterData from "../../Images/master data.png";
 import language from "../../Images/language.png";
 import roleimg from "../../Images/roleicon.png"
@@ -29,6 +25,14 @@ import Crnumber from "../../Images/Crnumber.png";
 import documentIcon from "../../Images/document.png";
 import newslettericon from "../../Images/newslettericon.png";
 import gs1v2logo from "../../Images/gs1logowhite.png";
+import gtinmanagment from "../../Images/gtinmanagment.png"
+import NPCcertification from "../../Images/NPCcertification.png"
+import publisher from "../../Images/publisher.png"
+import recipient from "../../Images/recipient.png"
+import Userprofile from "../../Images/Userprofile.png"
+import dashboradnpc from "../../Images/dashboradnpc.png"
+import GLNmanagement from "../../Images/GLNmanagement.png"
+import GS1digitallink from "../../Images/GS1digitallink.png"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
 import { GiPriceTag } from "react-icons/gi";
@@ -99,7 +103,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={identify}
+                          src={dashboradnpc}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
@@ -161,7 +165,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={identify}
+                                  src={gtinmanagment}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
@@ -194,7 +198,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={ngln}
+                                  src={GLNmanagement}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -227,7 +231,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={nsscc}
+                                  src={GS1digitallink}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -260,7 +264,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={ngln}
+                                  src={NPCcertification}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -293,7 +297,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={identify}
+                                  src={publisher}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -326,7 +330,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={nsscc}
+                                  src={recipient}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -359,7 +363,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={identify}
+                                  src={Userprofile}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
