@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { I18nextProvider, useTranslation } from "react-i18next";
-import newRequest from '../../../../utils/userRequest';
+import newRequest, { newRequestnpc } from "../../../../utils/userRequest";
 import { toast } from 'react-toastify';
 import { DotLoader } from 'react-spinners';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -35,7 +35,7 @@ const UpdateUsers = () => {
     const fetchRoleById = async () => {
       setIsLoading(true);
       try {
-        const response = await newRequest.get(`/admin/getAdminById?adminId=${id}`);
+        const response = await newRequestnpc.get(`/admin/getAdminById?adminId=${id}`);
         const responseAllRoles = await newRequest.get('/roles');
         // console.log(response.data);
         const data = responseAllRoles.data;
@@ -114,7 +114,7 @@ const UpdateUsers = () => {
           formData.append('password', password);
         }
 
-        const response = await newRequest.put(`/admin/updateAdmin/${id}`, formData);
+        const response = await newRequestnpc.put(`/master-data/admin/${id}`, formData);
         // console.log(response.data);
         setIsLoading(false);
         toast.success(response.data.message || 'User Updated Successfully');
@@ -159,7 +159,7 @@ const UpdateUsers = () => {
         </div>
       )}
 
-      <SideNav>
+      {/* <SideNav> */}
         <div className={`p-0 h-full bg-dashboard-color`}>
           <div className="flex justify-center items-center">
             <div className="h-auto w-[97%] px-0 pt-4">
@@ -183,7 +183,7 @@ const UpdateUsers = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                           i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                         placeholder={`${t("Email")}`}
@@ -207,7 +207,7 @@ const UpdateUsers = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                           i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                         placeholder={`${t("User Name")}`}
@@ -232,7 +232,7 @@ const UpdateUsers = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         // required
-                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                           i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                         placeholder={`${t("Password")}`}
@@ -255,7 +255,7 @@ const UpdateUsers = () => {
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
                         required
-                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                           i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                         placeholder={`${t("Mobile")}`}
@@ -279,7 +279,7 @@ const UpdateUsers = () => {
                         value={isSuper}
                         onChange={(e) => setIsSuper(e.target.value)}
                         required
-                        className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                           i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                       >
@@ -376,7 +376,7 @@ const UpdateUsers = () => {
             </div>
           </div>
         </div>
-      </SideNav>
+      {/* </SideNav> */}
     </div>
   );
 }
