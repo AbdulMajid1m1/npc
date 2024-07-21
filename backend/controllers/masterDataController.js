@@ -2178,3 +2178,58 @@ export const deleteRole = async (req, res, next) => {
         next(error);
     }
 };
+//------------------NEWS------------------------------------------------
+
+const allowedColumns = {
+    id: Joi.string(),
+    email: Joi.string(),
+    createdAt: Joi.date(),
+  };
+  
+  export const getNewsletterSubscriptions = async (req, res) => {
+    try {
+      // Create a dynamic schema for the allowed columns
+      const columnsSchema = Joi.object({
+        columns: Joi.array().items(
+          Joi.string().valid(...Object.keys(allowedColumns))
+        ),
+        filter: Joi.object().pattern(Joi.string(), Joi.any()),
+      }).unknown(true); // Allow other keys not defined in the schema
+  
+      // Validate the request query
+      const { error, value } = columnsSchema.validate(req.query);
+      if (error) {
+        return res.status(400).send({
+          message: `Invalid query parameter: ${error.details[0].message}`,
+        });
+      }
+  
+      // Extract columns and filter parameters
+      const selectedColumns =
+        value.columns && value.columns.length > 0
+          ? value.columns
+          : Object.keys(allowedColumns);
+  
+      const filterConditions = value.filter || {};
+  
+      // Construct the Prisma select object
+      const select = selectedColumns.reduce((obj, col) => {
+        obj[col] = true;
+        return obj;
+      }, {});
+  
+      const subscriptions = await prisma.newsletterSubscription.findMany({
+        where: filterConditions,
+        select,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+  
+      return res.json(subscriptions);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: error.message });
+    }
+  };
+  
