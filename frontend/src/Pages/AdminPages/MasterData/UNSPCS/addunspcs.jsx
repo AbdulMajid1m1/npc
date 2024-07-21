@@ -84,7 +84,7 @@ const Addunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={commodity}
                       onChange={(e) => setcommodity(e.target.value)}
                       placeholder={t('Enter commodity')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>
@@ -97,7 +97,7 @@ const Addunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={title}
                       onChange={(e) => settitle(e.target.value)}
                       placeholder={t('Enter title')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>
@@ -110,7 +110,7 @@ const Addunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={definition}
                       onChange={(e) => setdefinition(e.target.value)}
                       placeholder={t('Enter definition')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>
@@ -123,7 +123,7 @@ const Addunspcs = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={addedBy}
                       onChange={(e) => setaddedBy(e.target.value)}
                       placeholder={t('Enter addedBy')}
-                       className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                       className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                                                 }`}
                     />
                   </div>

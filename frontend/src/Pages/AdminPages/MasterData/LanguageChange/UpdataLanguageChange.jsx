@@ -80,7 +80,7 @@ const UpdataLanguageChange = ({ isVisible, setVisibility, refreshBrandData }) =>
                                             value={category_name_en}
                                             onChange={(e) => setcategory_name_en(e.target.value)}
                                             placeholder={`${t('Enter')} ${t('Word[English]')}`}
-                                            className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                                            className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                                         />
                                     </div>
 
@@ -92,7 +92,7 @@ const UpdataLanguageChange = ({ isVisible, setVisibility, refreshBrandData }) =>
                                             value={category_name_ar}
                                             onChange={(e) => setcategory_name_ar(e.target.value)}
                                             placeholder={`${t('Enter')} ${t('Word[Arabic]')}`}
-                                            className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                                            className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                                         />
                                     </div>
 

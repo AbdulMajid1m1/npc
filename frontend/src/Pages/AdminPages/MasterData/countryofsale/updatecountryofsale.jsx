@@ -99,7 +99,7 @@ const Updatecountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => 
                       onChange={(e) => setAlpha2(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter country name english')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -114,7 +114,7 @@ const Updatecountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => 
                       onChange={(e) => setAlpha3(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter Alpha3')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -129,7 +129,7 @@ const Updatecountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => 
                       onChange={(e) => setcountry_code_numeric3(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter country code')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -144,7 +144,7 @@ const Updatecountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => 
                       onChange={(e) => setcountry_name(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter country Name')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>

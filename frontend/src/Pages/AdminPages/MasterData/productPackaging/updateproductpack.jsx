@@ -91,7 +91,7 @@ const Updateproductpack = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setname(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter product pack name')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     />
                   </div>
 
@@ -103,7 +103,7 @@ const Updateproductpack = ({ isVisible, setVisibility, refreshBrandData }) => {
                       id="status"
                       value={status}
                       onChange={(e) => setstatus(e.target.value)}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     >
                       <option value="0">{t('inactive')}</option>
                       <option value="1">{t('active')}</option>

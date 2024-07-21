@@ -91,7 +91,7 @@ const Adddocumment = ({ isVisible, setVisibility, refreshBrandData }) =>
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder={t("Enter document Name")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />

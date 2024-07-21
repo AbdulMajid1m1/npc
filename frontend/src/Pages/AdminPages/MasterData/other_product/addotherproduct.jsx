@@ -100,7 +100,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       placeholder={`${t("Enter")} ${t("Product")} ${t(
                         "Name [English]"
                       )}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -123,7 +123,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       placeholder={`${t("Enter")} ${t("Product")} ${t(
                         "Name Arabic"
                       )}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -144,7 +144,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={total_no_of_barcodes}
                       onChange={(e) => settotal_no_of_barcodes(e.target.value)}
                       placeholder={t("Enter total no of barcodes")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -166,7 +166,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                         setproduct_subscription_fee(e.target.value)
                       }
                       placeholder={t("Enter product subscription fee")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -187,7 +187,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={med_subscription_fee}
                       onChange={(e) => setmed_subscription_fee(e.target.value)}
                       placeholder={t("Enter med subscription fee")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -208,7 +208,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={code}
                       onChange={(e) => setcode(e.target.value)}
                       placeholder={t("Enter code")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -228,7 +228,7 @@ const AddotherProduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={variant}
                       onChange={(e) => setvariant(e.target.value)}
                       placeholder={t("Enter variant")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />

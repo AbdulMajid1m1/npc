@@ -96,7 +96,7 @@ const Updateunit = ({ isVisible, setVisibility, refreshBrandData }) =>
                       onChange={(e) => setunit_code(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter unit code')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     />
                   </div>
                   <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
@@ -108,7 +108,7 @@ const Updateunit = ({ isVisible, setVisibility, refreshBrandData }) =>
                       onChange={(e) => setunit_name(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter Unit name')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     />
                   </div>
                   <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
@@ -119,7 +119,7 @@ const Updateunit = ({ isVisible, setVisibility, refreshBrandData }) =>
                       id="status"
                       value={status}
                       onChange={(e) => setstatus(e.target.value)}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start" }`}
                     >
                       <option value="0">{t('inactive')}</option>
                       <option value="1">{t('active')}</option>

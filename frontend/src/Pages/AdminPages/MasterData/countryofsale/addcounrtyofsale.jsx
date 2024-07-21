@@ -84,7 +84,7 @@ const Addcountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={Alpha2}
                       onChange={(e) => setAlpha2(e.target.value)}
                       placeholder={t('Enter Alpha2')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -97,7 +97,7 @@ const Addcountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={Alpha3}
                       onChange={(e) => setAlpha3(e.target.value)}
                       placeholder={t('Enter Alpha3')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -110,7 +110,7 @@ const Addcountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={country_code_numeric3}
                       onChange={(e) => setcountry_code_numeric3(e.target.value)}
                       placeholder={t('Enter Country Code')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -123,7 +123,7 @@ const Addcountryofsale = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={country_name}
                       onChange={(e) => setcountry_name(e.target.value)}
                       placeholder={t('Enter country Name')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>

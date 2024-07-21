@@ -118,7 +118,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       placeholder={`${t("Enter")} ${t("Product")} ${t(
                         "Name [English]"
                       )}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -141,7 +141,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       placeholder={`${t("Enter")} ${t("Product")} ${t(
                         "Name Arabic"
                       )}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -163,7 +163,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => settotal_no_of_barcodes(e.target.value)}
                       //   readOnly
                       placeholder={t("Enter total no of barcodes")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -187,7 +187,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       }
                       //   readOnly
                       placeholder={t("Enter product subscription fee")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -209,7 +209,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setcode(e.target.value)}
                       //   readOnly
                       placeholder={t("Enter code")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -230,7 +230,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setmed_subscription_fee(e.target.value)}
                       //   readOnly
                       placeholder={t("Enter med subscription fee")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -251,7 +251,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setvariant(e.target.value)}
                       //   readOnly
                       placeholder={t("Enter variant")}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
@@ -269,7 +269,7 @@ const Updateotherproduct = ({ isVisible, setVisibility, refreshBrandData }) => {
                       id="status"
                       value={status}
                       onChange={(e) => setstatus(e.target.value)}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     >

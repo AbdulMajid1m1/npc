@@ -78,7 +78,7 @@ const Adddocumenttype = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={file_name}
                       onChange={(e) => setfile_name(e.target.value)}
                       placeholder={`${t('Enter')} ${t('Document name')}`}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>

@@ -79,7 +79,7 @@ const AdddcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={gcp_code}
                       onChange={(e) => setgcp_code(e.target.value)}
                       placeholder={t('Enter gcp_code')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -93,7 +93,7 @@ const AdddcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
                       value={gcp_description}
                       onChange={(e) => setgcp_description(e.target.value)}
                       placeholder={t('Enter gcp description')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>

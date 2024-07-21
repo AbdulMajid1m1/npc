@@ -94,7 +94,7 @@ const UpdategcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setgcp_code(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter gcp code')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
@@ -109,7 +109,7 @@ const UpdategcpType = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setgcp_description(e.target.value)}
                       //   readOnly
                       placeholder={t('Enter gcp description')}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>

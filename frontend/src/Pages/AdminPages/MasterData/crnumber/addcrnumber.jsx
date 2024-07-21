@@ -104,7 +104,7 @@ const Addcrnumber = ({ isVisible, setVisibility }) => {
                       onChange={handleInputChange}
                       //    onChange={(e) => setAddCrNumber(e.target.value)}
                       placeholder={`${t('Enter')} ${t('Cr Number')} `}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                     {error && <p className="text-red-500 text-xs">{error}</p>}
@@ -119,7 +119,7 @@ const Addcrnumber = ({ isVisible, setVisibility }) => {
                       //  value={addCrNumber}
                       onChange={(e) => setCrActivity(e.target.value)}
                       placeholder={`${t('Enter')} ${t('Cr Activity')} `}
-                      className={`border-1 w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
+                      className={`border w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${i18n.language === "ar" ? "text-end" : "text-start"
                         }`}
                     />
                   </div>
