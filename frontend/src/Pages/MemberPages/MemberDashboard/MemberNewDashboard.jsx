@@ -22,7 +22,7 @@ const MemberNewDashboard = () => {
               <p className='text-secondary font-bold font-sans sm:text-4xl text-2xl'>{t("National Product Catalouge")} </p>
               <p className={`text-secondary font-sans mt-[2px] ${i18n.language==='ar'?'text-right':'text-left'}`}>{t("A Service of GS1 Saudi Arabia Barcode Center")}</p>
             </div>
-          </div>
+          </div>  
             
         </div>
 
