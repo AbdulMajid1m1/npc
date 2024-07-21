@@ -15,9 +15,13 @@ import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     getAllStates,getAllStatesName,createStates,getStatesById,updateStates,deleteStates,
     getAllCities,createCities,getCitiesById,updateCities,deleteCities,
     translations,translations_table,translations_put,translations_post,addAdmin,updateAdmin,getAllAdmins,deleteAdmin,createRole,
-    getRoles,updateRole,getRole,deleteRole
+    getRoles,updateRole,getRole,deleteRole,getNewsletterSubscriptions,sendNewsletter
 
 } from "../controllers/masterDataController.js";
+
+//--------------NewsletterSubscriptions----------------------------
+router.post('/NewsletterSubscriptions',sendNewsletter)
+router.get('/NewsletterSubscriptions', getNewsletterSubscriptions)
 //----------------------------Roles------------------------
 router.delete('/role/:id', deleteRole)
 router.get('/role/:id', getRole)

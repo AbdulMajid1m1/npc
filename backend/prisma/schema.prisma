@@ -679,3 +679,8 @@ model carts {
   discount       Float?    @default(0, map: "DF_carts_discount")
   user           users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
+model NewsletterSubscription {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}

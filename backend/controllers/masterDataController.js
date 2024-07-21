@@ -1,6 +1,7 @@
 import prisma from "../prismaClient.js";
 import Joi from "joi";
 import { gs1Prisma } from "../prismaMultiClinets.js";
+import { sendEmail, sendMultipleEmails } from "../services/emailTemplates.js";
 import bcrypt from "bcryptjs";
 import { createError } from '../utils/createError.js';
 const unitSchema = Joi.object({
@@ -2179,7 +2180,12 @@ export const deleteRole = async (req, res, next) => {
     }
 };
 //------------------NEWS------------------------------------------------
-
+import puppeteer from "puppeteer";
+import { ADMIN_EMAIL, SUPPORT_EMAIL } from "../configs/envConfig.js";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const allowedColumns = {
     id: Joi.string(),
     email: Joi.string(),
@@ -2230,6 +2236,107 @@ const allowedColumns = {
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: error.message });
+    }
+  };
+  const capturePage = async (url) => {
+    const browser = await puppeteer.launch({ headless: "new" });
+    const page = await browser.newPage();
+  
+    // Set viewport to a wider screen to avoid hamburger menu
+    await page.setViewport({ width: 1920, height: 1080 });
+  
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 90000 }); // Increased timeout to 90 seconds
+  
+    // Wait for 5 seconds to ensure the page is fully loaded
+    await page.waitForTimeout(5000);
+  
+    // Capture screenshot
+    const screenshot = await page.screenshot({
+      encoding: "base64",
+      fullPage: true,
+    });
+    await browser.close();
+    return screenshot;
+  };
+  
+  // Function to save the image
+  const saveImage = async (base64Data, imageName) => {
+    const imagePath = path.join(
+      __dirname,
+      "../public/uploads/images/newsletterImages",
+      imageName
+    );
+    const imageBuffer = Buffer.from(base64Data, "base64");
+    fs.writeFileSync(imagePath, imageBuffer);
+    return imagePath;
+  };
+  
+  export const sendNewsletter = async (req, res, next) => {
+    // Define validation schema
+    const schema = Joi.object({
+      slug: Joi.string().required(), // Changed to slug
+      subject: Joi.string().required(),
+      emailBody: Joi.string().required(),
+    });
+  
+    // Validate request body
+    const { error, value } = schema.validate(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
+    }
+  
+    const { slug, subject, emailBody } = value;
+  
+    try {
+      // Construct the full URL
+      const frontendUrl = `${req.protocol}://${req.get("host")}`;
+      const url = `${frontendUrl}/${slug}`;
+  
+      // Capture page screenshot
+      const screenshot = await capturePage(url);
+  
+      // Generate unique image name
+      const imageName = `newsletter-${Date.now()}.png`;
+  
+      // Save image to public/uploads/images/newsletterImages
+      await saveImage(screenshot, imageName);
+  
+      // Get the backend URL dynamically
+      const backendUrl = `${req.protocol}://${req.get("host")}`;
+      const imageUrl = `${backendUrl}/uploads/images/newsletterImages/${imageName}`;
+  
+      // Fetch all subscribers
+      const subscribers = await prisma.newsletterSubscription.findMany();
+  
+      // Prepare email data
+      const emailData = subscribers.map((subscriber) => ({
+        toEmail: subscriber.email,
+        subject: subject,
+        htmlContent: `
+          <div>
+            <p>${emailBody}</p>
+            <p>Click the image to view the content:</p>
+            <a href="${url}">
+              <img src="${imageUrl}" alt="Newsletter Content" />
+            </a>
+          </div>
+        `,
+        attachments: [],
+      }));
+  
+      // Send emails
+      await sendMultipleEmails({ emailData, fromEmail: ADMIN_EMAIL });
+  
+      res.status(200).json({
+        success: true,
+        message: "Emails sent successfully!",
+        imageUrl: imageUrl, // Include the image URL in the response
+      });
+    } catch (error) {
+      console.error("Error sending emails:", error);
+      next(error);
     }
   };
   
