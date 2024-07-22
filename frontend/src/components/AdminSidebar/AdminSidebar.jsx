@@ -52,6 +52,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   // const [isOpen, setIsOpen] = useState(false);
   const [isMangeOpen, setIsMangeOpen] = useState(false);
   const [MasterDatadropdown, setMasterDatadropdown] = useState(false);
+  const [codificationDropdown, setCodificationDropdown] = useState(false);
   const [isMangeSliderOpen, setIsMangeSliderOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -65,6 +66,9 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   };
   const handleToggleMangemasterdata = () => {
     setMasterDatadropdown(!MasterDatadropdown);
+  };
+  const handleToggleMangeCodification = () => {
+    setCodificationDropdown(!codificationDropdown);
   };
   const handleToggleMangeSlider = () => {
     setIsMangeSliderOpen(!isMangeSliderOpen);
@@ -901,6 +905,186 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       </div>
                     )}
                   </li>
+
+                  <li>
+                    <div
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                      onClick={handleToggleMangeCodification}
+                    >
+                      <span
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
+                      >
+                        <img
+                          src={recipient}
+                          alt="logo"
+                          className="w-10 h-10 object-cover"
+                        />
+                      </span>
+                      <span className="text-secondary font-semibold text-lg my-auto">
+                        {t("Codification")}
+                      </span>
+                      <span
+                        className={`inline-block  my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {codificationDropdown ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </span>
+                    </div>
+                    {codificationDropdown && (
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
+                        <ul className={`text-sm flex flex-col gap-3`}>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={language}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("GPC")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={dashboradnpc}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("HS-CODE")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={GLNmanagement}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("UNSPSC")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={gtinmanagment}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("GS1 GMN")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={NPCcertification}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("GMDN")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          </ul>
+                      </div>
+                    )}
+                  </li> 
 
                   <li>
                     <Link

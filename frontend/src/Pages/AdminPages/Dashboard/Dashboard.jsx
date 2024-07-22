@@ -31,6 +31,9 @@ const Dashboard = () => {
 
     setChartData(dummyData);
     setTopBrandsChartData(topBrandsData);
+
+    // auto scroll to bottom
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
 
