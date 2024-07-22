@@ -33,6 +33,7 @@ import Userprofile from "../../Images/Userprofile.png"
 import dashboradnpc from "../../Images/dashboradnpc.png"
 import GLNmanagement from "../../Images/GLNmanagement.png"
 import GS1digitallink from "../../Images/GS1digitallink.png"
+import logout from "../../Images/logout.jpeg"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
 import { GiPriceTag } from "react-icons/gi";
@@ -905,18 +906,22 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                     <Link
                       to="/"
                       // className="flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100"
-                      className={`flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${
+                      className={`flex items-center px-3 py-0 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${
                         i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
                       }`}
                     >
                       <span
-                        className={`drop-shadow-lg flex h-8 w-8 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${
-                          i18n.language === "ar" ? "ml-2" : "mr-2 "
+                        className={`drop-shadow-lg flex h-16 w-16 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
-                        <AiOutlineDashboard className="w-5 h-5" />
+                        <img
+                          src={logout}
+                          alt="logo"
+                          className="w-10 h-10 object-cover rounded-full bg-white"
+                        />
                       </span>
-                      <span className="font-semibold">{t("Log-out")}</span>
+                      <span className="text-secondary font-semibold text-lg -ml-3">{t("Log-out")}</span>
                     </Link>
                   </li>
                 </ul>
