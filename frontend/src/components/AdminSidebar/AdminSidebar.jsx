@@ -32,6 +32,9 @@ import Userprofile from "../../Images/Userprofile.png"
 import dashboradnpc from "../../Images/dashboradnpc.png"
 import GLNmanagement from "../../Images/GLNmanagement.png"
 import GS1digitallink from "../../Images/GS1digitallink.png"
+import npcregistry from "../../Images/npcregistry.png"
+import localproduct from "../../Images/localproduct.png"
+import globalproduct from "../../Images/globalproduct.png"
 import logout from "../../Images/logout.jpeg"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
@@ -53,6 +56,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   const [MasterDatadropdown, setMasterDatadropdown] = useState(false);
   const [dataManagement, setDataManagement] = useState(false);
   const [codificationDropdown, setCodificationDropdown] = useState(false);
+  const [npcRegistry, setNpcRegistry] = useState(false);
   const [isMangeSliderOpen, setIsMangeSliderOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -72,6 +76,9 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   };
   const handleToggleMangeCodification = () => {
     setCodificationDropdown(!codificationDropdown);
+  };
+  const handleToggleMangeNpcRegistry = () => {
+    setNpcRegistry(!npcRegistry);
   };
   const handleToggleMangeSlider = () => {
     setIsMangeSliderOpen(!isMangeSliderOpen);
@@ -121,6 +128,104 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                   </li>
 
                   <li>
+                    <div
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                      onClick={handleToggleMangeNpcRegistry}
+                    >
+                      <span
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
+                      >
+                        <img
+                          src={npcregistry}
+                          alt="logo"
+                          className="w-10 h-10 object-cover"
+                        />
+                      </span>
+                      <span className="text-secondary font-semibold text-lg my-auto">
+                        {t("NPC Registry")}
+                      </span>
+                      <span
+                        className={`inline-block  my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {npcRegistry ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </span>
+                    </div>
+                    {npcRegistry && (
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
+                        <ul className={`text-sm flex flex-col gap-3`}>
+                          <li>
+                            <Link
+                              to="/admin/global-product-registry"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={globalproduct}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg truncate">
+                                  {t("Global Product Registry")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/admin/local-product-registry"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={localproduct}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg truncate">
+                                  {t("Local Product Registry")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          </ul>
+                      </div>
+                    )}
+                  </li> 
+                  <li>
                   <div
                       className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
                         i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
@@ -138,7 +243,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="font-sans font-semibold text-base my-auto">
+                      <span className="text-secondary font-semibold text-lg my-auto">
                         {t("Data Management")}
                       </span>
                       <span

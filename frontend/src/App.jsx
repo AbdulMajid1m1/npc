@@ -38,6 +38,8 @@ import AdminSidebar from "./components/AdminSidebar/AdminSidebar.jsx";
 import Dashboard from "./Pages/AdminPages/Dashboard/Dashboard.jsx";
 import AdminLogin from "./Pages/AdminPages/AdminLogin/AdminLogin.jsx";
 import { useTranslation } from "react-i18next";
+import GlobalProductRegistry from "./Pages/AdminPages/NpcRegistry/GlobalProductRegistry/GlobalProductRegistry.jsx";
+import LocalProductRegistry from "./Pages/AdminPages/NpcRegistry/LocalProductRegistry/LocalProductRegistry.jsx";
 
 const App = () => {
   
@@ -202,6 +204,10 @@ const App = () => {
                           path="news-letter"
                           element={<AdminNewsLetter />}
                         />
+
+                        <Route path="global-product-registry" element={<GlobalProductRegistry />} />
+                        <Route path="local-product-registry" element={<LocalProductRegistry />} />
+
                       </Routes>
                     </AdminMainLayout>
                   }
