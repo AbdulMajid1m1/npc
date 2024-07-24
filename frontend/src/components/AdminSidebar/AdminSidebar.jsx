@@ -135,7 +135,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       onClick={handleToggleMangeNpcRegistry}
                     >
                       <span
-                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
                           i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
@@ -189,7 +189,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover"
                                 />
                                 <span className="text-secondary font-semibold text-lg truncate">
-                                  {t("Global Product Registry")}
+                                  {t("Global Registry")}
                                 </span>
                               </div>
                             </Link>
@@ -216,7 +216,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover"
                                 />
                                 <span className="text-secondary font-semibold text-lg truncate">
-                                  {t("Local Product Registry")}
+                                  {t("Local Registry")}
                                 </span>
                               </div>
                             </Link>
@@ -233,7 +233,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       onClick={handleToggleDataManagement}
                     >
                       <span
-                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
                           i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
@@ -373,7 +373,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       onClick={handleToggleMangeCodification}
                     >
                       <span
-                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
                           i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
@@ -652,7 +652,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       onClick={handleToggleMangemasterdata}
                     >
                       <span
-                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
                           i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
