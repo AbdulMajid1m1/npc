@@ -22,12 +22,12 @@ const CircularButtons = () => {
     { name: 'Compliance', icon: compliance, link: '/compliance' },
     { name: 'NPC Certification', icon: certification, link: '/npc-certification' },
     { name: 'API Community', icon: apicommunity, link: '/api-community' },
-    { name: 'Data Quality', icon: dataquality, link: '/data-quality-management' },
+    { name: 'Data Quality Management', icon: dataquality, link: '/data-quality-management' },
     { name: 'Customer Support', icon: customer, link: '/customer-support' },
   ];
 
   return (
-    <div className="relative w-96 h-96 rounded-full flex justify-center items-center bg-white">
+    <div className="relative w-[406px] h-[406px] rounded-full flex justify-center items-center bg-white">
       <div className="absolute w-40 h-40 bg-blue-500 rounded-full flex justify-center items-center">
         <span className="text-white text-center font-sans font-semibold">National Data Hub (NPC)</span>
       </div>
@@ -45,7 +45,7 @@ const CircularButtons = () => {
           >
             <img src={button.icon} alt={button.name} className="w-8 h-8" />
           </a>
-          <span className="text-center text-xs ml-1 font-semibold">{button.name}</span>
+          <span className="text-center text-[9px] text-secondary font-semibold w-16 mt-1">{button.name}</span>
         </div>
       ))}
     </div>

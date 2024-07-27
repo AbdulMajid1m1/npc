@@ -9,8 +9,8 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Button from '@mui/material/Button';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import retailsector from '../../../Images/npcsector/retailsector.png';
 import sliderbackground from '../../../Images/circular/sliderbackground.png';
+import fact from '../../../Images/circular/fact.png';
 import CircularButtons from './CircularButtons';  // Import the new component
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
@@ -47,15 +47,21 @@ const Sliders = () => {
                 <p className="sm:text-2xl text-xl font-thin text-white sm:max-w-3xl w-full">
                   NPC by GS1 Saudi Arabia: Real-time Product Data Sharing and Management for Supply Chain Excellence.
                 </p>
+                <div className="flex justify-between mt-3">
                 <Link to="#">
                   <Button
                     variant="contained"
                     style={{ backgroundColor: '#FF4308', color: '#ffffff', marginTop: '2rem'}}
                     endIcon={<ArrowRightAltIcon />}
-                  >
+                    >
                     More Details
                   </Button>
                 </Link>
+                <img 
+                  src={fact}
+                  className="h-auto w-32"
+                  alt="" />
+                  </div>
               </div>
               <div className="flex-1 relative">
                 <img
