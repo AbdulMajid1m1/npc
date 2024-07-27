@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import headerImage from "../../../../Images/headerImage.png";
-import HeaderChange from "../../../../components/Header/HeaderChange";
+import HeaderChange from "../../../../components/Header/Header";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendIcon from '@mui/icons-material/Send';

@@ -36,6 +36,7 @@ module.exports = {
     },
     colors: {
       'primary': '#a7a7a7',    // Main Color
+      'primary2': '#FF4308',
       'secondary': '#021F69',  
       'dashboard-color': '#ccd0f1',
       'border-color': '#8E9CAB',

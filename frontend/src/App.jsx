@@ -32,7 +32,6 @@ import Crnumber from "./Pages/AdminPages/MasterData/crnumber/crnumber";
 import Document_type from "./Pages/AdminPages/MasterData/documentype/documenttype";
 import AdminNewsLetter from "./Pages/AdminPages/MasterData/NewsLetter/NewsLetter.jsx";
 import SideNav from "./components/Sidebar/SideNav.jsx";
-import HeaderChange from "./components/Header/HeaderChange.jsx";
 import GLN from "./Pages/MemberPages/GLN/GLN.jsx";
 import AdminSidebar from "./components/AdminSidebar/AdminSidebar.jsx";
 import Dashboard from "./Pages/AdminPages/Dashboard/Dashboard.jsx";
@@ -40,10 +39,17 @@ import AdminLogin from "./Pages/AdminPages/AdminLogin/AdminLogin.jsx";
 import { useTranslation } from "react-i18next";
 import GlobalProductRegistry from "./Pages/AdminPages/NpcRegistry/GlobalProductRegistry/GlobalProductRegistry.jsx";
 import LocalProductRegistry from "./Pages/AdminPages/NpcRegistry/LocalProductRegistry/LocalProductRegistry.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Header from "./components/Header/Header.jsx";
+import HeaderLine from "./components/Header/HeaderLine.jsx";
+import HomePage from "./Pages/UserPages/HomePage/HomePage.jsx";
+import NewFooter from "./components/Footer/NewFooter.jsx";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   
-    const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const MainLayout = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -68,12 +74,19 @@ const App = () => {
   const UserLayout = () => {
     return (
       <div>
-        <div className="sticky top-0 z-50 bg-white">
-          <HeaderChange />
+        <div>
+          <HeaderLine />
         </div>
+        <div className="sticky top-0 z-50 bg-white">
+          <Header />
+        </div>
+        <QueryClientProvider client={queryClient}>
         <main className="mx-auto flex max-w-[1760px] flex-col justify-center">
           <Outlet /> {/* Nested routes will render here */}
         </main>
+        </QueryClientProvider>
+        {/* <Footer /> */}
+        <NewFooter />
       </div>
     );
   };
@@ -107,7 +120,8 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route element={<UserLayout />}>
-                  <Route path="/" element={<MemberLogin />} />
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/login-npc" element={<MemberLogin />} />
                   <Route path="/select-gln" element={<SelectGln />} />
 
                   <Route path="/admin-login" element={<AdminLogin />} />
