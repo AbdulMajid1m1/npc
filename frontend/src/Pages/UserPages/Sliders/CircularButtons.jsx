@@ -28,7 +28,7 @@ const CircularButtons = () => {
 
   return (
     <div className="relative w-[406px] h-[406px] rounded-full flex justify-center items-center bg-white">
-      <div className="absolute w-40 h-40 bg-blue-500 rounded-full flex justify-center items-center">
+      <div className="absolute w-40 h-40 bg-[#0038FF] rounded-full flex justify-center items-center">
         <span className="text-white text-center font-sans font-semibold">National Data Hub (NPC)</span>
       </div>
       {buttons.map((button, index) => (

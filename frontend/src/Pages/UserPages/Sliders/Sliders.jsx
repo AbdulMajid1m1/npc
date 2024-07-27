@@ -39,8 +39,8 @@ const Sliders = () => {
           className="mySwiper"
         >
           <SwiperSlide>
-            <div className="relative w-full h-[420px] flex">
-              <div className="flex-1 flex flex-col justify-center p-8 bg-[#003D8F]">
+            <div className="relative w-full md:h-[420px] h-auto flex flex-col md:flex-row">
+              <div className="flex-1 flex flex-col justify-center p-8 bg-secondary">
                 <h2 className="sm:text-4xl text-2xl font-sans text-white font-medium mb-4">
                   National Product Catalogue (NPC)
                 </h2>
@@ -59,7 +59,7 @@ const Sliders = () => {
                 </Link>
                 <img 
                   src={fact}
-                  className="h-auto w-32"
+                  className="h-auto w-40"
                   alt="" />
                   </div>
               </div>
@@ -75,7 +75,6 @@ const Sliders = () => {
               </div>
             </div>
           </SwiperSlide>
-          {/* Add more slides as needed */}
         </Swiper>
         <div
           id="swiper-button-prev"

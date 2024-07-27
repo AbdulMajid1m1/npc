@@ -19,32 +19,32 @@ const ContactUs = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
 
-    try {
-      const res = await newRequest.post('/website/contactUs', {
-        "name": name,
-        "email": email,
-        "phoneNumber": phoneNumber,
-        "company": company,
-        "message": message
-      });
-      toast.success(res?.data?.message || `${t("Email sent successfully!")}`);
-      setName('');
-      setEmail('');
-      setPhoneNumber('');
-      setCompany('');
-      setMessage('');
-    } 
-    catch (error) {
-      toast.error(error.response?.data?.error || t("Email sending failed!"));
-    } 
-    finally {
-      setLoading(false);
-    }
-  }
+  //   try {
+  //     const res = await newRequest.post('/website/contactUs', {
+  //       "name": name,
+  //       "email": email,
+  //       "phoneNumber": phoneNumber,
+  //       "company": company,
+  //       "message": message
+  //     });
+  //     toast.success(res?.data?.message || `${t("Email sent successfully!")}`);
+  //     setName('');
+  //     setEmail('');
+  //     setPhoneNumber('');
+  //     setCompany('');
+  //     setMessage('');
+  //   } 
+  //   catch (error) {
+  //     toast.error(error.response?.data?.error || t("Email sending failed!"));
+  //   } 
+  //   finally {
+  //     setLoading(false);
+  //   }
+  // }
 
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const handleCompanyNumber = (value) => {
@@ -80,7 +80,8 @@ const ContactUs = () => {
             </h2>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* <form onSubmit={handleSubmit} className="space-y-4"> */}
+          <form className="space-y-4">
             <div className="flex space-x-4">
               <div className="flex-1">
                 <input 
@@ -92,7 +93,7 @@ const ContactUs = () => {
                     className="w-full p-2 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500"> 
                 </input>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 -mt-4">
                 <PhoneInput
                     international
                     country={"sa"}
@@ -106,8 +107,10 @@ const ContactUs = () => {
                     }}
                     inputStyle={{
                       width: "100%",
-                      borderRadius: "0px",
-                      border: "none",
+                      borderRadius: "1px",
+                      borderWidth: "4px",
+                      height: "35px",
+                      border: "1px solid #9ca3af",
                     }}
                     required
                   />
