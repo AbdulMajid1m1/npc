@@ -22,7 +22,7 @@ const CircularButtons = () => {
     { name: 'Compliance', icon: compliance, link: '/compliance' },
     { name: 'NPC Certification', icon: certification, link: '/npc-certification' },
     { name: 'API Community', icon: apicommunity, link: '/api-community' },
-    { name: 'Data Quality Management', icon: dataquality, link: '/data-quality-management' },
+    { name: 'Data Quality', icon: dataquality, link: '/data-quality-management' },
     { name: 'Customer Support', icon: customer, link: '/customer-support' },
   ];
 
@@ -32,16 +32,21 @@ const CircularButtons = () => {
         <span className="text-white text-center font-sans font-semibold">National Data Hub (NPC)</span>
       </div>
       {buttons.map((button, index) => (
-        <a
+        <div
           key={index}
-          href={button.link}
-          className="absolute w-16 h-16 bg-white hover:shadow-secondary rounded-full shadow-xl flex justify-center items-center"
+          className="absolute flex flex-col items-center"
           style={{
             transform: `rotate(${index * 36}deg) translate(150px) rotate(-${index * 36}deg)`
           }}
         >
-          <img src={button.icon} alt={button.name} className="w-8 h-8" />
-        </a>
+          <a
+            href={button.link}
+            className="w-16 h-16 bg-white hover:shadow-secondary rounded-full shadow-xl flex justify-center items-center"
+          >
+            <img src={button.icon} alt={button.name} className="w-8 h-8" />
+          </a>
+          <span className="text-center text-xs ml-1 font-semibold">{button.name}</span>
+        </div>
       ))}
     </div>
   );
