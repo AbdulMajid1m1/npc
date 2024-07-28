@@ -2663,46 +2663,52 @@ export const LanguageDataColumn = (t, i18n) => [
 ];
 
 export const megamenuDataColumn = (t, i18n) => [
-
   {
-    field: 'name_en',
-    headerName: t('Name[English]'),
+    field: "name_en",
+    headerName: t("Name[English]"),
     width: 180,
+    renderCell: (params) => (
+      <Box dangerouslySetInnerHTML={{ __html: params.value }} />
+    ),
   },
   {
-    field: 'name_ar',
-    headerName: t('Name[Arabic]'),
+    field: "name_ar",
+    headerName: t("Name[Arabic]"),
     width: 260,
+    renderCell: (params) => (
+      <Box dangerouslySetInnerHTML={{ __html: params.value }} />
+    ),
   },
   {
-    field: 'status',
-    headerName: t('Status'),
+    field: "status",
+    headerName: t("Status"),
     width: 180,
     valueGetter: (params) => {
-      return params.value === 1 ? 'Active' : 'Inactive';
+      return params.value === 1 ? "Active" : "Inactive";
     },
   },
   {
-    field: 'created_at',
-    headerName: t('Created At'),
+    field: "created_at",
+    headerName: t("Created At"),
     width: 180,
-    type: 'dateTime',
+    type: "dateTime",
     valueGetter: (params) => {
       // Convert the string date to a Date object
       return params.value ? new Date(params.value) : null;
-    }
+    },
   },
   {
-    field: 'updated_at',
-    headerName: t('Updated At'),
+    field: "updated_at",
+    headerName: t("Updated At"),
     width: 180,
-    type: 'dateTime',
+    type: "dateTime",
     valueGetter: (params) => {
       // Convert the string date to a Date object
       return params.value ? new Date(params.value) : null;
-    }
+    },
   },
 ];
+
 
 export const CategoriesDataColumn = (t, i18n) => [
 

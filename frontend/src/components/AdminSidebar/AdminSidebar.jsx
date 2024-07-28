@@ -1,16 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineDashboard } from "react-icons/ai";
 import { FaChevronDown, FaChevronUp, FaUsers } from "react-icons/fa";
 import Images from "../../Images/gs1logowhite.png";
 import { useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
-import identify from "../../Images/identify.png";
-import ngln from "../../Images/ngln.png";
-import nsscc from "../../Images/nsscc.png";
 import usersicon from "../../Images/usersicon.png";
-import DashboardHeader from "../DashboardRightHeader/DashboardHeader";
 import MasterData from "../../Images/master data.png";
 import language from "../../Images/language.png";
 import roleimg from "../../Images/roleicon.png"
@@ -29,6 +24,21 @@ import Crnumber from "../../Images/Crnumber.png";
 import documentIcon from "../../Images/document.png";
 import newslettericon from "../../Images/newslettericon.png";
 import gs1v2logo from "../../Images/gs1logowhite.png";
+import gtinmanagment from "../../Images/gtinmanagment.png"
+import NPCcertification from "../../Images/NPCcertification.png"
+import publisher from "../../Images/publisher.png"
+import recipient from "../../Images/recipient.png"
+import Userprofile from "../../Images/Userprofile.png"
+import dashboradnpc from "../../Images/dashboradnpc.png"
+import GLNmanagement from "../../Images/GLNmanagement.png"
+import GS1digitallink from "../../Images/GS1digitallink.png"
+import npcregistry from "../../Images/npcregistry.png"
+import localproduct from "../../Images/localproduct.png"
+import globalproduct from "../../Images/globalproduct.png"
+import frontend from "../../Images/frontend.png"
+import megamenu from "../../Images/megamenu.png"
+import categories from "../../Images/categories.png"
+import logout from "../../Images/logout.jpeg"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
 import { GiPriceTag } from "react-icons/gi";
@@ -47,6 +57,10 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   // const [isOpen, setIsOpen] = useState(false);
   const [isMangeOpen, setIsMangeOpen] = useState(false);
   const [MasterDatadropdown, setMasterDatadropdown] = useState(false);
+  const [frontendDropdown, setFrontendDropdown] = useState(false);
+  const [dataManagement, setDataManagement] = useState(false);
+  const [codificationDropdown, setCodificationDropdown] = useState(false);
+  const [npcRegistry, setNpcRegistry] = useState(false);
   const [isMangeSliderOpen, setIsMangeSliderOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -58,8 +72,20 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   const handleToggleMange = () => {
     setIsMangeOpen(!isMangeOpen);
   };
+  const handleToggleDataManagement = () => {
+    setDataManagement(!dataManagement);
+  };
   const handleToggleMangemasterdata = () => {
     setMasterDatadropdown(!MasterDatadropdown);
+  };
+  const handleToggleMangeFrontendData = () => {
+    setFrontendDropdown(!frontendDropdown);
+  };
+  const handleToggleMangeCodification = () => {
+    setCodificationDropdown(!codificationDropdown);
+  };
+  const handleToggleMangeNpcRegistry = () => {
+    setNpcRegistry(!npcRegistry);
   };
   const handleToggleMangeSlider = () => {
     setIsMangeSliderOpen(!isMangeSliderOpen);
@@ -99,7 +125,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={identify}
+                          src={dashboradnpc}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
@@ -109,38 +135,136 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                   </li>
 
                   <li>
-                    {/* <div
+                    <div
                       className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
                         i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
                       }`}
-                      onClick={handleToggleMange}
+                      onClick={handleToggleMangeNpcRegistry}
                     >
                       <span
-                        className={`drop-shadow-lg flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center xl:p-2.5 ${
-                          i18n.language === "ar" ? "ml-2" : "mr-2 "
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
                         <img
-                          src={identify}
+                          src={npcregistry}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="font-sans font-semibold text-base my-auto">
-                        {t("IDENTIFY")}
+                      <span className="text-secondary font-semibold text-lg my-auto">
+                        {t("NPC Registry")}
                       </span>
                       <span
                         className={`inline-block  my-auto sidenav-arrow ${
                           i18n.language === "ar" ? "mr-auto" : "ml-auto"
                         }`}
                       >
-                        {isMangeOpen ? <FaChevronUp /> : <FaChevronDown />}
+                        {npcRegistry ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
                       </span>
-                    </div> */}
-                    {/* {isMangeOpen && ( */}
+                    </div>
+                    {npcRegistry && (
                       <div
                         className={`transition border-gray-500 dropdown-section nested-menu ${
-                          i18n.language === "ar" ? "pr-3 " : "pl-3"
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
+                        <ul className={`text-sm flex flex-col gap-3`}>
+                          <li>
+                            <Link
+                              to="/admin/global-product-registry"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={globalproduct}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg truncate">
+                                  {t("Global Registry")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/admin/local-product-registry"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={localproduct}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg truncate">
+                                  {t("Local Registry")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          </ul>
+                      </div>
+                    )}
+                  </li> 
+                  <li>
+                  <div
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                      onClick={handleToggleDataManagement}
+                    >
+                      <span
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
+                      >
+                        <img
+                          src={gtinmanagment}
+                          alt="logo"
+                          className="w-10 h-10 object-cover"
+                        />
+                      </span>
+                      <span className="text-secondary font-semibold text-lg my-auto">
+                        {t("Data Management")}
+                      </span>
+                      <span
+                        className={`inline-block  my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {dataManagement ? <FaChevronUp /> : <FaChevronDown />}
+                      </span>
+                    </div>
+                    {dataManagement && (
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-6 " : "pl-6"
                         }`}
                       >
                         <ul className="text-sm flex flex-col gap-3">
@@ -161,7 +285,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={identify}
+                                  src={gtinmanagment}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
@@ -172,7 +296,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                       : "text-start"
                                   }`}
                                 >
-                                  {t("GTIN Management")}
+                                  {t("GTIN")}
                                 </span>
                               </div>
                             </Link>
@@ -194,7 +318,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={ngln}
+                                  src={GLNmanagement}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -205,7 +329,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                       : "text-start"
                                   }`}
                                 >
-                                  {t("GLN Management")}
+                                  {t("GLN")}
                                 </span>
                               </div>
                             </Link>
@@ -227,7 +351,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={nsscc}
+                                  src={GS1digitallink}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -238,14 +362,59 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                       : "text-start"
                                   }`}
                                 >
-                                  {t("GS1 Digital Links")}
+                                  {t("Digital Links")}
                                 </span>
                               </div>
                             </Link>
                           </li>
+                          </ul>
+                          </div> 
+                        )}
+
+
+<li>
+                    <div
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                      onClick={handleToggleMangeCodification}
+                    >
+                      <span
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
+                      >
+                        <img
+                          src={recipient}
+                          alt="logo"
+                          className="w-10 h-10 object-cover"
+                        />
+                      </span>
+                      <span className="text-secondary font-semibold text-lg my-auto">
+                        {t("Codification")}
+                      </span>
+                      <span
+                        className={`inline-block  my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {codificationDropdown ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </span>
+                    </div>
+                    {codificationDropdown && (
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
+                        <ul className={`text-sm flex flex-col gap-3`}>
                           <li>
                             <Link
-                              to="/admin/gln"
+                              // to="/admin/Language/Dynamic"
                               className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
                                 i18n.language === "ar"
                                   ? "pr-3 pl-4 justify-end"
@@ -260,7 +429,147 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={ngln}
+                                  src={language}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("GPC")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={dashboradnpc}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("HS-CODE")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={GLNmanagement}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("UNSPSC")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={gtinmanagment}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("GS1 GMN")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              // to="/admin/Language/Dynamic"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={NPCcertification}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("GMDN")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          </ul>
+                      </div>
+                    )}
+                  </li> 
+
+                          <li>
+                            <Link
+                              to="/admin/gln"
+                              className={`flex items-center py-2  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-6 pl-6 justify-end"
+                                  : "pl-6 pr-6 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={NPCcertification}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -279,10 +588,10 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                           <li>
                             <Link
                               to="/admin/gln"
-                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                              className={`flex items-center py-2  text-gray-700 rounded hover:bg-gray-100 ${
                                 i18n.language === "ar"
-                                  ? "pr-3 pl-4 justify-end"
-                                  : "pl-3 pr-4 justify-start"
+                                  ? "pr-6 pl-6 justify-end"
+                                  : "pl-6 pr-6 justify-start"
                               }`}
                             >
                               <div
@@ -293,7 +602,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={identify}
+                                  src={publisher}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -312,10 +621,10 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                           <li>
                             <Link
                               to="/admin/gln"
-                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                              className={`flex items-center py-2  text-gray-700 rounded hover:bg-gray-100 ${
                                 i18n.language === "ar"
-                                  ? "pr-3 pl-4 justify-end"
-                                  : "pl-3 pr-4 justify-start"
+                                  ? "pr-6 pl-6 justify-end"
+                                  : "pl-6 pr-6 justify-start"
                               }`}
                             >
                               <div
@@ -326,7 +635,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={nsscc}
+                                  src={recipient}
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
@@ -343,44 +652,6 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                             </Link>
                           </li>
                           <li>
-                            <Link
-                              to="/admin/gln"
-                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
-                                i18n.language === "ar"
-                                  ? "pr-3 pl-4 justify-end"
-                                  : "pl-3 pr-4 justify-start"
-                              }`}
-                            >
-                              <div
-                                className={`flex justify-center items-center gap-3 ${
-                                  i18n.language === "ar"
-                                    ? "flex-row-reverse"
-                                    : "flex-row"
-                                }`}
-                              >
-                                <img
-                                  src={identify}
-                                  alt="logo"
-                                  className="w-10 h-10 object-cover rounded-full bg-white"
-                                />
-                                <span
-                                  className={`text-secondary font-semibold text-lg ${
-                                    i18n.language === "ar"
-                                      ? "text-end"
-                                      : "text-start"
-                                  }`}
-                                >
-                                  {t("User Profile")}
-                                </span>
-                              </div>
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    {/* )} */}
-                  </li>
-
-                  <li>
                     <div
                       className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
                         i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
@@ -388,7 +659,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       onClick={handleToggleMangemasterdata}
                     >
                       <span
-                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-white bg-center text-center  ${
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
                           i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
@@ -897,22 +1168,160 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                     )}
                   </li>
 
+                  <div
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                      onClick={handleToggleMangeFrontendData}
+                    >
+                      <span
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
+                      >
+                        <img
+                          src={frontend}
+                          alt="logo"
+                          className="w-10 h-10 object-cover"
+                        />
+                      </span>
+                      <span className="text-secondary my-auto font-semibold text-lg">
+                        {t("Frontend")}
+                      </span>
+                      <span
+                        className={`inline-block my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {frontendDropdown ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </span>
+                    </div>
+                    {frontendDropdown && (
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
+                        <ul className={`text-sm flex flex-col gap-3`}>
+                          <li>
+                            <Link
+                              to="/admin/megamenu"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={megamenu}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("Mega Menu")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/admin/categories"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={categories}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("Categories")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                        
+                          <li>
+                            <Link
+                              to="/admin/gln"
+                              className={`flex items-center py-2  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-6 pl-6 justify-end"
+                                  : "pl-6 pr-6 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={Userprofile}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span
+                                  className={`text-secondary font-semibold text-lg ${
+                                    i18n.language === "ar"
+                                      ? "text-end"
+                                      : "text-start"
+                                  }`}
+                                >
+                                  {t("API Guide")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                       
+                  </li>
+
+
                   <li>
                     <Link
                       to="/"
                       // className="flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100"
-                      className={`flex items-center px-6 py-4 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${
+                      className={`flex items-center px-3 py-0 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 ${
                         i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
                       }`}
                     >
                       <span
-                        className={`drop-shadow-lg flex h-8 w-8 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${
-                          i18n.language === "ar" ? "ml-2" : "mr-2 "
+                        className={`drop-shadow-lg flex h-16 w-16 items-center justify-center rounded-lg bg-D2D180 bg-center text-center xl:p-2.5 ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
                         }`}
                       >
-                        <AiOutlineDashboard className="w-5 h-5" />
+                        <img
+                          src={logout}
+                          alt="logo"
+                          className="w-10 h-10 object-cover rounded-full bg-white"
+                        />
                       </span>
-                      <span className="font-semibold">{t("Log-out")}</span>
+                      <span className="text-secondary font-semibold text-lg -ml-3">{t("Log-out")}</span>
                     </Link>
                   </li>
                 </ul>
