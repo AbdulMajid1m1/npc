@@ -59,7 +59,7 @@ const Sliders = () => {
                 </Link>
                 <img 
                   src={verified}
-                  className="h-auto w-80 object-contain -rotate-12"
+                  className="h-auto w-80 -rotate-12"
                   alt="" />
                   </div>
               </div>
