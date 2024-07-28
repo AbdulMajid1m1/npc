@@ -11,9 +11,9 @@ import Button from '@mui/material/Button';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import sliderbackground from '../../../Images/circular/sliderbackground.png';
 import fact from '../../../Images/circular/fact.png';
+import verified from '../../../Images/circular/verified.jpeg';
 import CircularButtons from './CircularButtons';  // Import the new component
 import { Link } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
 
 const Sliders = () => {
   const { t, i18n } = useTranslation();
@@ -58,8 +58,8 @@ const Sliders = () => {
                   </Button>
                 </Link>
                 <img 
-                  src={fact}
-                  className="h-auto w-40"
+                  src={verified}
+                  className="h-auto w-56 object-contain"
                   alt="" />
                   </div>
               </div>
