@@ -54,6 +54,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   // const [isOpen, setIsOpen] = useState(false);
   const [isMangeOpen, setIsMangeOpen] = useState(false);
   const [MasterDatadropdown, setMasterDatadropdown] = useState(false);
+  const [frontendDropdown, setFrontendDropdown] = useState(false);
   const [dataManagement, setDataManagement] = useState(false);
   const [codificationDropdown, setCodificationDropdown] = useState(false);
   const [npcRegistry, setNpcRegistry] = useState(false);
@@ -73,6 +74,9 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   };
   const handleToggleMangemasterdata = () => {
     setMasterDatadropdown(!MasterDatadropdown);
+  };
+  const handleToggleMangeFrontendData = () => {
+    setFrontendDropdown(!frontendDropdown);
   };
   const handleToggleMangeCodification = () => {
     setCodificationDropdown(!codificationDropdown);
@@ -1160,6 +1164,104 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                       </div>
                     )}
                   </li>
+
+                  <div
+                      className={`flex items-start px-6 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                        i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                      }`}
+                      onClick={handleToggleMangeFrontendData}
+                    >
+                      <span
+                        className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
+                          i18n.language === "ar" ? "ml-2" : "mr-2"
+                        }`}
+                      >
+                        <img
+                          src={MasterData}
+                          alt="logo"
+                          className="w-10 h-10 object-cover"
+                        />
+                      </span>
+                      <span className="text-secondary my-auto font-semibold text-lg">
+                        {t("Frontend")}
+                      </span>
+                      <span
+                        className={`inline-block my-auto sidenav-arrow ${
+                          i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                        }`}
+                      >
+                        {frontendDropdown ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </span>
+                    </div>
+                    {frontendDropdown && (
+                      <div
+                        className={`transition border-gray-500 dropdown-section nested-menu ${
+                          i18n.language === "ar" ? "pr-3 mr-3 " : "pl-3 ml-3 "
+                        }`}
+                      >
+                        <ul className={`text-sm flex flex-col gap-3`}>
+                          <li>
+                            <Link
+                              to="/admin/megamenu"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={language}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("Mega Menu")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/admin/categories"
+                              className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-4 justify-end"
+                                  : "pl-3 pr-4 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={language}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover"
+                                />
+                                <span className="text-secondary font-semibold text-lg">
+                                  {t("Categories")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                        
                           <li>
                             <Link
                               to="/admin/gln"

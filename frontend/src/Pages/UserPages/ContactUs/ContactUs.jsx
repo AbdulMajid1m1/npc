@@ -7,6 +7,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import PhoneInput from 'react-phone-input-2';
+import "react-phone-input-2/lib/style.css";
 
 const ContactUs = () => {
   const { t, i18n } = useTranslation();
@@ -93,7 +94,7 @@ const ContactUs = () => {
                     className="w-full p-2 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500"> 
                 </input>
               </div>
-              <div className="flex-1 -mt-4">
+              <div className="flex-1">
                 <PhoneInput
                     international
                     country={"sa"}
@@ -108,8 +109,6 @@ const ContactUs = () => {
                     inputStyle={{
                       width: "100%",
                       borderRadius: "1px",
-                      borderWidth: "4px",
-                      height: "35px",
                       border: "1px solid #9ca3af",
                     }}
                     required

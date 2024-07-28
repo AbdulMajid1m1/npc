@@ -7,6 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
 import newRequest from "../../../../utils/userRequest";
 import { toast } from "react-toastify";
+import DropDownSelection from "../../../UserPages/DropDownSelection/DropDownSelection";
 // import { useTranslation } from 'react-i18next';
 
 const MemberLogin = () => {
@@ -42,6 +43,10 @@ const MemberLogin = () => {
       {/* <div className="sticky top-0 z-50 bg-white">
         <HeaderChange />
       </div> */}
+      <div>
+        {/* DropDown */}
+        <DropDownSelection />
+      </div>
 
       <div className="flex justify-center items-center mt-5 mb-10">
         <div className="sm:h-[725px] h-auto w-[85%] border border-primary rounded-md shadow-xl">

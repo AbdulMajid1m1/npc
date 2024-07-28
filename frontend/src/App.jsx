@@ -44,6 +44,8 @@ import Header from "./components/Header/Header.jsx";
 import HeaderLine from "./components/Header/HeaderLine.jsx";
 import HomePage from "./Pages/UserPages/HomePage/HomePage.jsx";
 import NewFooter from "./components/Footer/NewFooter.jsx";
+import Megamenu from "./Pages/AdminPages/Frontend/MegaMenu/Megamenu.jsx";
+import Categories from "./Pages/AdminPages/Frontend/Categories/Categories.jsx";
 
 const queryClient = new QueryClient();
 
@@ -222,6 +224,9 @@ const App = () => {
                         <Route path="global-product-registry" element={<GlobalProductRegistry />} />
                         <Route path="local-product-registry" element={<LocalProductRegistry />} />
 
+                        {/* frontend */}
+                        <Route path="megamenu" element={<Megamenu />} />
+                        <Route path="categories" element={<Categories />} />
                       </Routes>
                     </AdminMainLayout>
                   }

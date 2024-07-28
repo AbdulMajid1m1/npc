@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <div>
       {/* DropDown */}
-      {/* <DropDownSelection /> */}
+      <DropDownSelection />
 
       {/* Slider */}
       <Sliders />
