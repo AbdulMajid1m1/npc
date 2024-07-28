@@ -21,7 +21,7 @@ import {
 
     router.get("/getAllmega_menu", getAllmega_menu);
 router.post(
- 
+ "/createmega_menus",
   createmega_menus
 );
 router.get("/getmega_menusById/:id", getmega_menusById);
