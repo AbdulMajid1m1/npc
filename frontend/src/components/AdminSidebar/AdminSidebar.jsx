@@ -35,6 +35,9 @@ import GS1digitallink from "../../Images/GS1digitallink.png"
 import npcregistry from "../../Images/npcregistry.png"
 import localproduct from "../../Images/localproduct.png"
 import globalproduct from "../../Images/globalproduct.png"
+import frontend from "../../Images/frontend.png"
+import megamenu from "../../Images/megamenu.png"
+import categories from "../../Images/categories.png"
 import logout from "../../Images/logout.jpeg"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
@@ -1177,7 +1180,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={MasterData}
+                          src={frontend}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
@@ -1221,7 +1224,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={language}
+                                  src={megamenu}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
@@ -1248,7 +1251,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={language}
+                                  src={categories}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
