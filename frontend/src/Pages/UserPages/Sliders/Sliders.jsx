@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import sliderbackground from '../../../Images/circular/sliderbackground.png';
 import fact from '../../../Images/circular/fact.png';
-import verified from '../../../Images/circular/verified.jpeg';
+import verified from '../../../Images/circular/verified.png';
 import CircularButtons from './CircularButtons';  // Import the new component
 import { Link } from "react-router-dom";
 
@@ -59,7 +59,7 @@ const Sliders = () => {
                 </Link>
                 <img 
                   src={verified}
-                  className="h-auto w-56 object-contain"
+                  className="h-auto w-80 object-contain -rotate-12"
                   alt="" />
                   </div>
               </div>
