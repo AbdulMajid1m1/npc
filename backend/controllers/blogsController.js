@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import fs1 from "fs/promises";
 import { fileURLToPath } from "url";
-import { prismaGroute } from "../prismaMultiClinets.js";
+import prisma from "../prismaClient.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Schema validation using Joi
@@ -67,7 +67,7 @@ export const createPage = async (req, res, next) => {
   } = value;
 
   try {
-    const existingPage = await prismaGroute.newPage.findUnique({
+    const existingPage = await prisma.newPage.findUnique({
       where: { slug },
     });
 
@@ -75,7 +75,7 @@ export const createPage = async (req, res, next) => {
       throw createError(400, "Slug already exists");
     }
 
-    const page = await prismaGroute.newPage.create({
+    const page = await prisma.newPage.create({
       data: {
         name,
         name_ar,
@@ -221,15 +221,15 @@ export const updatePage = async (req, res, next) => {
   } = value;
 
   try {
-    const page = await prismaGroute.newPage.findUnique({ where: { id } });
+    const page = await prisma.newPage.findUnique({ where: { id } });
 
     if (!page) {
       throw createError(404, "Page not found");
     }
 
-    await prismaGroute.$transaction(
-      async (prismaGroute) => {
-        await prismaGroute.newPage.update({
+    await prisma.$transaction(
+      async (prisma) => {
+        await prisma.newPage.update({
           where: { id },
           data: {
             name,
@@ -242,14 +242,14 @@ export const updatePage = async (req, res, next) => {
           },
         });
 
-        await prismaGroute.section.deleteMany({
+        await prisma.section.deleteMany({
           where: {
             page_id: id,
           },
         });
 
         for (const section of sections) {
-          const createdSection = await prismaGroute.section.create({
+          const createdSection = await prisma.section.create({
             data: {
               page_id: id,
               name: section.name,
@@ -303,7 +303,7 @@ export const updatePage = async (req, res, next) => {
             delete data.fileField;
             delete data_ar.fileField;
 
-            await prismaGroute.content.create({
+            await prisma.content.create({
               data: {
                 section_id: sectionId,
                 type: content.type,
@@ -317,7 +317,7 @@ export const updatePage = async (req, res, next) => {
       { timeout: 50000 }
     );
 
-    const updatedPage = await prismaGroute.newPage.findUnique({
+    const updatedPage = await prisma.newPage.findUnique({
       where: { id },
       include: {
         sections: {
@@ -384,7 +384,7 @@ export const getNewPages = async (req, res, next) => {
       return obj;
     }, {});
 
-    const pages = await prismaGroute.newPage.findMany({
+    const pages = await prisma.newPage.findMany({
       where: filterConditions,
       select,
       orderBy: {
@@ -405,7 +405,7 @@ export const getPage = async (req, res, next) => {
   const language = req.query.lang || "en";
 
   try {
-    const page = await prismaGroute.newPage.findUnique({
+    const page = await prisma.newPage.findUnique({
       where: { slug },
       include: {
         template: true,
@@ -487,7 +487,7 @@ export const getTemplates = async (req, res, next) => {
         : {};
 
     // Find templates with Prisma
-    const templates = await prismaGroute.template.findMany({
+    const templates = await prisma.template.findMany({
       where: filterConditions,
       orderBy: { updated_at: "desc" }, // Sort by latest update
     });
@@ -514,7 +514,7 @@ export const deletePage = async (req, res, next) => {
 
   try {
     // Retrieve the page and its associated data
-    const page = await prismaGroute.newPage.findUnique({
+    const page = await prisma.newPage.findUnique({
       where: { id: pageId },
       include: {
         sections: {
@@ -567,7 +567,7 @@ export const deletePage = async (req, res, next) => {
     });
 
     // Delete the page from the database
-    await prismaGroute.newPage.delete({
+    await prisma.newPage.delete({
       where: { id: pageId },
     });
 

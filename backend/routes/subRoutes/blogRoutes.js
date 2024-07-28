@@ -8,7 +8,7 @@ import {
   getTemplates,
   updatePage,
 } from "../../controllers/blogsController.js";
-import { adminAuth, generalAuth } from "../../Middleware/auth.js";
+import { adminAuth, generalAuth } from "../../middlewares/auth.js";
 
 const templateUploadConfigs = {
   template1: [
@@ -93,7 +93,7 @@ const router = express.Router();
 
 router.post(
   "/",
-  generalAuth,
+
   determineUploadFields, // Determine template type and upload fields
   dynamicUpload, // Dynamic upload based on template type
   createPage
@@ -101,7 +101,7 @@ router.post(
 
 router.put(
   "/",
-  generalAuth,
+
   determineUploadFields, // Determine template type and upload fields
   dynamicUpload, // Dynamic upload based on template type
   updatePage
@@ -109,10 +109,10 @@ router.put(
 
 router.get("/", getPage);
 
-router.get("/pages", generalAuth, getNewPages);
+router.get("/pages", getNewPages);
 
 router.get("/template", getTemplates);
 
-router.delete("/:id", generalAuth, deletePage);
+router.delete("/:id", deletePage);
 
 export default router;

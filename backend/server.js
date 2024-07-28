@@ -8,12 +8,6 @@ import morgan from'morgan';
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import rootRoute from "./routes/RootRoute.js";
-import {
-  handleExpiredSubscriptions,
-  handleInvoiceReminders,
-  sendNotificationEmailsToExpiringMembers,
-  sendReminderEmailsToExpiredMembers,
-} from "./utils/functions/reminderEmailFun.js";
 import QRCode from "qrcode";
 // import { PrismaClient } from '@prisma/client';
 import ejs from "ejs";
@@ -85,18 +79,18 @@ app.use("/api", rootRoute);
 
 // Cron job to run the reminder function every day at midnight
 
-cron.schedule("0 * * * *", async () => {
-  console.log("Running a task every hour");
-  handleInvoiceReminders();
-  handleExpiredSubscriptions();
-  try {
-    console.log("Running daily reminder email task...");
-    // await sendReminderEmailsToExpiredMembers();
-    // await sendNotificationEmailsToExpiringMembers();
-  } catch (error) {
-    console.error("Error running daily reminder email task:", error);
-  }
-});
+// cron.schedule("0 * * * *", async () => {
+//   console.log("Running a task every hour");
+//   // handleInvoiceReminders();
+//   // handleExpiredSubscriptions();
+//   try {
+//     console.log("Running daily reminder email task...");
+//     // await sendReminderEmailsToExpiredMembers();
+//     // await sendNotificationEmailsToExpiringMembers();
+//   } catch (error) {
+//     console.error("Error running daily reminder email task:", error);
+//   }
+// });
 
 app.get("/test", async (req, res) => {
   try {
