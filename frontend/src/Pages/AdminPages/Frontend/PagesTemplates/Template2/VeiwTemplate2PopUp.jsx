@@ -71,15 +71,15 @@ const ViewTemplate2PopUp = ({ isVisible, setVisibility, slug }) => {
                   </button>
                 </div>
                 
-                {/* {isLoading ? (
+                {isLoading ? (
                   <div className="flex justify-center items-center">
-                    <DotLoader size={45} color={"#FF693A"} loading={isLoading} />
+                    <BounceLoader size={45} color={"#021F69"} loading={isLoading} />
                   </div>
                 ) : (
                   viewTemplateData && (
                     <BarcodeServices pageData={viewTemplateData} />
                   )
-                )} */}
+                )}
 
                 
               </div>

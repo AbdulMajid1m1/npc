@@ -53,6 +53,7 @@ import Template4 from "./Pages/AdminPages/Frontend/PagesTemplates/Template4/Temp
 import Template6 from "./Pages/AdminPages/Frontend/PagesTemplates/Template6/Template6.jsx";
 import Template5 from "./Pages/AdminPages/Frontend/PagesTemplates/Tempate5/Template5.jsx";
 import Template7 from "./Pages/AdminPages/Frontend/PagesTemplates/Template7/Template7.jsx";
+import BlogPages from "./Pages/UserPages/BlogPages/BlogPages.jsx";
 
 const queryClient = new QueryClient();
 
@@ -134,6 +135,8 @@ const App = () => {
                   <Route path="/select-gln" element={<SelectGln />} />
 
                   <Route path="/admin-login" element={<AdminLogin />} />
+
+                  <Route path=":id" element={<BlogPages />} />
                 </Route>
               </Routes>
               <Routes>

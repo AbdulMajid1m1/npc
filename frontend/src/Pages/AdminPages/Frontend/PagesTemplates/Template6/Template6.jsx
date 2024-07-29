@@ -195,9 +195,9 @@ const Template6 = () => {
           <UpdateTemplate6 isVisible={isUpdatePopupVisible} setVisibility={setUpdatePopupVisibility} refreshTemplate6Data={refetchTemplate6Data} />
         )}
 
-        {/* {isViewPopupVisible && (
+        {isViewPopupVisible && (
           <ViewTemplate6PopUp isVisible={isViewPopupVisible} setVisibility={setViewPopupVisibility} slug={viewSlug}/>
-        )} */}
+        )}
       </div>
     </div>
   );

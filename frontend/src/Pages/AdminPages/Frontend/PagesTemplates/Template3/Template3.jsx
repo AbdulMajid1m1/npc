@@ -193,9 +193,9 @@ const Template3 = () => {
           <UpdateTemplate3 isVisible={isUpdatePopupVisible} setVisibility={setUpdatePopupVisibility} refreshTemplate3Data={refetchTemplate3Data} />
         )}
         
-        {/* {isViewPopupVisible && (
+        {isViewPopupVisible && (
           <ViewTemplate3PopUp isVisible={isViewPopupVisible} setVisibility={setViewPopupVisibility} slug={viewSlug}/>
-        )} */}
+        )}
       </div>
     </div>
   );

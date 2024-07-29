@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../../../i18n";
-import { DotLoader } from "react-spinners";
-// import Gs1Barcodes from "../../../../UserPages/Gs1Barcodes/Gs1Barcodes";
+import { BounceLoader } from "react-spinners";
+import Gs1Barcodes from "../../../../UserPages/Gs1Barcodes/Gs1Barcodes";
 import newRequest from "../../../../../utils/userRequest";
 import { toast } from "react-toastify";
 
@@ -71,15 +71,15 @@ const ViewTemplate4PopUp = ({ isVisible, setVisibility, slug }) => {
                   </button>
                 </div>
                 
-                {/* {isLoading ? (
+                {isLoading ? (
                   <div className="flex justify-center items-center">
-                    <DotLoader size={45} color={"#FF693A"} loading={isLoading} />
+                    <BounceLoader size={45} color={"#021F69"} loading={isLoading} />
                   </div>
                 ) : (
                   viewTemplateData && (
                     <Gs1Barcodes pageData={viewTemplateData} />
                   )
-                )} */}
+                )}
 
                 
               </div>

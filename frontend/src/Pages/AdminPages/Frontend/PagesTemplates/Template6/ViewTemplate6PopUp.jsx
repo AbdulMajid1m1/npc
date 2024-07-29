@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../../../i18n";
-import { DotLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import newRequest from "../../../../../utils/userRequest";
 import { toast } from "react-toastify";
-// import IndustrySolutions from "../../../../UserPages/IndustrySolutions/IndustrySolutions";
+import IndustrySolutions from "../../../../UserPages/IndustrySolutions/IndustrySolutions";
 
 const ViewTemplate6PopUp = ({ isVisible, setVisibility, slug }) => {
   const { t } = useTranslation();
@@ -71,15 +71,15 @@ const ViewTemplate6PopUp = ({ isVisible, setVisibility, slug }) => {
                   </button>
                 </div>
                 
-                {/* {isLoading ? (
+                {isLoading ? (
                   <div className="flex justify-center items-center">
-                    <DotLoader size={45} color={"#FF693A"} loading={isLoading} />
+                    <BounceLoader size={45} color={"#021F69"} loading={isLoading} />
                   </div>
                 ) : (
                   viewTemplateData && (
                     <IndustrySolutions pageData={viewTemplateData} />
                   )
-                )} */}
+                )}
 
                 
               </div>
