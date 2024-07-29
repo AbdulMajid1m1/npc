@@ -20,7 +20,12 @@ import {
     mega_menu_categories_frontSide,creatfeatured_services
     ,updatefeatured_services
     ,deletefeatured_services,getAllfeatured_services,
-    getfeatured_servicesById} from "../../controllers/frontEndController.js"
+    getfeatured_servicesById, getAllupcoming_events,
+    creatupcoming_events,
+    getupcoming_eventsById,
+    updateupcoming_events,
+    deleteupcoming_events,
+    } from "../../controllers/frontEndController.js"
 
 
     router.get("/getAllmega_menu", getAllmega_menu);
@@ -109,4 +114,36 @@ router.delete(
  
   deletefeatured_services
 );
+
+// Routes for upcoming_events
+router.get("/getAllupcoming_events", getAllupcoming_events);
+router.post(
+  "/creatupcoming_events",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+  
+  creatupcoming_events
+);
+router.get("/getupcoming_eventsById/:id", getupcoming_eventsById);
+router.put(
+  "/updateupcoming_events/:id",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+
+  updateupcoming_events
+);
+router.delete(
+  "/deleteupcoming_events/:id",
+
+  deleteupcoming_events
+);
+
 export default router;
