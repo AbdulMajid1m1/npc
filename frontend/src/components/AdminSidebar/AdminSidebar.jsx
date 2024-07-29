@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaChevronDown, FaChevronUp, FaUsers } from "react-icons/fa";
@@ -6,7 +6,6 @@ import Images from "../../Images/gs1logowhite.png";
 import { useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import usersicon from "../../Images/usersicon.png";
-import MasterData from "../../Images/master data.png";
 import language from "../../Images/language.png";
 import roleimg from "../../Images/roleicon.png"
 import unitsimg from "../../Images/Unit.png";
@@ -38,6 +37,17 @@ import globalproduct from "../../Images/globalproduct.png"
 import frontend from "../../Images/frontend.png"
 import megamenu from "../../Images/megamenu.png"
 import categories from "../../Images/categories.png"
+import masterdatanpc from "../../Images/masterdatanpc.png"
+import codifications from "../../Images/codifications.png"
+import datamangement from "../../Images/datamangement.png"
+import templatepages from "../../Images/pagestemplates/templatepages.png"
+import template1 from "../../Images/pagestemplates/template1.png"
+import template2 from "../../Images/pagestemplates/template2.png"
+import template3 from "../../Images/pagestemplates/template3.png"
+import template4 from "../../Images/pagestemplates/template4.png"
+import template5 from "../../Images/pagestemplates/template5.png"
+import template6 from "../../Images/pagestemplates/template6.png"
+import template7 from "../../Images/pagestemplates/template7.png"
 import logout from "../../Images/logout.jpeg"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
@@ -51,6 +61,7 @@ import { MdOutlineLogout } from "react-icons/md";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../switer";
 import i18ns from '../../i18n';
+import newRequest from "../../utils/userRequest";
 
 function AdminSidebar({ isOpen, toggleSideNav }) {
   const { t, i18n } = useTranslation();
@@ -90,6 +101,48 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
   const handleToggleMangeSlider = () => {
     setIsMangeSliderOpen(!isMangeSliderOpen);
   };
+
+  const [pagesTemplate, setPagesTemplate] = useState(false);
+  const [templateData, setTemplateData] = useState([]);
+  const fetchTemplateData = async () =>
+    {
+      try
+      {
+        const response = await newRequest.get('/blogs/template');
+        const data = response.data;
+        // console.log(data)
+        setTemplateData(data);
+      }
+      catch (error)
+      {
+        console.log(error);
+      }
+    };
+
+    const templatePathMap = {
+      0: '/admin/template1',
+      1: '/admin/template2',
+      2: '/admin/template3',
+      3: '/admin/template4',
+      4: '/admin/template5',
+      5: '/admin/template6',
+      6: '/admin/template7',
+    };
+
+    const imageUrls = [
+      template1,
+      template2,
+      template3,
+      template4,
+      template5,
+      template6,
+      template7,
+    ];
+
+  useEffect(() => {
+    fetchTemplateData();
+  }, [])
+
 
   return (
     <>
@@ -152,7 +205,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg my-auto">
+                      <span className="text-secondary font-semibold text-base font-sans my-auto">
                         {t("NPC Registry")}
                       </span>
                       <span
@@ -195,7 +248,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg truncate">
+                                <span className="text-secondary font-semibold text-base font-sans truncate">
                                   {t("Global Registry")}
                                 </span>
                               </div>
@@ -222,7 +275,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg truncate">
+                                <span className="text-secondary font-semibold text-base font-sans truncate">
                                   {t("Local Registry")}
                                 </span>
                               </div>
@@ -245,12 +298,12 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={gtinmanagment}
+                          src={datamangement}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg my-auto">
+                      <span className="text-secondary font-semibold text-base font-sans my-auto">
                         {t("Data Management")}
                       </span>
                       <span
@@ -290,7 +343,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -323,7 +376,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -356,7 +409,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -385,12 +438,12 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={recipient}
+                          src={codifications}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg my-auto">
+                      <span className="text-secondary font-semibold text-base font-sans my-auto">
                         {t("Codification")}
                       </span>
                       <span
@@ -433,7 +486,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("GPC")}
                                 </span>
                               </div>
@@ -460,7 +513,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("HS-CODE")}
                                 </span>
                               </div>
@@ -487,7 +540,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("UNSPSC")}
                                 </span>
                               </div>
@@ -514,7 +567,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("GS1 GMN")}
                                 </span>
                               </div>
@@ -541,7 +594,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("GMDN")}
                                 </span>
                               </div>
@@ -574,7 +627,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -607,7 +660,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -640,7 +693,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -664,12 +717,12 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={MasterData}
+                          src={masterdatanpc}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="font-sans font-semibold my-auto">
+                      <span className="font-sans text-secondary font-semibold my-auto">
                         {t("MASTER DATA")}
                       </span>
                       <span
@@ -712,7 +765,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="font-sans text-secondary font-semibold text-base font-sans">
                                   {t("Language")}
                                 </span>
                               </div>
@@ -739,7 +792,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Users")}
                                 </span>
                               </div>
@@ -766,7 +819,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Role")}
                                 </span>
                               </div>
@@ -793,7 +846,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Units")}
                                 </span>
                               </div>
@@ -821,7 +874,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Documents")}
                                 </span>
                               </div>
@@ -849,7 +902,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Product Packaging")}
                                 </span>
                               </div>
@@ -877,7 +930,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Other Products")}
                                 </span>
                               </div>
@@ -905,7 +958,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Gcp Type")}
                                 </span>
                               </div>
@@ -933,7 +986,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Country Of Sales")}
                                 </span>
                               </div>
@@ -961,7 +1014,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Hs Code")}
                                 </span>
                               </div>
@@ -989,7 +1042,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("UNSPCS")} 
                                 </span>
                               </div>
@@ -1017,7 +1070,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Cities")}
                                 </span>
                               </div>
@@ -1045,7 +1098,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("State")}
                                 </span>
                               </div>
@@ -1073,7 +1126,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Country")}
                                 </span>
                               </div>
@@ -1101,7 +1154,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Cr Number")}
                                 </span>
                               </div>
@@ -1129,7 +1182,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Document Type")}
                                 </span>
                               </div>
@@ -1157,7 +1210,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("News Letter")}
                                 </span>
                               </div>
@@ -1185,7 +1238,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary my-auto font-semibold text-lg">
+                      <span className="text-secondary my-auto font-sans font-semibold text-base">
                         {t("Frontend")}
                       </span>
                       <span
@@ -1228,7 +1281,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Mega Menu")}
                                 </span>
                               </div>
@@ -1255,12 +1308,94 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("Categories")}
                                 </span>
                               </div>
                             </Link>
                           </li>
+
+
+                          <div
+                            className={`flex items-start px-3 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
+                              i18n.language === "ar" ? "flex-row-reverse" : "flex-row"
+                            }`}
+                            onClick={() => setPagesTemplate(!pagesTemplate)}
+                          >
+                            <span
+                              className={`drop-shadow-lg mr-2 flex h-10 w-10 items-center justify-center rounded-lg bg-center text-center  ${
+                                i18n.language === "ar" ? "ml-2" : "mr-2"
+                              }`}
+                            >
+                              <img
+                                src={frontend}
+                                alt="logo"
+                                className="w-10 h-10 object-cover"
+                              />
+                            </span>
+                            <span className="text-secondary my-auto font-sans text-base font-semibold">
+                              {t("Template Pages")}
+                            </span>
+                            <span
+                              className={`inline-block my-auto sidenav-arrow ${
+                                i18n.language === "ar" ? "mr-auto" : "ml-auto"
+                              }`}
+                            >
+                              {pagesTemplate ? (
+                                <FaChevronUp />
+                              ) : (
+                                <FaChevronDown />
+                              )}
+                            </span>
+                          </div>
+                          {pagesTemplate && (
+                          <div
+                            className={`transition border-gray-500 dropdown-section nested-menu space-y-2 ${
+                              i18n.language === "ar" ? "pr-3" : "pl-3"
+                            }`}
+                          >
+                          {templateData?.map((item, index) => {
+                            const path = templatePathMap[index] || `/admin/template${index + 1}`;
+                            const imageUrl = imageUrls[index % imageUrls.length];
+                            return (
+                              <div key={index}>
+                            <ul className={`text-sm flex flex-col gap-3`}>
+                              <li>
+                                <Link
+                                  to={path}
+                                  className={`flex items-center py-1  text-gray-700 rounded hover:bg-gray-100 ${
+                                    i18n.language === "ar"
+                                      ? "pr-3 pl-4 justify-end"
+                                      : "pl-3 pr-4 justify-start"
+                                  }`}
+                                  onClick={() => {
+                                    sessionStorage.setItem('selectedTemplate', JSON.stringify(item));
+                                  }}
+                                >
+                                  <div
+                                    className={`flex justify-center items-center gap-3 ${
+                                      i18n.language === "ar"
+                                        ? "flex-row-reverse"
+                                        : "flex-row"
+                                    }`}
+                                  >
+                                    <img
+                                      src={imageUrl}
+                                      alt="logo"
+                                      className="w-10 h-10 object-cover"
+                                    />
+                                    <span className="text-secondary font-semibold text-base font-sans">
+                                      {item?.name}
+                                    </span>
+                                  </div>
+                                </Link>
+                                </li>
+                               </ul>
+                               </div>
+                                );
+                              })}
+                             </div>
+                            )}
                         </ul>
                       </div>
                     )}
@@ -1287,7 +1422,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -1321,7 +1456,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                           className="w-10 h-10 object-cover rounded-full bg-white"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg -ml-3">{t("Log-out")}</span>
+                      <span className="text-secondary font-semibold text-base font-sans -ml-3">{t("Log-out")}</span>
                     </Link>
                   </li>
                 </ul>

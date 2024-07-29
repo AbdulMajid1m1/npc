@@ -46,6 +46,13 @@ import HomePage from "./Pages/UserPages/HomePage/HomePage.jsx";
 import NewFooter from "./components/Footer/NewFooter.jsx";
 import Megamenu from "./Pages/AdminPages/Frontend/MegaMenu/Megamenu.jsx";
 import Categories from "./Pages/AdminPages/Frontend/Categories/Categories.jsx";
+import Template1 from "./Pages/AdminPages/Frontend/PagesTemplates/Template1/Template1.jsx";
+import Template2 from "./Pages/AdminPages/Frontend/PagesTemplates/Template2/Template2.jsx";
+import Template3 from "./Pages/AdminPages/Frontend/PagesTemplates/Template3/Template3.jsx";
+import Template4 from "./Pages/AdminPages/Frontend/PagesTemplates/Template4/Template4.jsx";
+import Template6 from "./Pages/AdminPages/Frontend/PagesTemplates/Template6/Template6.jsx";
+import Template5 from "./Pages/AdminPages/Frontend/PagesTemplates/Tempate5/Template5.jsx";
+import Template7 from "./Pages/AdminPages/Frontend/PagesTemplates/Template7/Template7.jsx";
 
 const queryClient = new QueryClient();
 
@@ -227,6 +234,16 @@ const App = () => {
                         {/* frontend */}
                         <Route path="megamenu" element={<Megamenu />} />
                         <Route path="categories" element={<Categories />} />
+
+
+                        {/* Pages Templates */}
+                        <Route path="template1" element={<Template1 />} />
+                        <Route path="template2" element={<Template2 />} />
+                        <Route path="template3" element={<Template3 />} />
+                        <Route path="template4" element={<Template4 />} />
+                        <Route path="template5" element={<Template5 />} />
+                        <Route path="template6" element={<Template6 />} />
+                        <Route path="template7" element={<Template7 />} />
                       </Routes>
                     </AdminMainLayout>
                   }
