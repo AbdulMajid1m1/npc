@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import { upload, video } from "../../configs/multerConfig.js";
 import {
     getAllmega_menu,
     createmega_menus,
@@ -16,7 +17,10 @@ import {
     getfooter_menusById,
     updatefooter_menus,
     deletefooter_menus,
-    mega_menu_categories_frontSide} from "../../controllers/frontEndController.js"
+    mega_menu_categories_frontSide,creatfeatured_services
+    ,updatefeatured_services
+    ,deletefeatured_services,getAllfeatured_services,
+    getfeatured_servicesById} from "../../controllers/frontEndController.js"
 
 
     router.get("/getAllmega_menu", getAllmega_menu);
@@ -73,5 +77,36 @@ router.delete(
   "/deletefooter_menus/:id",
  
   deletefooter_menus
+);
+
+
+router.get("/getAllfeatured_services", getAllfeatured_services);
+router.post(
+  "/creatfeatured_services",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+
+  creatfeatured_services
+);
+router.get("/getfeatured_servicesById/:id", getfeatured_servicesById);
+router.put(
+  "/updatefeatured_services/:id",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+
+  updatefeatured_services
+);
+router.delete(
+  "/deletefeatured_services/:id",
+ 
+  deletefeatured_services
 );
 export default router;
