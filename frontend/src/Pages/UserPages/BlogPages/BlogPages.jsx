@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import DropDownSelection from '../DropDownSelection/DropDownSelection';
 import newRequest from '../../../utils/userRequest';
-import { DotLoader } from 'react-spinners';
+import { BounceLoader } from 'react-spinners';
 import { useTranslation } from 'react-i18next';
 import IndustrySolutions from '../IndustrySolutions/IndustrySolutions';
 import GDSN from '../GDSN/GDSN';
@@ -73,9 +73,9 @@ const BlogPages = () => {
 
               }}
           >
-              <DotLoader
+              <BounceLoader
                   size={45}
-                  color={"#FF693A"}
+                  color={"#021F69"}
                   // height={4}
                   loading={isLoading}
               />
