@@ -722,3 +722,57 @@ model footer_menus {
   updated_at          DateTime             @default(now()) @db.DateTime
   mega_menu_categorie mega_menu_categories @relation(fields: [parent_id], references: [id])
 }
+
+
+
+model Template {
+  id             String   @id @default(cuid())
+  name           String   @db.NVarChar(Max)
+  name_ar        String   @db.NVarChar(Max)
+  description    String?  @db.NVarChar(Max)
+  description_ar String?  @db.NVarChar(Max)
+  created_at     DateTime @default(now()) @db.DateTime
+  updated_at     DateTime @default(now()) @db.DateTime
+
+  pages NewPage[]
+}
+
+model NewPage {
+  id                 String    @id @default(cuid())
+  name               String?   @db.NVarChar(Max)
+  name_ar            String?   @db.NVarChar(Max)
+  slug               String?   @unique
+  seo_description    String?   @db.NVarChar(Max)
+  seo_description_ar String?   @db.NVarChar(Max)
+  status             Int?
+  template_id        String
+  created_at         DateTime? @default(now()) @db.DateTime
+  updated_at         DateTime? @default(now()) @db.DateTime
+  template           Template  @relation(fields: [template_id], references: [id], onDelete: Cascade)
+  sections           Section[]
+}
+
+model Section {
+  id         String   @id @default(cuid())
+  page_id    String
+  name       String   @db.NVarChar(Max)
+  name_ar    String   @db.NVarChar(Max)
+  order      Int
+  created_at DateTime @default(now()) @db.DateTime
+  updated_at DateTime @default(now()) @db.DateTime
+
+  page     NewPage   @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  contents Content[]
+}
+
+model Content {
+  id         String   @id @default(cuid())
+  section_id String
+  type       String   @db.NVarChar(Max)
+  data       String   @db.NVarChar(Max) // Storing JSON as string
+  data_ar    String?  @db.NVarChar(Max) // Storing JSON as string for Arabic content
+  created_at DateTime @default(now()) @db.DateTime
+  updated_at DateTime @default(now()) @db.DateTime
+
+  section Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
+}
