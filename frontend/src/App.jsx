@@ -54,6 +54,8 @@ import Template6 from "./Pages/AdminPages/Frontend/PagesTemplates/Template6/Temp
 import Template5 from "./Pages/AdminPages/Frontend/PagesTemplates/Tempate5/Template5.jsx";
 import Template7 from "./Pages/AdminPages/Frontend/PagesTemplates/Template7/Template7.jsx";
 import BlogPages from "./Pages/UserPages/BlogPages/BlogPages.jsx";
+import Sectors from "./Pages/AdminPages/Frontend/Sectors/Sectors.jsx";
+import SolutionsAndInovations from "./Pages/AdminPages/Frontend/SolutionsAndInovation/SolutionsAndInovation.jsx";
 
 const queryClient = new QueryClient();
 
@@ -247,6 +249,9 @@ const App = () => {
                         <Route path="template5" element={<Template5 />} />
                         <Route path="template6" element={<Template6 />} />
                         <Route path="template7" element={<Template7 />} />
+
+                        <Route path="sectors" element={<Sectors />} />  
+                        <Route path="solution-inovations" element={<SolutionsAndInovations />} />  
                       </Routes>
                     </AdminMainLayout>
                   }

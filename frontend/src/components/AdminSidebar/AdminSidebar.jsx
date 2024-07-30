@@ -1314,7 +1314,72 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                               </div>
                             </Link>
                           </li>
-
+                          <li>
+                            <Link
+                              to="/admin/sectors"
+                              className={`flex items-center py-2  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-3 justify-end"
+                                  : "pl-3 pr-3 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={Userprofile}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span
+                                  className={`text-secondary font-semibold text-base font-sans ${
+                                    i18n.language === "ar"
+                                      ? "text-end"
+                                      : "text-start"
+                                  }`}
+                                >
+                                  {t("Sectors")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/admin/solution-inovations"
+                              className={`flex items-center py-2  text-gray-700 rounded hover:bg-gray-100 ${
+                                i18n.language === "ar"
+                                  ? "pr-3 pl-3 justify-end"
+                                  : "pl-3 pr-3 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`flex justify-center items-center gap-3 ${
+                                  i18n.language === "ar"
+                                    ? "flex-row-reverse"
+                                    : "flex-row"
+                                }`}
+                              >
+                                <img
+                                  src={Userprofile}
+                                  alt="logo"
+                                  className="w-10 h-10 object-cover rounded-full bg-white"
+                                />
+                                <span
+                                  className={`text-secondary font-semibold text-base font-sans ${
+                                    i18n.language === "ar"
+                                      ? "text-end"
+                                      : "text-start"
+                                  }`}
+                                >
+                                  {t("Help Resources")}
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
 
                           <div
                             className={`flex items-start px-3 py-2 text-gray-700 group hover:text-gray-600 hover:bg-gray-100 cursor-pointer ${
@@ -1432,8 +1497,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 </span>
                               </div>
                             </Link>
-                          </li>
-                       
+                          </li>                       
                   </li>
 
 
@@ -1536,11 +1600,6 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
 
                 <div className={`flex  justify-end gap-5 ${i18n.language==='ar'?'flex-wrap-reverse':"flex-wrap"}`}>
                   <div className="flex items-center gap-1">
-                    <I18nextProvider i18n={i18ns}>
-                      <LanguageSwitcher />
-                    </I18nextProvider>
-                  </div>
-                  <div className="flex items-center gap-1">
                     <CiBarcode className="text-xl text-[#643ECF]" />
                     <p className="font-sans font-medium text-secondary">
                       {t("GTIN Search")}
@@ -1562,6 +1621,11 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                   <div className="flex items-center gap-1">
                     <MdOutlineLogout className="text-xl text-[#643ECF]" />
                     <p className="font-sans font-medium text-secondary">{t("Logout")}</p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <I18nextProvider i18n={i18ns}>
+                      <LanguageSwitcher />
+                    </I18nextProvider>
                   </div>
                 </div>
               </div>

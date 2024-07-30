@@ -2860,7 +2860,16 @@ export const silderDataColumn = (t) => [
 ];
 
 export const FeaturedServicesDataColumn = (t) => [
-
+  {
+    field: 'name_en',
+    headerName: t('Name[English]'),
+    width: 180,
+  },
+  {
+    field: 'name_ar',
+    headerName: t('Name[Arabic]'),
+    width: 180,
+  },
   {
     field: 'image',
     headerName: t('Image'),
@@ -2894,26 +2903,7 @@ export const FeaturedServicesDataColumn = (t) => [
       return params.value === 1 ? 'Active' : 'Inactive';
     },
   },
-  {
-    field: 'created_at',
-    headerName: t('Created At'),
-    width: 200,
-    type: 'dateTime',
-    valueGetter: (params) => {
-      // Convert the string date to a Date object
-      return params.value ? new Date(params.value) : null;
-    }
-  },
-  {
-    field: 'updated_at',
-    headerName: t('Updated At'),
-    width: 200,
-    type: 'dateTime',
-    valueGetter: (params) => {
-      // Convert the string date to a Date object
-      return params.value ? new Date(params.value) : null;
-    }
-  },
+ 
 ];
 
 export const FeaturedEventsDataColumn = (t) => [
