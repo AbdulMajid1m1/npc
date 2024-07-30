@@ -10,7 +10,7 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Button from '@mui/material/Button';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import sliderbackground from '../../../Images/circular/sliderbackground.png';
-import fact from '../../../Images/circular/fact.png';
+import benefits from '../../../Images/benefits.png';
 import verified from '../../../Images/circular/verified.png';
 import CircularButtons from './CircularButtons';  // Import the new component
 import { Link } from "react-router-dom";
@@ -76,6 +76,15 @@ const Sliders = () => {
             </div>
           </SwiperSlide>
         </Swiper>
+
+        <div className='flex items-center space-x-2 mt-4 px-6'>
+          <div className='bg-[#30CDFF] hover:bg-[#28b1da] flex justify-center items-center px-6 shadow-lg rounded-sm'>
+            <img src={benefits} alt='Benefits' className='h-6 w-6 ml-3'/>
+            <button className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
+              Benefits
+            </button>
+          </div>
+        </div>
         <div
           id="swiper-button-prev"
           className="absolute bottom-0 z-20 -translate-y-1/2 transform right-20"

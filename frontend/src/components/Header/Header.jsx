@@ -2,7 +2,7 @@ import React from 'react'
 import gs1logowhite from "../../Images/gs1logowhite.png"
 import { useNavigate } from 'react-router-dom'
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import LanguageSwitcher from "../../switer"
+// import LanguageSwitcher from "../../switer"
 import i18n from '../../i18n';
 
 const Header = () => {
@@ -50,11 +50,11 @@ const Header = () => {
               </div>
             </div>
 
-            <div className='w-full sm:w-auto'>
+            {/* <div className='w-full sm:w-auto'>
               <I18nextProvider i18n={i18n}>
                 <LanguageSwitcher />
               </I18nextProvider>
-            </div>
+            </div> */}
 
 
 
