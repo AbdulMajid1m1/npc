@@ -43,7 +43,7 @@ const AdminLogin = () => {
       </div> */}
 
       <div className="flex justify-center items-center mt-5 mb-10">
-        <div className="sm:h-[725px] h-auto w-[85%] border border-primary rounded-md shadow-xl">
+        <div className="sm:h-[725px] h-auto w-[85%] border border-primary rounded-md shadow-xl pb-6 sm:pb-0">
           <div className="flex flex-col justify-center items-center">
             {/* <h2 className="text-secondary font-medium font-body sm:text-2xl text-lg mt-3">
               Welcome to the

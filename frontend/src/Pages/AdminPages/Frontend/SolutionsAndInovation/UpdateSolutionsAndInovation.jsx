@@ -275,7 +275,7 @@ const Updatafeaturedservice = ({
                       <div className="row " htmlFor="file-inputs">
                         <label
                           htmlFor="file-inputs"
-                          className="choosefile bg-secondary hover:bg-primary"
+                          className="choosefile bg-secondary hover:bg-primary2 text-white font-sans px-10 py-2 ml-5"
                         >
                           choose file
                         </label>
