@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import { upload, video } from "../../configs/multerConfig.js";
 import {
     getAllmega_menu,
     createmega_menus,
@@ -16,7 +17,15 @@ import {
     getfooter_menusById,
     updatefooter_menus,
     deletefooter_menus,
-    mega_menu_categories_frontSide} from "../../controllers/frontEndController.js"
+    mega_menu_categories_frontSide,creatfeatured_services
+    ,updatefeatured_services
+    ,deletefeatured_services,getAllfeatured_services,
+    getfeatured_servicesById, getAllupcoming_events,
+    creatupcoming_events,
+    getupcoming_eventsById,
+    updateupcoming_events,
+    deleteupcoming_events,
+    } from "../../controllers/frontEndController.js"
 
 
     router.get("/getAllmega_menu", getAllmega_menu);
@@ -74,4 +83,67 @@ router.delete(
  
   deletefooter_menus
 );
+
+
+router.get("/getAllfeatured_services", getAllfeatured_services);
+router.post(
+  "/creatfeatured_services",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+
+  creatfeatured_services
+);
+router.get("/getfeatured_servicesById/:id", getfeatured_servicesById);
+router.put(
+  "/updatefeatured_services/:id",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+
+  updatefeatured_services
+);
+router.delete(
+  "/deletefeatured_services/:id",
+ 
+  deletefeatured_services
+);
+
+// Routes for upcoming_events
+router.get("/getAllupcoming_events", getAllupcoming_events);
+router.post(
+  "/creatupcoming_events",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+  
+  creatupcoming_events
+);
+router.get("/getupcoming_eventsById/:id", getupcoming_eventsById);
+router.put(
+  "/updateupcoming_events/:id",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/adminImg",
+    },
+  ]),
+
+  updateupcoming_events
+);
+router.delete(
+  "/deleteupcoming_events/:id",
+
+  deleteupcoming_events
+);
+
 export default router;

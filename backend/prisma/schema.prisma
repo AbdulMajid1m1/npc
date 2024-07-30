@@ -776,3 +776,31 @@ model Content {
 
   section Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
 }
+model featured_services {
+  id             String    @id @default(cuid())
+  name_en        String?   @db.NVarChar(Max)
+  name_ar        String?   @db.NVarChar(Max)
+  image          String?   @db.NVarChar(Max)
+  link           String?   @db.NVarChar(Max)
+  status         Int?
+  description    String?   @db.NVarChar(Max)
+  description_ar String?   @db.NVarChar(Max)
+  created_at     DateTime? @db.DateTime
+  updated_at     DateTime? @db.DateTime
+}
+
+model upcoming_events {
+  id             String    @id @default(cuid())
+  title          String?   @db.NVarChar(Max)
+  title_ar       String?   @db.NVarChar(Max)
+  image          String?   @db.NVarChar(Max)
+  date           String?   @db.NVarChar(255)
+  link           String?   @db.NVarChar(Max)
+  description    String?   @db.NVarChar(Max)
+  description_ar String?   @db.NVarChar(Max)
+  status         Int?
+  created_at     DateTime? @default(now()) @db.DateTime
+  updated_at     DateTime  @default(now()) @db.DateTime
+  video          String?   @db.NVarChar(Max)
+  display_type   String?   @db.NVarChar(Max)
+}
