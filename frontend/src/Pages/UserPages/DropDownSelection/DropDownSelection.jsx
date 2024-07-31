@@ -126,10 +126,9 @@ const DropDownSelection = () => {
                                 ? category?.category_name_ar
                                 : category?.category_name_en}
                             <p style={{ fontWeight: '400', marginTop: '-22px', color: '#021F69', fontSize: '14px', whiteSpace: 'nowrap' }}>
-                              {/* {i18n.language === "ar"
+                              {i18n.language === "ar"
                                 ? category?.category_caption_ar
-                                : category?.category_caption_en} */}
-                                {category?.caption}
+                                : category?.caption}
                             </p>
                             </Link>
                             <ul>
