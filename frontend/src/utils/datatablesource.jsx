@@ -2726,6 +2726,9 @@ export const CategoriesDataColumn = (t, i18n) => [
     field: 'megamenu_id',
     headerName: t('Mega Menu'),
     width: 200,
+    renderCell: (params) => (
+      <Box dangerouslySetInnerHTML={{ __html: params.value }} />
+    ),
   },
   {
     field: 'description',

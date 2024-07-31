@@ -61,7 +61,7 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
     formData.append("category_name_en", category_name_en);
     formData.append("category_name_ar", category_name_ar);
     formData.append("caption", captionEr);
-    // formData.append("caption_er", captionEr);
+    formData.append("caption_ar", captionAr);
     formData.append("description", Description);
     formData.append("url", Page);
     formData.append("meta_title", Title);
@@ -179,7 +179,7 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
                       }`}
                     />
 
-                    {/* <label
+                    <label
                       htmlFor="captionAr"
                       className={`text-secondary  ${
                         i18n.language === "ar" ? "text-end" : "text-start"
@@ -198,7 +198,7 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
                       className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
-                    /> */}
+                    />
                   </div>
 
                   <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
