@@ -2738,6 +2738,26 @@ export const CategoriesDataColumn = (t, i18n) => [
     width: 260,
   },
   {
+    field: 'image',
+    headerName: t('Image'),
+    width: 200,
+    renderCell: (params) => (
+      < img
+        src={imageLiveUrl(params.row.image)}
+        alt="Image"
+        style={{
+          width: '90%',
+          height: '90%',
+          objectFit: 'contain',
+          cursor: 'pointer'
+        }}
+        onClick={() => {
+          window.open(imageLiveUrl(params.row.image), '_blank', 'width=400,height=300,top=0,left=0');
+        }}
+      />
+    ),
+  },
+  {
     field: 'meta_title',
     headerName: t('Meta Title'),
     width: 200,

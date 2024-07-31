@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
   const [category_name_en, setcategory_name_en] = useState("");
   const [category_name_ar, setcategory_name_ar] = useState("");
+  const [captionEr, setCaptionEr] = useState("");
+  const [captionAr, setCaptionAr] = useState("");
   const [Categorylevel, setCategorylevel] = useState("");
   const [Page, setPage] = useState("");
   const [Pagedropdown, setPagedropdown] = useState([]);
@@ -14,6 +16,13 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
   const [Description, setDescription] = useState("");
   const [Title, setTitle] = useState("");
   const [MetaDescription, setMetaDescription] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageshow, setimageshow] = useState("");
+
+  function handleChangeback(e) {
+    setSelectedFile(e.target.files[0]);
+    setimageshow(e.target.files[0]);
+  }
 
   const { t, i18n } = useTranslation();
   useEffect(() => {
@@ -46,37 +55,43 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
   };
 
   const handleAddCompany = async () => {
-    //  integrate the post api in try catch blcck
+    const formData = new FormData();
+    formData.append("parent_id", Categorylevel || "Main Category");
+    formData.append("megamenu_id", MegaMenuCategories);
+    formData.append("category_name_en", category_name_en);
+    formData.append("category_name_ar", category_name_ar);
+    formData.append("caption", captionEr);
+    // formData.append("caption_er", captionEr);
+    formData.append("description", Description);
+    formData.append("url", Page);
+    formData.append("meta_title", Title);
+    formData.append("meta_description", MetaDescription);
+    formData.append("meta_keywords", "khan");
+    formData.append("status", 1);
+    formData.append("image", imageshow); // Assuming `image` is the file object
+  
     try {
-      const response = await newRequest.post("/creatmega_menu_categories/", {
-        parent_id: Categorylevel || "Main Category",
-        megamenu_id: MegaMenuCategories,
-        category_name_en: category_name_en,
-        category_name_ar: category_name_ar,
-        description: Description,
-        url: Page,
-        meta_title: Title,
-        meta_description: MetaDescription,
-        meta_keywords: "khan",
-        status: 1,
+      const response = await newRequest.post("/creatmega_menu_categories/", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
-
+  
       toast.success(
         `Mega Menu categories ${category_name_en} has been added successfully.`
       );
-
-      // console.log(response.data);
+  
       refreshBrandData();
       handleCloseCreatePopup();
     } catch (error) {
       toast.error(
         error?.response?.data?.error ||
-          error?.response?.data?.message ||
-          `${t("Something went wrong")}`
+        error?.response?.data?.message ||
+        `${t("Something went wrong")}`
       );
     }
   };
-
+  
   return (
     <div>
       {/* create the post api popup */}
@@ -110,7 +125,7 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
                       id="category_name_en"
                       value={category_name_en}
                       onChange={(e) => setcategory_name_en(e.target.value)}
-                      placeholder={`${t("Enter")}${t("Categories")}${t(
+                      placeholder={`${t("Enter")} ${t("Categories")} ${t(
                         "Name[English]"
                       )}`}
                       className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
@@ -133,13 +148,57 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
                       id="category_name_ar"
                       value={category_name_ar}
                       onChange={(e) => setcategory_name_ar(e.target.value)}
-                      placeholder={`${t("Enter")}${t("Categories")}${t(
+                      placeholder={`${t("Enter")} ${t("Categories")} ${t(
                         "Name[Arabic]"
                       )}`}
                       className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
                       }`}
                     />
+                  </div>
+
+                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
+                    <label
+                      htmlFor="captionEr"
+                      className={`text-secondary  ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    >
+                      {t("Caption")} {t("English")}
+                    </label>
+                    <input
+                      type="text"
+                      id="captionEr"
+                      value={captionEr}
+                      onChange={(e) => setCaptionEr(e.target.value)}
+                      placeholder={`${t("Enter")} ${t("Caption")} ${t(
+                        "English"
+                      )}`}
+                      className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    />
+
+                    {/* <label
+                      htmlFor="captionAr"
+                      className={`text-secondary  ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    >
+                      {t("Caption")} {t("Arabic")}
+                    </label>
+                    <input
+                      type="text"
+                      id="captionAr"
+                      value={captionAr}
+                      onChange={(e) => setCaptionAr(e.target.value)}
+                      placeholder={`${t("Enter")} ${t("Caption")} ${t(
+                        "Arabic"
+                      )}`}
+                      className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    /> */}
                   </div>
 
                   <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
@@ -163,8 +222,12 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
                       {megamenudropdown &&
                         megamenudropdown.map((itme, index) => {
                           return (
-                            <option key={index} value={itme.id}>
-                              {itme.name_en}
+                            <option key={index} value={itme.id}
+                              dangerouslySetInnerHTML={{
+                                __html: itme.name_en,
+                              }}
+                            >
+                              {/* {itme.name_en} */}  
                             </option>
                           );
                         })}
@@ -287,6 +350,49 @@ const Addcategories = ({ isVisible, setVisibility, refreshBrandData }) => {
                     />
                   </div>
                 </div>
+
+
+                <div className="font-body sm:text-base text-sm flex flex-col gap-2">
+                    <label
+                      htmlFor="Image"
+                      className={`text-secondary  ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    >
+                      {t("Image")}
+                    </label>
+                    <div className="imgesection">
+                      <img
+                        src={
+                          selectedFile
+                            ? URL.createObjectURL(selectedFile)
+                            : imageshow != null
+                            ? imageshow
+                            : ""
+                        }
+                        className="printerpic"
+                        style={{
+                          width: selectedFile || imageshow ? "200px" : "200px",
+                          height: selectedFile || imageshow ? "200px" : "200px",
+                        }}
+                      />
+
+                      <div className="row" htmlFor="file-inputs">
+                        <label
+                          htmlFor="file-inputs"
+                          className="choosefile bg-secondary hover:bg-primary2 text-white font-sans px-10 py-2 ml-5"
+                        >
+                          {t("choose file")}
+                        </label>
+                        <input
+                          id="file-inputs"
+                          type="file"
+                          onChange={handleChangeback}
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
                 <div className="w-full flex justify-center items-center gap-8 mt-5">
                   <button
