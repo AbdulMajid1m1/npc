@@ -138,16 +138,33 @@ export const getAllmega_menu_categories = async (req, res, next) => {
   }
 };
 export const creatmega_menu_categories = async (req, res, next) => {
-  try {
-    const { error, value } = mega_menu_categories.validate(req.body);
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
-    const unit = await prisma.mega_menu_categories.create({
-      data: value,
-    });
-    res.status(201).json(unit);
-  } catch (error) {
+    try {
+        const { error, value } = mega_menu_categories.validate(req.body);
+        if (error) {
+          return res.status(400).json({ error: error.details[0].message });
+        }
+    
+        const uploadedImage = req.files.image; // Use req.file for a single file
+        if (!uploadedImage) {
+          return res.status(400).json({ error: "Image is required" });
+        }
+    
+        const documentFile = uploadedImage[0];
+        const documentPath = path.join(
+          documentFile.destination,
+          documentFile.filename
+        );
+        const imagePathWithoutPublic = documentPath.replace(/^public[\\/]/, "");
+        const sliderData = {
+          image: imagePathWithoutPublic,
+          ...value,
+        };
+        const newCategory = await prisma.mega_menu_categories.create({
+          data: sliderData,
+        });
+    
+        res.status(201).json(newCategory);
+      } catch (error) {
     next(error);
   }
 };
@@ -177,52 +194,76 @@ export const getmega_menu_categoriesById = async (req, res, next) => {
   }
 };
 export const updatemega_menu_categories = async (req, res, next) => {
-  try {
-    const schema = Joi.object({
-      id: Joi.string().required(),
-    });
-    const { error: idError } = schema.validate(req.params);
-    if (idError) {
-      return next(createError(400, idError.details[0].message));
-    }
-
-    const { id } = req.params;
-
-    const { error } = mega_menu_categories.validate(req.body);
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
-
-    const {
-      parent_id,
-      megamenu_id,
-      category_name_en,
-      category_name_ar,
-      description,
-      url,
-      meta_title,
-      meta_description,
-      meta_keywords,
-      status,
-    } = req.body;
-    const updatedUNSPSC = await prisma.mega_menu_categories.update({
-      where: { id: id },
-      data: {
-        parent_id,
-        megamenu_id,
-        category_name_en,
-        category_name_ar,
-        description,
-        url,
-        meta_title,
-        meta_description,
-        meta_keywords,
-        status,
-      },
-    });
-
-    res.json(updatedUNSPSC);
-  } catch (error) {
+    try {
+        // Validate request parameters
+        const paramSchema = Joi.object({
+          id: Joi.string().required(),
+        });
+        const { error: idError } = paramSchema.validate(req.params);
+        if (idError) {
+          return next(createError(400, idError.details[0].message));
+        }
+    
+        const { id } = req.params;
+    
+        // Define and validate request body
+        const bodySchema = Joi.object({
+            parent_id: Joi.string().max(255).required(),
+            megamenu_id: Joi.string().max(255).required(),
+            category_name_en: Joi.string().max(255).required(),
+            category_name_ar: Joi.string().max(255).required(),
+            description: Joi.string().max(255),
+            url: Joi.string().max(255).required(),
+          
+            meta_title: Joi.string().max(255),
+            meta_description: Joi.string().max(255),
+            meta_keywords: Joi.string().max(255),
+            status: Joi.number().required(),
+        });
+    
+        const { error, value } = bodySchema.validate(req.body);
+        if (error) {
+          return res.status(400).json({ error: error.details[0].message });
+        }
+    
+        const existingCategory = await prisma.mega_menu_categories.findUnique({
+          where: { id: id },
+        });
+    
+        if (!existingCategory) {
+          return next(createError(404, 'mega_menu_categories not found'));
+        }
+    
+        let imagePath = existingCategory.image || '';
+    
+        // Handle image upload
+        if (req.files && req.files.image) {
+          const imageFile = req.files.image[0];
+          const imagePathWithPublic = path.join(imageFile.destination, imageFile.filename);
+    
+          // Delete the existing image if there is one
+          if (existingCategory.image) {
+            const existingImagePath = path.join(existingCategory.image);
+            try {
+              await fs.unlink(existingImagePath);
+            } catch (unlinkError) {
+              console.error('Error deleting existing image:', unlinkError);
+            }
+          }
+    
+          imagePath = imagePathWithPublic.replace(/^public[\\/]/, '');
+        }
+    
+        const updatedCategory = await prisma.mega_menu_categories.update({
+          where: { id: id },
+          data: {
+            ...value,
+            image: imagePath,
+          },
+        });
+    
+        res.json(updatedCategory);
+      } catch (error) {
     next(error);
   }
 };

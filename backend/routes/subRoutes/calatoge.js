@@ -50,13 +50,24 @@ router.get("/mega_menu_categories_frontSide", mega_menu_categories_frontSide);
 router.get("/getAllmega_menu_categories", getAllmega_menu_categories);
 router.post(
   "/creatmega_menu_categories",
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/manuImage",
+    },
+  ]),
 
   creatmega_menu_categories
 );
 router.get("/getmega_menu_categoriesById/:id", getmega_menu_categoriesById);
 router.put(
   "/updatemega_menu_categories/:id",
-
+  upload([
+    {
+      name: "image",
+      path: "public/uploads/manuImage",
+    },
+  ]),
   updatemega_menu_categories
 );
 router.delete(
