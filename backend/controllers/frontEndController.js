@@ -118,7 +118,7 @@ const mega_menu_categories = Joi.object({
   category_name_ar: Joi.string().max(255).required(),
   description: Joi.string().max(255),
   url: Joi.string().max(255).required(),
-
+  caption: Joi.string().max(255).required(),
   meta_title: Joi.string().max(255),
   meta_description: Joi.string().max(255),
   meta_keywords: Joi.string().max(255),
@@ -214,7 +214,7 @@ export const updatemega_menu_categories = async (req, res, next) => {
             category_name_ar: Joi.string().max(255).required(),
             description: Joi.string().max(255),
             url: Joi.string().max(255).required(),
-          
+            caption: Joi.string().max(255).required(),
             meta_title: Joi.string().max(255),
             meta_description: Joi.string().max(255),
             meta_keywords: Joi.string().max(255),
