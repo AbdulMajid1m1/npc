@@ -21,7 +21,7 @@ const Sliders = () => {
 
   return (
     <div className="relative h-auto w-full bg-white border-b mt-4 mb-20">
-      <div className="relative h-[420px] w-full">
+      <div className="relative md:h-[420px] h-auto w-full">
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
