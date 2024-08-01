@@ -25,12 +25,9 @@ const Header = () => {
           </div>
 
           <div>
-            <h2 className='md:text-2xl text-base text-secondary font-medium font-sans'>Your Once Source of Reliable Data</h2>
+            <button className='md:text-2xl text-base bg-primary2 text-white px-5 py-1 font-sans rounded-md transition-transform transform hover:scale-90'>Your One Source of Reliable Data</button>
           </div>
 
-          <div></div>
-          <div></div>
-          
           {/* Buttons */}
           {/* <div 
           className={`flex flex-wrap justify-center ${i18n.language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}
