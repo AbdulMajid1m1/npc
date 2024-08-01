@@ -10,13 +10,14 @@ import certification from "../../../Images/circular/certification.png";
 import apicommunity from "../../../Images/circular/apicommunity.png";
 import dataquality from "../../../Images/circular/dataquality.png";
 import customer from "../../../Images/circular/customer.png";
+import { Link } from 'react-router-dom';
 
 const CircularButtons = () => {
   const { t, i18n } = useTranslation();
   const buttons = [
     { name: 'GDSN', icon: gdsn, link: '/gdsn' },
     { name: 'Data Validator', icon: data, link: '/data-validator' },
-    { name: 'GS1', icon: gs1, link: '/gs1' },
+    { name: 'GS1', icon: gs1, link: '/admin-login' },
     { name: 'Governance', icon: governance, link: '/governance' },
     { name: 'Recipients', icon: receipts, link: '/recipients' },
     { name: 'Compliance', icon: compliance, link: '/compliance' },
@@ -39,12 +40,12 @@ const CircularButtons = () => {
             transform: `rotate(${index * 36}deg) translate(150px) rotate(-${index * 36}deg)`
           }}
         >
-          <a
-            href={button.link}
-            className="w-16 h-16 bg-white hover:shadow-secondary rounded-full shadow-xl flex justify-center items-center"
+          <Link
+            to={button.link}
+            className="w-16 h-16 bg-white hover:bg-[#DDF3F6] rounded-full shadow-xl flex justify-center items-center"
           >
             <img src={button.icon} alt={button.name} className="w-8 h-8" />
-          </a>
+          </Link>
           <span className="text-center text-[9px] text-secondary font-semibold w-16 mt-1">{button.name}</span>
         </div>
       ))}

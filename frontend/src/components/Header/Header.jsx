@@ -24,8 +24,15 @@ const Header = () => {
             </div>
           </div>
 
+          <div>
+            <h2 className='md:text-2xl text-base text-secondary font-medium font-sans'>Your Once Source of Reliable Data</h2>
+          </div>
+
+          <div></div>
+          <div></div>
+          
           {/* Buttons */}
-          <div 
+          {/* <div 
           className={`flex flex-wrap justify-center ${i18n.language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             <div className=''>
@@ -34,7 +41,7 @@ const Header = () => {
               </div>
               <div className='flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2'>
                 <button
-                  // onClick={() => navigate('/select-business-type')}
+                  onClick={() => navigate('/select-business-type')}
                   className='bg-secondary text-white px-5 py-1 font-sans rounded-md transition-transform transform hover:scale-90'
                 >
                   {t('Register to NPC')}
@@ -50,15 +57,15 @@ const Header = () => {
               </div>
             </div>
 
-            {/* <div className='w-full sm:w-auto'>
+            <div className='w-full sm:w-auto'>
               <I18nextProvider i18n={i18n}>
                 <LanguageSwitcher />
               </I18nextProvider>
-            </div> */}
+            </div>
 
 
 
-          </div>
+          </div> */}
 
         </div>
       </div>

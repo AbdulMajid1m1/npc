@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import headerImage from "../../../Images/headerImage.png";
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -35,6 +35,11 @@ const AdminLogin = () => {
 //       setLoading(false);
 //     }
 //   };
+
+  useEffect(() => {
+    // auto scroll to bottom
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  },[])
 
   return (
     <div>
