@@ -42,7 +42,7 @@ const CircularButtons = () => {
         >
           <Link
             to={button.link}
-            className="w-16 h-16 bg-white hover:bg-[#DDF3F6] rounded-full shadow-xl flex justify-center items-center"
+            className="w-16 h-16 bg-white hover:bg-[#DDF3F6] transition-transform transform hover:scale-90 rounded-full shadow-xl flex justify-center items-center"
           >
             <img src={button.icon} alt={button.name} className="w-8 h-8" />
           </Link>
