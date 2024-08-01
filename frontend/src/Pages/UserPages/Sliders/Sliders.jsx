@@ -86,7 +86,7 @@ const Sliders = () => {
             </button>
           </div>
 
-          <div className='bg-[#30CDFF] hover:bg-[#28b1da] flex justify-center items-center px-6 shadow-lg rounded-sm'>
+          <div className='bg-secondary hover:bg-primary2 flex justify-center items-center px-6 shadow-lg rounded-sm'>
             <img src={registertonpc} alt='Benefits' className='h-6 w-6 ml-3'/>
             <button className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
               Register to NPC
