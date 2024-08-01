@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import sliderbackground from '../../../Images/circular/sliderbackground.png';
 import benefits from '../../../Images/benefits.png';
-import certification from "../../../Images/circular/certification.png";
+import registertonpc from '../../../Images/registertonpc.png';
 import verified from '../../../Images/circular/verified.png';
 import CircularButtons from './CircularButtons';  // Import the new component
 import { Link } from "react-router-dom";
@@ -87,7 +87,7 @@ const Sliders = () => {
           </div>
 
           <div className='bg-[#30CDFF] hover:bg-[#28b1da] flex justify-center items-center px-6 shadow-lg rounded-sm'>
-            <img src={certification} alt='Benefits' className='h-6 w-6 ml-3'/>
+            <img src={registertonpc} alt='Benefits' className='h-6 w-6 ml-3'/>
             <button className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
               Register to NPC
             </button>
