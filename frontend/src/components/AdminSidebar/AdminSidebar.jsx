@@ -48,6 +48,13 @@ import template4 from "../../Images/pagestemplates/template4.png";
 import template5 from "../../Images/pagestemplates/template5.png";
 import template6 from "../../Images/pagestemplates/template6.png";
 import template7 from "../../Images/pagestemplates/template7.png";
+import gs1funtions from "../../Images/adminSidebar/gs1funtions.png";
+import consumerrights from "../../Images/adminSidebar/consumerrights.png";
+import digitalproductpassports from "../../Images/adminSidebar/digitalproductpassports.png";
+import DQMS from "../../Images/adminSidebar/DQMS.png";
+import governance from "../../Images/adminSidebar/governance.png";
+import localdatapolicy from "../../Images/adminSidebar/localdatapolicy.png";
+import subscribers from "../../Images/adminSidebar/subscribers.png";
 import logout from "../../Images/logout.jpeg";
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
@@ -189,7 +196,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={dashboradnpc}
+                          src={gs1funtions}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
@@ -258,7 +265,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={datamangement}
+                                  src={subscribers}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
@@ -1185,7 +1192,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={npcregistry}
+                          src={DQMS}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
@@ -1874,7 +1881,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={Userprofile}
+                          src={governance}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
@@ -1918,7 +1925,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={dashboradnpc}
+                                  src={digitalproductpassports}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
@@ -1945,7 +1952,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={GLNmanagement}
+                                  src={localdatapolicy}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
@@ -1972,7 +1979,7 @@ function AdminSidebar({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={gtinmanagment}
+                                  src={consumerrights}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
