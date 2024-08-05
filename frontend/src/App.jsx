@@ -56,6 +56,8 @@ import Template7 from "./Pages/AdminPages/Frontend/PagesTemplates/Template7/Temp
 import BlogPages from "./Pages/UserPages/BlogPages/BlogPages.jsx";
 import Sectors from "./Pages/AdminPages/Frontend/Sectors/Sectors.jsx";
 import SolutionsAndInovations from "./Pages/AdminPages/Frontend/SolutionsAndInovation/SolutionsAndInovation.jsx";
+import MemberRegistration from "./Pages/MemberPages/MemberRegistration/MemberRegistration.jsx";
+import HorizontalLinearStepper from "./Pages/MemberPages/MemberRegistration/HorizontalLinearStepper.jsx";
 
 const queryClient = new QueryClient();
 
@@ -98,7 +100,7 @@ const App = () => {
         </main>
         </QueryClientProvider>
         {/* <Footer /> */}
-        <NewFooter />
+        {/* <NewFooter /> */}
       </div>
     );
   };
@@ -135,6 +137,7 @@ const App = () => {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/login-npc" element={<MemberLogin />} />
                   <Route path="/select-gln" element={<SelectGln />} />
+                  <Route path="/member-registration" element={<HorizontalLinearStepper />} />
 
                   <Route path="/admin-login" element={<AdminLogin />} />
 

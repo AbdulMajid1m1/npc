@@ -14,10 +14,11 @@ import benefits from '../../../Images/benefits.png';
 import registertonpc from '../../../Images/registertonpc.png';
 import verified from '../../../Images/circular/verified.png';
 import CircularButtons from './CircularButtons';  // Import the new component
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sliders = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="relative h-auto w-full bg-white border-b mt-4 mb-20">
@@ -89,7 +90,9 @@ const Sliders = () => {
 
           <div className='bg-secondary hover:bg-primary2 flex justify-center items-center px-6 shadow-lg rounded-sm transition-transform transform hover:scale-90'>
             <img src={registertonpc} alt='Benefits' className='h-6 w-6 ml-3'/>
-            <button className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
+            <button 
+              onClick={() => navigate('/member-registration')}
+              className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
               Register to NPC
             </button>
           </div>
