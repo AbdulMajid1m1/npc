@@ -39,26 +39,26 @@ const StepTwo = () => {
         </p>
         <div className="flex flex-col sm:flex-row justify-between items-start gap-6 mt-5">
           <div className="w-full sm:w-1/2">
-            <label htmlFor="registerType" className="block mb-2 font-semibold text-secondary font-sans">
+            <label htmlFor="registerType" className="block mb-2 ml-1 font-semibold text-secondary font-sans">
               CR Activity
             </label>
             <select
               type="text"
               id="registerType"
-              className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+              className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
             >
                 <option value="">Select Registration type</option>
                 <option value="1">CR Activity 1</option>
                 <option value="2">CR Activity 2</option>
               </select>
 
-            <label htmlFor="subtype" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+            <label htmlFor="subtype" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
               Sub Type
             </label>
             <select
               type="text"
               id="subtype"
-              className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+              className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
             >
               <option value="">Select Services</option>
               <option value="1">service 1</option>
@@ -67,13 +67,13 @@ const StepTwo = () => {
           </div>
 
           <div className="w-full sm:w-1/2">
-            <label htmlFor="subtype" className="block mb-2 font-semibold text-secondary font-sans">
+            <label htmlFor="subtype" className="block mb-2 ml-1 font-semibold text-secondary font-sans">
               Sub Type
             </label>
             <select
               type="text"
               id="subtype"
-              className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+              className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
             >
               <option value="">Select Sub Type</option>
               <option value="1">Subtype 1</option>

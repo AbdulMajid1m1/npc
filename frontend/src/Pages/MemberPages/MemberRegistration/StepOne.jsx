@@ -43,130 +43,130 @@ const StepOne = () => {
             </p>
           <div className="flex flex-col sm:flex-row justify-between items-start gap-6 mt-5">
             <div className="w-full sm:w-1/2">
-              <label htmlFor="crNumber" className="block mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="crNumber" className="block mb-2 ml-1 font-semibold text-secondary font-sans">
                 CR Number
               </label>
               <input
                 type="text"
                 id="crNumber"
                 placeholder="Enter CR number"
-                className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="email" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="email" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Email Address
               </label>
               <input
                 type="email"
                 id="email"
                 placeholder="Enter email address"
-                className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="companyNameEnglish" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="companyNameEnglish" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Company Name (English)
               </label>
               <input
                 type="text"
                 id="companyNameEnglish"
                 placeholder="English"
-                className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="companyLandline" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="companyLandline" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Company Landline
               </label>
               <div className="flex">
-                <span className="flex items-center justify-center px-3 border border-r-0 border-gray-300 bg-gray-200 rounded text-secondary placeholder:text-secondary-l">
+                <span className="flex items-center justify-center px-3 border border-r-0 border-gray-300 bg-gray-200 rounded-l-full text-secondary placeholder:text-secondary-l">
                   +966
                 </span>
                 <input
                   type="text"
                   id="companyLandline"
                   placeholder="Enter number"
-                  className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary-r"
+                  className="w-full p-2 border border-gray-300 rounded-r-full text-secondary placeholder:text-secondary"
                 />
               </div>
 
-              <label htmlFor="country" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="country" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Country
               </label>
-              <select id="country" className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary">
+              <select id="country" className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary">
                 <option>Select country</option>
                 {/* Add options here */}
               </select>
 
-              <label htmlFor="city" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="city" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 City
               </label>
-              <select id="city" className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary">
+              <select id="city" className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary">
                 <option>Select city</option>
                 {/* Add options here */}
               </select>
             </div>
 
             <div className="w-full sm:w-1/2">
-              <label htmlFor="crActivity" className="block mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="crActivity" className="block mb-2 ml-1 font-semibold text-secondary font-sans">
                 CR Activity
               </label>
               <input
                 type="text"
                 id="crActivity"
                 placeholder="Enter CR activity"
-                className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="contactPerson" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="contactPerson" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Contact Person
               </label>
               <input
                 type="text"
                 id="contactPerson"
                 placeholder="Enter contact person"
-                className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="companyNameArabic" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="companyNameArabic" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Company Name (Arabic)
               </label>
               <input
                 type="text"
                 id="companyNameArabic"
                 placeholder="Arabic"
-                className="w-full p-2 border border-gray-300 rounded text-secondary placeholder:text-secondary"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="mobileNumber" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="mobileNumber" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Mobile Number (Omit zero)
               </label>
               <div className="flex">
-                <span className="flex items-center justify-center px-3 border border-r-0 border-gray-300 bg-gray-200 rounded text-secondary placeholder:text-secondary-l">
+                <span className="flex items-center justify-center px-3 border border-r-0 border-gray-300 bg-gray-200 rounded-l-full text-secondary placeholder:text-secondary-l">
                   +966
                 </span>
                 <input
                   type="text"
                   id="mobileNumber"
                   placeholder="Enter number"
-                  className="w-full p-2 border border-gray-300 rounded-r"
+                  className="w-full p-2 pl-4 border border-gray-300 rounded-r-full text-secondary placeholder:text-secondary"
                 />
               </div>
 
-              <label htmlFor="province" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="province" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Province
               </label>
-              <select id="province" className="w-full p-2 border border-gray-300 rounded">
+              <select id="province" className="w-full p-2 pl-4 border border-gray-300 rounded-full">
                 <option>Select province</option>
                 {/* Add options here */}
               </select>
 
-              <label htmlFor="zipCode" className="block mt-4 mb-2 font-semibold text-secondary font-sans">
+              <label htmlFor="zipCode" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
                 Zip Code
               </label>
               <input
                 type="text"
                 id="zipCode"
                 placeholder="Enter Zip code"
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 pl-4 border border-gray-300 text-secondary placeholder:text-secondary rounded-full"
               />
             </div>
           </div>
