@@ -22,7 +22,7 @@ const StepThree = () => {
       {/* Top Header */}
       <div className="flex justify-center items-center">
         <div
-          className={`h-28 w-[97%] text-center text-white font-sans font-medium sm:text-3xl text-lg rounded-lg p-3 bg-[#0C08D3] sm:gap-7 gap-4`}
+          className={`h-28 w-[97%] text-center text-white font-sans font-medium sm:text-3xl text-lg rounded-lg p-3 bg-secondary sm:gap-7 gap-4`}
         >
           <p>National Product Catalogue (NPC)</p>
         </div>
