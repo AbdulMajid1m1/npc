@@ -100,7 +100,7 @@ const App = () => {
         </main>
         </QueryClientProvider>
         {/* <Footer /> */}
-        {/* <NewFooter /> */}
+        <NewFooter />
       </div>
     );
   };
