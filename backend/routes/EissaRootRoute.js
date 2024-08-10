@@ -18,7 +18,10 @@ import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     getRoles,updateRole,getRole,deleteRole,getNewsletterSubscriptions,sendNewsletter
 
 } from "../controllers/masterDataController.js";
+import {createproductRequest} from "../controllers/productRequestController.js"
 
+//--------------------ProductRequest--------------------------------
+router.post("/createproductRequest", createproductRequest)
 //--------------NewsletterSubscriptions----------------------------
 router.post('/NewsletterSubscriptions',sendNewsletter)
 router.get('/NewsletterSubscriptions', getNewsletterSubscriptions)
