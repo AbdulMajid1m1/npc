@@ -9,7 +9,7 @@ datasource db {
 
 model users {
   id                                    String                                  @id @default(cuid())
-  user_type                             String?                                 @db.VarChar(20) // for submembers
+  user_type                             String?                                 @db.VarChar(20)
   slug                                  String?                                 @db.NVarChar(Max)
   location_uk                           String?                                 @db.NVarChar(Max)
   have_cr                               String?                                 @db.NVarChar(Max)
@@ -86,30 +86,44 @@ model users {
   industryTypes                         String?                                 @db.NVarChar(Max)
   isproductApproved                     Int?                                    @default(0, map: "DF_users_isproductApproved")
   pending_invoices                      String                                  @default("for_review", map: "DF_users_for_approval") @db.VarChar(50)
-  member_type                           String?                                 @db.NVarChar(Max) // old or new member 
+  member_type                           String?                                 @db.NVarChar(Max)
   lastReminderSentDateForExpired        DateTime?                               @db.DateTime
   lastNotificationSentDateForExpiring   DateTime?                               @db.DateTime
   gps_location                          String?                                 @db.NVarChar(Max)
   longitude                             String?                                 @db.NVarChar(Max)
   latitude                              String?                                 @db.NVarChar(Max)
-  carts                                 carts[]
-  member_history_logs                   member_history_logs[]
-  gtin_subscription_histories           gtin_subscription_histories[]
-  other_products_subscription_histories other_products_subscription_histories[]
-  admin_history_logs                    admin_history_logs[]
-  assign_to_admin                       admins?                                 @relation(fields: [assign_to], references: [id], onDelete: NoAction, onUpdate: NoAction)
   gepirPosted                           Int?                                    @default(0, map: "DF_users_gepirPosted")
-  member_documents                      member_documents[]
-  foreign_gtins                         foreign_gtins[]
-  products                              products[]
-  other_products_subcriptions           other_products_subcriptions[]
-  gtin_subcriptions                     gtin_subcriptions[]
   api_key                               String?
+  admin_history_logs                    admin_history_logs[]
+  carts                                 carts[]
+  foreign_gtins                         foreign_gtins[]
+  gtin_subcriptions                     gtin_subcriptions[]
+  gtin_subscription_histories           gtin_subscription_histories[]
+  member_documents                      member_documents[]
+  member_history_logs                   member_history_logs[]
+  other_products_subcriptions           other_products_subcriptions[]
+  other_products_subscription_histories other_products_subscription_histories[]
+  products                              products[]
   skipped_barcodes                      skipped_barcodes[]
   skipped_GLN_barcodes                  skipped_GLN_barcodes[]
+  assign_to_admin                       admins?                                 @relation(fields: [assign_to], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([assign_to], map: "users_assign_to_index")
   @@index([parent_memberID], map: "users_parent_memberID_index")
+}
+
+model npcUsers {
+  id         String   @id @default(cuid())
+  username   String?
+  email      String?
+  password   String?  @db.NVarChar(Max)
+  user_type  String
+  image      String?  @db.NVarChar(Max)
+  mobile     String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([email], map: "npcUsers_email_index")
 }
 
 model admins {
@@ -124,11 +138,11 @@ model admins {
   created_at                            DateTime                                @default(now())
   updated_at                            DateTime                                @updatedAt
   admin_history_logs                    admin_history_logs[]
-  other_products_subscription_histories other_products_subscription_histories[]
-  gtin_subscription_histories           gtin_subscription_histories[]
-  users                                 users[]
   roles                                 AdminRole[]
   foreign_gtins                         foreign_gtins[]
+  gtin_subscription_histories           gtin_subscription_histories[]
+  other_products_subscription_histories other_products_subscription_histories[]
+  users                                 users[]
 }
 
 model emailsetting {
@@ -148,8 +162,8 @@ model emailsetting {
 model Role {
   id          String           @id @default(cuid())
   name        String
-  permissions RolePermission[]
   admins      AdminRole[]
+  permissions RolePermission[]
 }
 
 model Permission {
@@ -170,8 +184,8 @@ model AdminRole {
 model RolePermission {
   roleId       String
   permissionId String
-  role         Role       @relation(fields: [roleId], references: [id])
   permission   Permission @relation(fields: [permissionId], references: [id])
+  role         Role       @relation(fields: [roleId], references: [id])
 
   @@id([roleId, permissionId])
 }
@@ -195,7 +209,7 @@ model languages {
 }
 
 model cr_documents {
-    id       String    @id @default(cuid())
+  id         String    @id @default(cuid())
   name       String?   @db.NVarChar(Max)
   status     Int?
   created_at DateTime? @db.DateTime
@@ -231,7 +245,7 @@ model other_products_subcriptions {
   react_no                                Int?
   transaction_id                          String
   product_id                              String
-  price                                   Float? // registration fee
+  price                                   Float?
   status                                  String?        @default("inactive", map: "DF_other_products_subcriptions_status") @db.VarChar(10)
   user_id                                 String?
   createdBy                               String?        @db.NVarChar(255)
@@ -245,34 +259,32 @@ model other_products_subcriptions {
   product_identifier_name                 String?        @db.NVarChar(255)
   isDeleted                               Boolean?       @default(false)
   product                                 other_products @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  user                                    users?         @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  user                                    users?         @relation(fields: [user_id], references: [id])
 }
 
 model other_products_subscription_histories {
-  id                String    @id @default(cuid())
+  id                String         @id @default(cuid())
   react_no          Int?
   transaction_id    String
   product_id        String
-  other_date        DateTime? @db.DateTime
+  other_date        DateTime?      @db.DateTime
   user_id           String
   price             Float?
-  request_type      String?   @db.NVarChar(Max)
-  document          String?   @db.NVarChar(Max)
-  payment_type      String?   @db.NVarChar(Max)
-  status            String?   @default("pending", map: "DF_other_products_subscription_histories_status") @db.VarChar(255)
-  createdBy         String?   @db.NVarChar(255)
-  created_at        DateTime? @default(now())
-  updated_at        DateTime? @updatedAt
-  deleted_at        DateTime? @db.DateTime
-  expiry_date       DateTime? @db.DateTime
-  approved_date     DateTime? @db.DateTime
+  request_type      String?        @db.NVarChar(Max)
+  document          String?        @db.NVarChar(Max)
+  payment_type      String?        @db.NVarChar(Max)
+  status            String?        @default("pending", map: "DF_other_products_subscription_histories_status") @db.VarChar(255)
+  createdBy         String?        @db.NVarChar(255)
+  created_at        DateTime?      @default(now())
+  updated_at        DateTime?      @updatedAt
+  deleted_at        DateTime?      @db.DateTime
+  expiry_date       DateTime?      @db.DateTime
+  approved_date     DateTime?      @db.DateTime
   admin_id          String?
   additional_gln_id String?
-  // point additional_gln_id to gln_upgrade_pricing optionaly
-
-  admin   admins?        @relation(fields: [admin_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product other_products @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user    users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  admin             admins?        @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+  product           other_products @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  user              users          @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model gtin_products {
@@ -302,7 +314,7 @@ model gtin_subcriptions {
   react_no                      Int?
   transaction_id                String?
   pkg_id                        String
-  price                         Float? // this is registration fee
+  price                         Float?
   request_type                  String?       @db.NVarChar(Max)
   status                        String?       @default("inactive", map: "DF_gtin_subcriptions_status") @db.VarChar(10)
   user_id                       String?
@@ -316,40 +328,36 @@ model gtin_subcriptions {
   gtin_subscription_total_price Float         @default(0)
   isDeleted                     Boolean?      @default(false)
   gtin_product                  gtin_products @relation(fields: [pkg_id], references: [id], onDelete: Cascade)
-  // make optioanl realtion with user
-  user                          users?        @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  user                          users?        @relation(fields: [user_id], references: [id])
 }
 
 model gtin_subscription_histories {
-  id             String    @id @default(cuid())
-  react_no       Int?
-  transaction_id String?
-  pkg_id         String
-  pkg_date       DateTime? @default(now()) @db.DateTime
-  user_id        String
-  price          Float?
-  request_type   String?   @db.NVarChar(Max)
-  document       String?   @db.NVarChar(Max)
-  payment_type   String?   @db.NVarChar(Max)
-  status         String?   @default("pending", map: "DF_gtin_subscription_histories_status") @db.VarChar(10)
-  createdBy      Int?      @default(0, map: "DF_gtin_subscription_histories_createdBy")
-  created_at     DateTime? @default(now()) @db.DateTime
-  updated_at     DateTime? @updatedAt
-  deleted_at     DateTime? @db.DateTime
-  expiry_date    DateTime? @db.DateTime
-
-  approved_date          DateTime? @db.DateTime
+  id                     String        @id @default(cuid())
+  react_no               Int?
+  transaction_id         String?
+  pkg_id                 String
+  pkg_date               DateTime?     @default(now()) @db.DateTime
+  user_id                String
+  price                  Float?
+  request_type           String?       @db.NVarChar(Max)
+  document               String?       @db.NVarChar(Max)
+  payment_type           String?       @db.NVarChar(Max)
+  status                 String?       @default("pending", map: "DF_gtin_subscription_histories_status") @db.VarChar(10)
+  createdBy              Int?          @default(0, map: "DF_gtin_subscription_histories_createdBy")
+  created_at             DateTime?     @default(now()) @db.DateTime
+  updated_at             DateTime?     @updatedAt
+  deleted_at             DateTime?     @db.DateTime
+  expiry_date            DateTime?     @db.DateTime
+  approved_date          DateTime?     @db.DateTime
   admin_id               String?
   additional_products_id String?
-  // point  additional_products_id  to  gtin_upgrade_pricing optionally
-
-  admin        admins?       @relation(fields: [admin_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user         users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  gtin_product gtin_products @relation(fields: [pkg_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  admin                  admins?       @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+  gtin_product           gtin_products @relation(fields: [pkg_id], references: [id], onDelete: Cascade)
+  user                   users         @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model gcp_types {
-   id             String    @id @default(cuid())
+  id              String    @id @default(cuid())
   gcp_code        String    @db.NVarChar(255)
   gcp_description String?   @db.NVarChar(Max)
   created_at      DateTime? @db.DateTime
@@ -448,9 +456,8 @@ model member_documents {
   reject_reason       String?   @db.VarChar(1000)
   uploaded_by         String?
   no_of_years         Int       @default(1, map: "DF_member_documents_no_of_years")
-  // point userId to users table
-  user                users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cron_job_check_time DateTime  @default(now())
+  user                users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model products {
@@ -476,7 +483,6 @@ model products {
   barcode            String?   @db.NVarChar(50)
   gpc                String?   @db.VarChar(255)
   gpc_code           String?   @db.VarChar(50)
-  // add default custom
   gpc_type           String?   @default("custom") @db.VarChar(50)
   countrySale        String?   @db.VarChar(50)
   HSCODES            String?   @db.Text
@@ -503,8 +509,7 @@ model products {
   image_1            String?   @db.VarChar(255)
   image_2            String?   @db.VarChar(255)
   image_3            String?   @db.VarChar(255)
-  // create user relation
-  user               users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user               users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([barcode], map: "products_barcode_index")
 }
@@ -602,10 +607,8 @@ model foreign_gtins {
   updated_at         DateTime  @updatedAt
   deleted_at         DateTime? @db.DateTime
   companyId          String?
-  //create user and admin relation
-
-  user  users?  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  admin admins? @relation(fields: [admin_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  admin              admins?   @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+  user               users?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model member_history_logs {
@@ -618,7 +621,7 @@ model member_history_logs {
   created_by_admin Boolean?  @default(false, map: "DF_member_history_logs_created_by_admin")
   rejected_usersId String?
   deleted_at       DateTime? @db.DateTime
-  user             users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user             users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model admin_history_logs {
@@ -629,8 +632,8 @@ model admin_history_logs {
   updated_at DateTime? @updatedAt @db.DateTime
   deleted_at DateTime? @db.DateTime
   user_id    String
-  user       users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  admin      admins    @relation(fields: [admin_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  admin      admins    @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+  user       users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model skipped_barcodes {
@@ -641,9 +644,7 @@ model skipped_barcodes {
   deleted_at DateTime? @db.DateTime
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-
-  // create user relation
-  user users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user       users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model skipped_GLN_barcodes {
@@ -653,9 +654,7 @@ model skipped_GLN_barcodes {
   deleted_at DateTime? @db.DateTime
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-
-  // create user relation
-  user users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user       users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model carts {
@@ -677,8 +676,9 @@ model carts {
   admin_id       Int?      @default(0, map: "DF_carts_admin_id")
   assign_to      Int?      @default(0, map: "DF_carts_assign_to")
   discount       Float?    @default(0, map: "DF_carts_discount")
-  user           users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user           users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
+
 model NewsletterSubscription {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -694,6 +694,7 @@ model mega_menus {
   updated_at           DateTime               @default(now()) @db.DateTime
   mega_menu_categories mega_menu_categories[]
 }
+
 model mega_menu_categories {
   id               String         @id @default(cuid())
   parent_id        String
@@ -711,9 +712,13 @@ model mega_menu_categories {
   status           Int?
   created_at       DateTime?      @default(now()) @db.DateTime
   updated_at       DateTime       @default(now()) @db.DateTime
+  image            String?        @db.NVarChar(Max)
+  caption          String?        @db.NVarChar(Max)
+  caption_ar       String?        @db.NVarChar(Max)
   footer_menus     footer_menus[]
   mega_menus       mega_menus?    @relation(fields: [megamenu_id], references: [id])
 }
+
 model footer_menus {
   id                  String               @id @default(cuid())
   parent_id           String
@@ -726,18 +731,15 @@ model footer_menus {
   mega_menu_categorie mega_menu_categories @relation(fields: [parent_id], references: [id])
 }
 
-
-
 model Template {
-  id             String   @id @default(cuid())
-  name           String   @db.NVarChar(Max)
-  name_ar        String   @db.NVarChar(Max)
-  description    String?  @db.NVarChar(Max)
-  description_ar String?  @db.NVarChar(Max)
-  created_at     DateTime @default(now()) @db.DateTime
-  updated_at     DateTime @default(now()) @db.DateTime
-
-  pages NewPage[]
+  id             String    @id @default(cuid())
+  name           String    @db.NVarChar(Max)
+  name_ar        String    @db.NVarChar(Max)
+  description    String?   @db.NVarChar(Max)
+  description_ar String?   @db.NVarChar(Max)
+  created_at     DateTime  @default(now()) @db.DateTime
+  updated_at     DateTime  @default(now()) @db.DateTime
+  pages          NewPage[]
 }
 
 model NewPage {
@@ -756,28 +758,262 @@ model NewPage {
 }
 
 model Section {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   page_id    String
-  name       String   @db.NVarChar(Max)
-  name_ar    String   @db.NVarChar(Max)
+  name       String    @db.NVarChar(Max)
+  name_ar    String    @db.NVarChar(Max)
   order      Int
-  created_at DateTime @default(now()) @db.DateTime
-  updated_at DateTime @default(now()) @db.DateTime
-
-  page     NewPage   @relation(fields: [page_id], references: [id], onDelete: Cascade)
-  contents Content[]
+  created_at DateTime  @default(now()) @db.DateTime
+  updated_at DateTime  @default(now()) @db.DateTime
+  contents   Content[]
+  page       NewPage   @relation(fields: [page_id], references: [id], onDelete: Cascade)
 }
 
 model Content {
   id         String   @id @default(cuid())
   section_id String
   type       String   @db.NVarChar(Max)
-  data       String   @db.NVarChar(Max) // Storing JSON as string
-  data_ar    String?  @db.NVarChar(Max) // Storing JSON as string for Arabic content
+  data       String   @db.NVarChar(Max)
+  data_ar    String?  @db.NVarChar(Max)
   created_at DateTime @default(now()) @db.DateTime
   updated_at DateTime @default(now()) @db.DateTime
+  section    Section  @relation(fields: [section_id], references: [id], onDelete: Cascade)
+}
 
-  section Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
+model featured_services {
+  id             String    @id
+  name_en        String?   @db.NVarChar(Max)
+  name_ar        String?   @db.NVarChar(Max)
+  image          String?   @db.NVarChar(Max)
+  link           String?   @db.NVarChar(Max)
+  status         Int?
+  description    String?   @db.NVarChar(Max)
+  description_ar String?   @db.NVarChar(Max)
+  created_at     DateTime? @db.DateTime
+  updated_at     DateTime? @db.DateTime
+}
+
+model Product_Storage {
+  StorageID             Int       @id(map: "PK__Product___8A247E37942EC147") @default(autoincrement())
+  ProductID             Int
+  LocationID            Int
+  LocationType          String    @db.VarChar(100)
+  Quantity              Int
+  StorageDate           DateTime  @db.Date
+  ExpirationDate        DateTime? @db.Date
+  BatchNumber           String?   @db.VarChar(100)
+  TemperatureControlled Boolean?
+  MinTemperature        Decimal?  @db.Decimal(5, 2)
+  MaxTemperature        Decimal?  @db.Decimal(5, 2)
+  HumidityControlled    Boolean?
+  MinHumidity           Decimal?  @db.Decimal(5, 2)
+  MaxHumidity           Decimal?  @db.Decimal(5, 2)
+  SpecialHandling       String?   @db.Text
+  CreatedBy             String    @db.VarChar(255)
+  CreatedDate           DateTime? @default(now(), map: "DF__Product_S__Creat__2704CA5F") @db.DateTime
+  LastModifiedBy        String    @db.VarChar(255)
+  LastModifiedDate      DateTime? @default(now(), map: "DF__Product_S__LastM__27F8EE98") @db.DateTime
+}
+
+model tbDLAllergens {
+  AllergenID             Int       @id(map: "PK__tbDLAlle__158B937F6AD56CD4") @default(autoincrement())
+  ProductID              Int
+  AllergenName           String    @db.VarChar(255)
+  AllergenType           String    @db.VarChar(100)
+  ContainsAllergen       Boolean
+  MayContain             Boolean
+  CrossContaminationRisk Boolean
+  AllergenSource         String?   @db.VarChar(255)
+  CreatedBy              String    @db.VarChar(255)
+  CreatedDate            DateTime? @default(now(), map: "DF__tbDLAller__Creat__2EA5EC27") @db.DateTime
+  LastModifiedBy         String    @db.VarChar(255)
+  LastModifiedDate       DateTime? @default(now(), map: "DF__tbDLAller__LastM__2F9A1060") @db.DateTime
+}
+
+model tblDL_IECEE_Certificate {
+  CertificateID     Int       @id(map: "PK__tblDL_IE__BBF8A7E1320C7F0C") @default(autoincrement())
+  ProductID         Int
+  CertificateNumber String    @db.VarChar(255)
+  IssueDate         DateTime  @db.Date
+  ExpiryDate        DateTime? @db.Date
+  IssuedBy          String    @db.VarChar(255)
+  StandardMet       String    @db.VarChar(255)
+  Status            String    @db.VarChar(100)
+  Scope             String?   @db.Text
+  CreatedBy         String    @db.VarChar(255)
+  CreatedDate       DateTime? @default(now(), map: "DF__tblDL_IEC__Creat__4959E263") @db.DateTime
+  LastModifiedBy    String    @db.VarChar(255)
+  LastModifiedDate  DateTime? @default(now(), map: "DF__tblDL_IEC__LastM__4A4E069C") @db.DateTime
+}
+
+model tblDLEfficiency_Labels {
+  LabelID          Int       @id(map: "PK__tblDLEff__397E2BA3A1E7D7ED") @default(autoincrement())
+  ProductID        Int
+  LabelType        String    @db.VarChar(255)
+  Rating           String    @db.VarChar(50)
+  IssuedBy         String    @db.VarChar(255)
+  IssueDate        DateTime  @db.Date
+  ValidUntil       DateTime? @db.Date
+  Scope            String?   @db.VarChar(255)
+  Details          String?   @db.Text
+  CreatedBy        String    @db.VarChar(255)
+  CreatedDate      DateTime? @default(now(), map: "DF__tblDLEffi__Creat__41B8C09B") @db.DateTime
+  LastModifiedBy   String    @db.VarChar(255)
+  LastModifiedDate DateTime? @default(now(), map: "DF__tblDLEffi__LastM__42ACE4D4") @db.DateTime
+}
+
+model tblDLFood_Product_Safety {
+  SafetyID             Int       @id(map: "PK__tblDLFoo__1BC90EF9C94FD453") @default(autoincrement())
+  ProductID            Int
+  BatchNumber          String    @db.VarChar(100)
+  ManufactureDate      DateTime  @db.Date
+  ExpiryDate           DateTime  @db.Date
+  SupplierID           Int?
+  InspectionDate       DateTime? @db.Date
+  InspectionResult     String?   @db.VarChar(100)
+  IssueDetected        Boolean?
+  IssueDescription     String?   @db.Text
+  CorrectiveAction     String?   @db.Text
+  RecallStatus         String?   @db.VarChar(50)
+  RecallDate           DateTime? @db.Date
+  RegulatoryCompliance String?   @db.VarChar(255)
+  StorageConditions    String?   @db.VarChar(255)
+  CreatedBy            String    @db.VarChar(255)
+  CreatedDate          DateTime? @default(now(), map: "DF__tblDLFood__Creat__3A179ED3") @db.DateTime
+  LastModifiedBy       String    @db.VarChar(255)
+  LastModifiedDate     DateTime? @default(now(), map: "DF__tblDLFood__LastM__3B0BC30C") @db.DateTime
+}
+
+model tblDLNutritional_Info {
+  NutritionalID      Int       @id(map: "PK__tblDLNut__960E87DF848CC1CC") @default(autoincrement())
+  ProductID          Int
+  ServingSize        String    @db.VarChar(100)
+  Calories           Decimal   @db.Decimal(10, 2)
+  TotalFat           Decimal   @db.Decimal(10, 2)
+  SaturatedFat       Decimal?  @db.Decimal(10, 2)
+  TransFat           Decimal?  @db.Decimal(10, 2)
+  Cholesterol        Decimal?  @db.Decimal(10, 2)
+  Sodium             Decimal   @db.Decimal(10, 2)
+  TotalCarbohydrates Decimal   @db.Decimal(10, 2)
+  DietaryFiber       Decimal?  @db.Decimal(10, 2)
+  Sugars             Decimal?  @db.Decimal(10, 2)
+  Protein            Decimal   @db.Decimal(10, 2)
+  VitaminA           Decimal?  @db.Decimal(10, 2)
+  VitaminC           Decimal?  @db.Decimal(10, 2)
+  Calcium            Decimal?  @db.Decimal(10, 2)
+  Iron               Decimal?  @db.Decimal(10, 2)
+  CreatedBy          String    @db.VarChar(255)
+  CreatedDate        DateTime? @default(now(), map: "DF__tblDLNutr__Creat__32767D0B") @db.DateTime
+  LastModifiedBy     String    @db.VarChar(255)
+  LastModifiedDate   DateTime? @default(now(), map: "DF__tblDLNutr__LastM__336AA144") @db.DateTime
+}
+
+model tblDLPackaging {
+  PackagingID       Int       @id(map: "PK__tblDLPac__BD507F58CDFE867F") @default(autoincrement())
+  ProductID         Int
+  PackagingType     String    @db.VarChar(100)
+  Material          String    @db.VarChar(100)
+  Dimensions        String?   @db.VarChar(100)
+  Weight            Decimal?  @db.Decimal(10, 2)
+  Capacity          String?   @db.VarChar(100)
+  Recyclable        Boolean?
+  Biodegradable     Boolean?
+  Barcode           String?   @db.VarChar(100)
+  PackagingSupplier String?   @db.VarChar(255)
+  CostPerUnit       Decimal?  @db.Decimal(10, 2)
+  Color             String?   @db.VarChar(50)
+  Labeling          String?   @db.Text
+  CreatedBy         String?   @db.VarChar(255)
+  CreatedDate       DateTime? @default(now(), map: "DF__tblDLPack__Creat__214BF109") @db.DateTime
+  LastModifiedBy    String?   @db.VarChar(255)
+  LastModifiedDate  DateTime? @default(now(), map: "DF__tblDLPack__LastM__22401542") @db.DateTime
+}
+
+model tblDLProduct_Conformity {
+  CertificateID    Int       @id(map: "PK__tblDLPro__BBF8A7E1D6A43FC2") @default(autoincrement())
+  ProductID        Int
+  CertificateName  String    @db.VarChar(255)
+  IssuedBy         String    @db.VarChar(255)
+  IssueDate        DateTime  @db.Date
+  ExpiryDate       DateTime? @db.Date
+  StandardMet      String?   @db.VarChar(255)
+  Details          String?   @db.Text
+  CreatedBy        String    @db.VarChar(255)
+  CreatedDate      DateTime? @default(now(), map: "DF__tblDLProd__Creat__4589517F") @db.DateTime
+  LastModifiedBy   String    @db.VarChar(255)
+  LastModifiedDate DateTime? @default(now(), map: "DF__tblDLProd__LastM__467D75B8") @db.DateTime
+}
+
+model tblDLProduct_Contents {
+  ContentID            Int       @id(map: "PK__tblDLPro__2907A87E1255CB94") @default(autoincrement())
+  ProductID            Int
+  IngredientName       String    @db.VarChar(255)
+  IngredientType       String    @db.VarChar(100)
+  Quantity             Decimal   @db.Decimal(10, 2)
+  UnitOfMeasure        String    @db.VarChar(50)
+  Source               String?   @db.VarChar(255)
+  Organic              Boolean?
+  Allergen             Boolean?
+  GMOStatus            String?   @db.VarChar(50)
+  NutritionalInfo      String?   @db.Text
+  RegulatoryCompliance String?   @db.VarChar(255)
+  CreatedBy            String    @db.VarChar(255)
+  CreatedDate          DateTime? @default(now(), map: "DF__tblDLProd__Creat__36470DEF") @db.DateTime
+  LastModifiedBy       String    @db.VarChar(255)
+  LastModifiedDate     DateTime? @default(now(), map: "DF__tblDLProd__LastM__373B3228") @db.DateTime
+}
+
+model tblDLProduct_Quality_Mark {
+  QualityMarkID    Int       @id(map: "PK__tblDLPro__D13EAFA467814EF2") @default(autoincrement())
+  ProductID        Int
+  QualityMark      String    @db.VarChar(255)
+  IssuingAuthority String    @db.VarChar(255)
+  IssueDate        DateTime  @db.Date
+  ExpiryDate       DateTime? @db.Date
+  Status           String    @db.VarChar(50)
+  Scope            String?   @db.VarChar(255)
+  CreatedBy        String    @db.VarChar(255)
+  CreatedDate      DateTime? @default(now(), map: "DF__tblDLProd__Creat__3DE82FB7") @db.DateTime
+  LastModifiedBy   String    @db.VarChar(255)
+  LastModifiedDate DateTime? @default(now(), map: "DF__tblDLProd__LastM__3EDC53F0") @db.DateTime
+}
+
+model tblDLProduct_Storage {
+  StorageID             Int       @id(map: "PK__tblDLPro__8A247E373E566A1F") @default(autoincrement())
+  ProductID             Int
+  LocationID            Int
+  LocationType          String    @db.VarChar(100)
+  Quantity              Int
+  StorageDate           DateTime  @db.Date
+  ExpirationDate        DateTime? @db.Date
+  BatchNumber           String?   @db.VarChar(100)
+  TemperatureControlled Boolean?
+  MinTemperature        Decimal?  @db.Decimal(5, 2)
+  MaxTemperature        Decimal?  @db.Decimal(5, 2)
+  HumidityControlled    Boolean?
+  MinHumidity           Decimal?  @db.Decimal(5, 2)
+  MaxHumidity           Decimal?  @db.Decimal(5, 2)
+  SpecialHandling       String?   @db.Text
+  CreatedBy             String    @db.VarChar(255)
+  CreatedDate           DateTime? @default(now(), map: "DF__tblDLProd__Creat__2AD55B43") @db.DateTime
+  LastModifiedBy        String    @db.VarChar(255)
+  LastModifiedDate      DateTime? @default(now(), map: "DF__tblDLProd__LastM__2BC97F7C") @db.DateTime
+}
+
+model upcoming_events {
+  id             String    @id
+  title          String?   @db.NVarChar(Max)
+  title_ar       String?   @db.NVarChar(Max)
+  image          String?   @db.NVarChar(Max)
+  date           String?   @db.NVarChar(255)
+  link           String?   @db.NVarChar(Max)
+  description    String?   @db.NVarChar(Max)
+  description_ar String?   @db.NVarChar(Max)
+  status         Int?
+  created_at     DateTime? @default(now()) @db.DateTime
+  updated_at     DateTime  @default(now()) @db.DateTime
+  video          String?   @db.NVarChar(Max)
+  display_type   String?   @db.NVarChar(Max)
 }
 model featured_services {
   id             String    @id @default(cuid())
