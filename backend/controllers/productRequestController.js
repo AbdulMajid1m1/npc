@@ -27,3 +27,30 @@ export const createproductRequest = async (req, res, next) => {
       next(error);
     }
   };
+  export const getAllProductRequests = async (req, res, next) => {
+    try {
+      const productRequests = await prisma.productRequest.findMany();
+      res.status(200).json(productRequests);
+    } catch (error) {
+      next(error);
+    }
+  };
+  export const getProductRequestsByNpcUserId = async (req, res, next) => {
+    try {
+      const { npc_user_id } = req.params;
+  
+      const productRequests = await prisma.productRequest.findMany({
+        where: {
+          npc_user_id: npc_user_id // Ensure npc_user_id is of the correct type (e.g., integer)
+        },
+      });
+  
+      if (productRequests.length === 0) {
+        return res.status(404).json({ message: 'No product requests found for this user.' });
+      }
+  
+      res.status(200).json(productRequests);
+    } catch (error) {
+      next(error);
+    }
+  };
