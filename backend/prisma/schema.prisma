@@ -919,6 +919,38 @@ model tblDlEfficiencyLabels {
   last_modified_by String    @db.VarChar(255)
 }
 
+
+model tblDlProductConformity {
+  id               String    @id @default(cuid())
+  barcode          String    @db.NVarChar(50)
+  certificate_name String    @db.VarChar(255)
+  issued_by        String    @db.VarChar(255)
+  issue_date       DateTime  @db.Date
+  expiry_date      DateTime? @db.Date
+  standard_met     String?   @db.VarChar(255)
+  details          String?   @db.Text
+  brand_owner_id   String    @db.VarChar(255)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  last_modified_by String    @db.VarChar(255)
+}
+
+model tblDlProductQualityMark {
+  id                String    @id @default(cuid())
+  barcode           String    @db.NVarChar(50)
+  quality_mark      String    @db.VarChar(255)
+  issuing_authority String    @db.VarChar(255)
+  issue_date        DateTime  @db.Date
+  expiry_date       DateTime? @db.Date
+  status            String    @db.VarChar(50)
+  scope             String?   @db.VarChar(255)
+  brand_owner_id    String    @db.VarChar(255)
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  last_modified_by  String    @db.VarChar(255)
+}
+
+
 model tblDlFoodProductSafety {
   id                    String    @id @default(cuid())
   barcode               String    @db.NVarChar(50)
@@ -963,35 +995,6 @@ model tblDlPackaging {
   last_modified_by   String?  @db.VarChar(255)
 }
 
-model tblDlProductConformity {
-  id               String    @id @default(cuid())
-  barcode          String    @db.NVarChar(50)
-  certificate_name String    @db.VarChar(255)
-  issued_by        String    @db.VarChar(255)
-  issue_date       DateTime  @db.Date
-  expiry_date      DateTime? @db.Date
-  standard_met     String?   @db.VarChar(255)
-  details          String?   @db.Text
-  brand_owner_id   String    @db.VarChar(255)
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
-  last_modified_by String    @db.VarChar(255)
-}
-
-model tblDlProductQualityMark {
-  id                String    @id @default(cuid())
-  barcode           String    @db.NVarChar(50)
-  quality_mark      String    @db.VarChar(255)
-  issuing_authority String    @db.VarChar(255)
-  issue_date        DateTime  @db.Date
-  expiry_date       DateTime? @db.Date
-  status            String    @db.VarChar(50)
-  scope             String?   @db.VarChar(255)
-  brand_owner_id    String    @db.VarChar(255)
-  created_at        DateTime  @default(now())
-  updated_at        DateTime  @updatedAt
-  last_modified_by  String    @db.VarChar(255)
-}
 
 model tblDlProductStorage {
   id                     String    @id @default(cuid())
