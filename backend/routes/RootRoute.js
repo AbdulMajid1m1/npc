@@ -16,5 +16,4 @@ router.use("/npcUsers", npcUserRoutes);
 router.use("/blogs", blogRoutes);
 
 
-
 export default router;
