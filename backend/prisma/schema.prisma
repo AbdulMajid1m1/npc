@@ -712,9 +712,6 @@ model mega_menu_categories {
   status           Int?
   created_at       DateTime?      @default(now()) @db.DateTime
   updated_at       DateTime       @default(now()) @db.DateTime
-  image            String?        @db.NVarChar(Max)
-  caption          String?        @db.NVarChar(Max)
-  caption_ar       String?        @db.NVarChar(Max)
   footer_menus     footer_menus[]
   mega_menus       mega_menus?    @relation(fields: [megamenu_id], references: [id])
 }
@@ -793,213 +790,6 @@ model featured_services {
   updated_at     DateTime? @db.DateTime
 }
 
-model Product_Storage {
-  StorageID             Int       @id(map: "PK__Product___8A247E37942EC147") @default(autoincrement())
-  ProductID             Int
-  LocationID            Int
-  LocationType          String    @db.VarChar(100)
-  Quantity              Int
-  StorageDate           DateTime  @db.Date
-  ExpirationDate        DateTime? @db.Date
-  BatchNumber           String?   @db.VarChar(100)
-  TemperatureControlled Boolean?
-  MinTemperature        Decimal?  @db.Decimal(5, 2)
-  MaxTemperature        Decimal?  @db.Decimal(5, 2)
-  HumidityControlled    Boolean?
-  MinHumidity           Decimal?  @db.Decimal(5, 2)
-  MaxHumidity           Decimal?  @db.Decimal(5, 2)
-  SpecialHandling       String?   @db.Text
-  CreatedBy             String    @db.VarChar(255)
-  CreatedDate           DateTime? @default(now(), map: "DF__Product_S__Creat__2704CA5F") @db.DateTime
-  LastModifiedBy        String    @db.VarChar(255)
-  LastModifiedDate      DateTime? @default(now(), map: "DF__Product_S__LastM__27F8EE98") @db.DateTime
-}
-
-model tbDLAllergens {
-  AllergenID             Int       @id(map: "PK__tbDLAlle__158B937F6AD56CD4") @default(autoincrement())
-  ProductID              Int
-  AllergenName           String    @db.VarChar(255)
-  AllergenType           String    @db.VarChar(100)
-  ContainsAllergen       Boolean
-  MayContain             Boolean
-  CrossContaminationRisk Boolean
-  AllergenSource         String?   @db.VarChar(255)
-  CreatedBy              String    @db.VarChar(255)
-  CreatedDate            DateTime? @default(now(), map: "DF__tbDLAller__Creat__2EA5EC27") @db.DateTime
-  LastModifiedBy         String    @db.VarChar(255)
-  LastModifiedDate       DateTime? @default(now(), map: "DF__tbDLAller__LastM__2F9A1060") @db.DateTime
-}
-
-model tblDL_IECEE_Certificate {
-  CertificateID     Int       @id(map: "PK__tblDL_IE__BBF8A7E1320C7F0C") @default(autoincrement())
-  ProductID         Int
-  CertificateNumber String    @db.VarChar(255)
-  IssueDate         DateTime  @db.Date
-  ExpiryDate        DateTime? @db.Date
-  IssuedBy          String    @db.VarChar(255)
-  StandardMet       String    @db.VarChar(255)
-  Status            String    @db.VarChar(100)
-  Scope             String?   @db.Text
-  CreatedBy         String    @db.VarChar(255)
-  CreatedDate       DateTime? @default(now(), map: "DF__tblDL_IEC__Creat__4959E263") @db.DateTime
-  LastModifiedBy    String    @db.VarChar(255)
-  LastModifiedDate  DateTime? @default(now(), map: "DF__tblDL_IEC__LastM__4A4E069C") @db.DateTime
-}
-
-model tblDLEfficiency_Labels {
-  LabelID          Int       @id(map: "PK__tblDLEff__397E2BA3A1E7D7ED") @default(autoincrement())
-  ProductID        Int
-  LabelType        String    @db.VarChar(255)
-  Rating           String    @db.VarChar(50)
-  IssuedBy         String    @db.VarChar(255)
-  IssueDate        DateTime  @db.Date
-  ValidUntil       DateTime? @db.Date
-  Scope            String?   @db.VarChar(255)
-  Details          String?   @db.Text
-  CreatedBy        String    @db.VarChar(255)
-  CreatedDate      DateTime? @default(now(), map: "DF__tblDLEffi__Creat__41B8C09B") @db.DateTime
-  LastModifiedBy   String    @db.VarChar(255)
-  LastModifiedDate DateTime? @default(now(), map: "DF__tblDLEffi__LastM__42ACE4D4") @db.DateTime
-}
-
-model tblDLFood_Product_Safety {
-  SafetyID             Int       @id(map: "PK__tblDLFoo__1BC90EF9C94FD453") @default(autoincrement())
-  ProductID            Int
-  BatchNumber          String    @db.VarChar(100)
-  ManufactureDate      DateTime  @db.Date
-  ExpiryDate           DateTime  @db.Date
-  SupplierID           Int?
-  InspectionDate       DateTime? @db.Date
-  InspectionResult     String?   @db.VarChar(100)
-  IssueDetected        Boolean?
-  IssueDescription     String?   @db.Text
-  CorrectiveAction     String?   @db.Text
-  RecallStatus         String?   @db.VarChar(50)
-  RecallDate           DateTime? @db.Date
-  RegulatoryCompliance String?   @db.VarChar(255)
-  StorageConditions    String?   @db.VarChar(255)
-  CreatedBy            String    @db.VarChar(255)
-  CreatedDate          DateTime? @default(now(), map: "DF__tblDLFood__Creat__3A179ED3") @db.DateTime
-  LastModifiedBy       String    @db.VarChar(255)
-  LastModifiedDate     DateTime? @default(now(), map: "DF__tblDLFood__LastM__3B0BC30C") @db.DateTime
-}
-
-model tblDLNutritional_Info {
-  NutritionalID      Int       @id(map: "PK__tblDLNut__960E87DF848CC1CC") @default(autoincrement())
-  ProductID          Int
-  ServingSize        String    @db.VarChar(100)
-  Calories           Decimal   @db.Decimal(10, 2)
-  TotalFat           Decimal   @db.Decimal(10, 2)
-  SaturatedFat       Decimal?  @db.Decimal(10, 2)
-  TransFat           Decimal?  @db.Decimal(10, 2)
-  Cholesterol        Decimal?  @db.Decimal(10, 2)
-  Sodium             Decimal   @db.Decimal(10, 2)
-  TotalCarbohydrates Decimal   @db.Decimal(10, 2)
-  DietaryFiber       Decimal?  @db.Decimal(10, 2)
-  Sugars             Decimal?  @db.Decimal(10, 2)
-  Protein            Decimal   @db.Decimal(10, 2)
-  VitaminA           Decimal?  @db.Decimal(10, 2)
-  VitaminC           Decimal?  @db.Decimal(10, 2)
-  Calcium            Decimal?  @db.Decimal(10, 2)
-  Iron               Decimal?  @db.Decimal(10, 2)
-  CreatedBy          String    @db.VarChar(255)
-  CreatedDate        DateTime? @default(now(), map: "DF__tblDLNutr__Creat__32767D0B") @db.DateTime
-  LastModifiedBy     String    @db.VarChar(255)
-  LastModifiedDate   DateTime? @default(now(), map: "DF__tblDLNutr__LastM__336AA144") @db.DateTime
-}
-
-model tblDLPackaging {
-  PackagingID       Int       @id(map: "PK__tblDLPac__BD507F58CDFE867F") @default(autoincrement())
-  ProductID         Int
-  PackagingType     String    @db.VarChar(100)
-  Material          String    @db.VarChar(100)
-  Dimensions        String?   @db.VarChar(100)
-  Weight            Decimal?  @db.Decimal(10, 2)
-  Capacity          String?   @db.VarChar(100)
-  Recyclable        Boolean?
-  Biodegradable     Boolean?
-  Barcode           String?   @db.VarChar(100)
-  PackagingSupplier String?   @db.VarChar(255)
-  CostPerUnit       Decimal?  @db.Decimal(10, 2)
-  Color             String?   @db.VarChar(50)
-  Labeling          String?   @db.Text
-  CreatedBy         String?   @db.VarChar(255)
-  CreatedDate       DateTime? @default(now(), map: "DF__tblDLPack__Creat__214BF109") @db.DateTime
-  LastModifiedBy    String?   @db.VarChar(255)
-  LastModifiedDate  DateTime? @default(now(), map: "DF__tblDLPack__LastM__22401542") @db.DateTime
-}
-
-model tblDLProduct_Conformity {
-  CertificateID    Int       @id(map: "PK__tblDLPro__BBF8A7E1D6A43FC2") @default(autoincrement())
-  ProductID        Int
-  CertificateName  String    @db.VarChar(255)
-  IssuedBy         String    @db.VarChar(255)
-  IssueDate        DateTime  @db.Date
-  ExpiryDate       DateTime? @db.Date
-  StandardMet      String?   @db.VarChar(255)
-  Details          String?   @db.Text
-  CreatedBy        String    @db.VarChar(255)
-  CreatedDate      DateTime? @default(now(), map: "DF__tblDLProd__Creat__4589517F") @db.DateTime
-  LastModifiedBy   String    @db.VarChar(255)
-  LastModifiedDate DateTime? @default(now(), map: "DF__tblDLProd__LastM__467D75B8") @db.DateTime
-}
-
-model tblDLProduct_Contents {
-  ContentID            Int       @id(map: "PK__tblDLPro__2907A87E1255CB94") @default(autoincrement())
-  ProductID            Int
-  IngredientName       String    @db.VarChar(255)
-  IngredientType       String    @db.VarChar(100)
-  Quantity             Decimal   @db.Decimal(10, 2)
-  UnitOfMeasure        String    @db.VarChar(50)
-  Source               String?   @db.VarChar(255)
-  Organic              Boolean?
-  Allergen             Boolean?
-  GMOStatus            String?   @db.VarChar(50)
-  NutritionalInfo      String?   @db.Text
-  RegulatoryCompliance String?   @db.VarChar(255)
-  CreatedBy            String    @db.VarChar(255)
-  CreatedDate          DateTime? @default(now(), map: "DF__tblDLProd__Creat__36470DEF") @db.DateTime
-  LastModifiedBy       String    @db.VarChar(255)
-  LastModifiedDate     DateTime? @default(now(), map: "DF__tblDLProd__LastM__373B3228") @db.DateTime
-}
-
-model tblDLProduct_Quality_Mark {
-  QualityMarkID    Int       @id(map: "PK__tblDLPro__D13EAFA467814EF2") @default(autoincrement())
-  ProductID        Int
-  QualityMark      String    @db.VarChar(255)
-  IssuingAuthority String    @db.VarChar(255)
-  IssueDate        DateTime  @db.Date
-  ExpiryDate       DateTime? @db.Date
-  Status           String    @db.VarChar(50)
-  Scope            String?   @db.VarChar(255)
-  CreatedBy        String    @db.VarChar(255)
-  CreatedDate      DateTime? @default(now(), map: "DF__tblDLProd__Creat__3DE82FB7") @db.DateTime
-  LastModifiedBy   String    @db.VarChar(255)
-  LastModifiedDate DateTime? @default(now(), map: "DF__tblDLProd__LastM__3EDC53F0") @db.DateTime
-}
-
-model tblDLProduct_Storage {
-  StorageID             Int       @id(map: "PK__tblDLPro__8A247E373E566A1F") @default(autoincrement())
-  ProductID             Int
-  LocationID            Int
-  LocationType          String    @db.VarChar(100)
-  Quantity              Int
-  StorageDate           DateTime  @db.Date
-  ExpirationDate        DateTime? @db.Date
-  BatchNumber           String?   @db.VarChar(100)
-  TemperatureControlled Boolean?
-  MinTemperature        Decimal?  @db.Decimal(5, 2)
-  MaxTemperature        Decimal?  @db.Decimal(5, 2)
-  HumidityControlled    Boolean?
-  MinHumidity           Decimal?  @db.Decimal(5, 2)
-  MaxHumidity           Decimal?  @db.Decimal(5, 2)
-  SpecialHandling       String?   @db.Text
-  CreatedBy             String    @db.VarChar(255)
-  CreatedDate           DateTime? @default(now(), map: "DF__tblDLProd__Creat__2AD55B43") @db.DateTime
-  LastModifiedBy        String    @db.VarChar(255)
-  LastModifiedDate      DateTime? @default(now(), map: "DF__tblDLProd__LastM__2BC97F7C") @db.DateTime
-}
-
 model upcoming_events {
   id             String    @id
   title          String?   @db.NVarChar(Max)
@@ -1015,31 +805,255 @@ model upcoming_events {
   video          String?   @db.NVarChar(Max)
   display_type   String?   @db.NVarChar(Max)
 }
-model featured_services {
-  id             String    @id @default(cuid())
-  name_en        String?   @db.NVarChar(Max)
-  name_ar        String?   @db.NVarChar(Max)
-  image          String?   @db.NVarChar(Max)
-  link           String?   @db.NVarChar(Max)
-  status         Int?
-  description    String?   @db.NVarChar(Max)
-  description_ar String?   @db.NVarChar(Max)
-  created_at     DateTime? @db.DateTime
-  updated_at     DateTime? @db.DateTime
+
+model productStorage {
+  id                     String    @id @default(cuid())
+  barcode                String    @db.NVarChar(50)
+  gln                    String    @db.NVarChar(50)
+  gln_type               String    @db.VarChar(100)
+  quantity               Int
+  storage_date           DateTime  @db.Date
+  expiration_date        DateTime? @db.Date
+  batch_number           String?   @db.VarChar(100)
+  temperature_controlled Boolean?
+  min_temperature        Decimal?  @db.Decimal(5, 2)
+  max_temperature        Decimal?  @db.Decimal(5, 2)
+  humidity_controlled    Boolean?
+  min_humidity           Decimal?  @db.Decimal(5, 2)
+  max_humidity           Decimal?  @db.Decimal(5, 2)
+  special_handling       String?   @db.Text
+  brand_owner_id         String    @db.VarChar(255)
+  created_at             DateTime  @default(now())
+  updated_at             DateTime  @updatedAt
+  last_modified_by       String    @db.VarChar(255)
 }
 
-model upcoming_events {
-  id             String    @id @default(cuid())
-  title          String?   @db.NVarChar(Max)
-  title_ar       String?   @db.NVarChar(Max)
-  image          String?   @db.NVarChar(Max)
-  date           String?   @db.NVarChar(255)
-  link           String?   @db.NVarChar(Max)
-  description    String?   @db.NVarChar(Max)
-  description_ar String?   @db.NVarChar(Max)
-  status         Int?
-  created_at     DateTime? @default(now()) @db.DateTime
-  updated_at     DateTime  @default(now()) @db.DateTime
-  video          String?   @db.NVarChar(Max)
-  display_type   String?   @db.NVarChar(Max)
+model tblDlProductContents {
+  id                    String   @id @default(cuid())
+  barcode               String   @db.NVarChar(50)
+  ingredient_name       String   @db.VarChar(255)
+  ingredient_type       String   @db.VarChar(100)
+  quantity              Decimal  @db.Decimal(10, 2)
+  unit_of_measure       String   @db.VarChar(50)
+  source                String?  @db.VarChar(255)
+  organic               Boolean?
+  allergen              Boolean?
+  gmo_status            String?  @db.VarChar(50)
+  nutritional_info      String?  @db.Text
+  regulatory_compliance String?  @db.VarChar(255)
+  brand_owner_id        String   @db.VarChar(255)
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+  last_modified_by      String   @db.VarChar(255)
 }
+
+model tblDlNutritionalInfo {
+  id                  String   @id @default(cuid())
+  barcode             String   @db.NVarChar(50)
+  serving_size        String   @db.VarChar(100)
+  calories            Decimal  @db.Decimal(10, 2)
+  total_fat           Decimal  @db.Decimal(10, 2)
+  saturated_fat       Decimal? @db.Decimal(10, 2)
+  trans_fat           Decimal? @db.Decimal(10, 2)
+  cholesterol         Decimal? @db.Decimal(10, 2)
+  sodium              Decimal  @db.Decimal(10, 2)
+  total_carbohydrates Decimal  @db.Decimal(10, 2)
+  dietary_fiber       Decimal? @db.Decimal(10, 2)
+  sugars              Decimal? @db.Decimal(10, 2)
+  protein             Decimal  @db.Decimal(10, 2)
+  vitamin_a           Decimal? @db.Decimal(10, 2)
+  vitamin_c           Decimal? @db.Decimal(10, 2)
+  calcium             Decimal? @db.Decimal(10, 2)
+  iron                Decimal? @db.Decimal(10, 2)
+  brand_owner_id      String   @db.VarChar(255)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  last_modified_by    String   @db.VarChar(255)
+}
+
+
+model tbDlAllergens {
+  id                       String   @id @default(cuid())
+  barcode                  String   @db.NVarChar(50)
+  allergen_name            String   @db.VarChar(255)
+  allergen_type            String   @db.VarChar(100)
+  contains_allergen        Boolean
+  may_contain              Boolean
+  cross_contamination_risk Boolean
+  allergen_source          String?  @db.VarChar(255)
+  brand_owner_id           String   @db.VarChar(255)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+  last_modified_by         String   @db.VarChar(255)
+}
+
+model tblDlIeceeCertificate {
+  id                 String    @id @default(cuid())
+  barcode            String    @db.NVarChar(50)
+  certificate_number String    @db.VarChar(255)
+  issue_date         DateTime  @db.Date
+  expiry_date        DateTime? @db.Date
+  issued_by          String    @db.VarChar(255)
+  standard_met       String    @db.VarChar(255)
+  status             String    @db.VarChar(100)
+  scope              String?   @db.Text
+  brand_owner_id     String    @db.VarChar(255)
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  last_modified_by   String    @db.VarChar(255)
+}
+
+model tblDlEfficiencyLabels {
+  id               String    @id @default(cuid())
+  barcode          String    @db.NVarChar(50)
+  label_type       String    @db.VarChar(255)
+  rating           String    @db.VarChar(50)
+  issued_by        String    @db.VarChar(255)
+  issue_date       DateTime  @db.Date
+  valid_until      DateTime? @db.Date
+  scope            String?   @db.VarChar(255)
+  details          String?   @db.Text
+  brand_owner_id   String    @db.VarChar(255)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  last_modified_by String    @db.VarChar(255)
+}
+
+
+model tblDlProductConformity {
+  id               String    @id @default(cuid())
+  barcode          String    @db.NVarChar(50)
+  certificate_name String    @db.VarChar(255)
+  issued_by        String    @db.VarChar(255)
+  issue_date       DateTime  @db.Date
+  expiry_date      DateTime? @db.Date
+  standard_met     String?   @db.VarChar(255)
+  details          String?   @db.Text
+  brand_owner_id   String    @db.VarChar(255)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  last_modified_by String    @db.VarChar(255)
+}
+
+model tblDlProductQualityMark {
+  id                String    @id @default(cuid())
+  barcode           String    @db.NVarChar(50)
+  quality_mark      String    @db.VarChar(255)
+  issuing_authority String    @db.VarChar(255)
+  issue_date        DateTime  @db.Date
+  expiry_date       DateTime? @db.Date
+  status            String    @db.VarChar(50)
+  scope             String?   @db.VarChar(255)
+  brand_owner_id    String    @db.VarChar(255)
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  last_modified_by  String    @db.VarChar(255)
+}
+
+
+model tblDlFoodProductSafety {
+  id                    String    @id @default(cuid())
+  barcode               String    @db.NVarChar(50)
+  batch_number          String    @db.VarChar(100)
+  manufacture_date      DateTime  @db.Date
+  expiry_date           DateTime  @db.Date
+  supplier_id           Int?
+  inspection_date       DateTime? @db.Date
+  inspection_result     String?   @db.VarChar(100)
+  issue_detected        Boolean?
+  issue_description     String?   @db.Text
+  corrective_action     String?   @db.Text
+  recall_status         String?   @db.VarChar(50)
+  recall_date           DateTime? @db.Date
+  regulatory_compliance String?   @db.VarChar(255)
+  storage_conditions    String?   @db.VarChar(255)
+  brand_owner_id        String    @db.VarChar(255)
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  last_modified_by      String    @db.VarChar(255)
+}
+
+
+
+model tblDlPackaging {
+  id                 String   @id @default(cuid())
+  barcode            String   @db.NVarChar(50)
+  packaging_type     String   @db.VarChar(100)
+  material           String   @db.VarChar(100)
+  dimensions         String?  @db.VarChar(100)
+  weight             Decimal? @db.Decimal(10, 2)
+  capacity           String?  @db.VarChar(100)
+  recyclable         Boolean?
+  biodegradable      Boolean?
+  packaging_supplier String?  @db.VarChar(255)
+  cost_per_unit      Decimal? @db.Decimal(10, 2)
+  color              String?  @db.VarChar(50)
+  labeling           String?  @db.Text
+  brand_owner_id     String?  @db.VarChar(255)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  last_modified_by   String?  @db.VarChar(255)
+}
+
+
+model tblDlProductStorage {
+  id                     String    @id @default(cuid())
+  barcode                String    @db.NVarChar(50)
+  gln                    Int
+  gln_type               String    @db.VarChar(100)
+  quantity               Int
+  storage_date           DateTime  @db.Date
+  expiration_date        DateTime? @db.Date
+  batch_number           String?   @db.VarChar(100)
+  temperature_controlled Boolean?
+  min_temperature        Decimal?  @db.Decimal(5, 2)
+  max_temperature        Decimal?  @db.Decimal(5, 2)
+  humidity_controlled    Boolean?
+  min_humidity           Decimal?  @db.Decimal(5, 2)
+  max_humidity           Decimal?  @db.Decimal(5, 2)
+  special_handling       String?   @db.Text
+  brand_owner_id         String    @db.VarChar(255)
+  created_at             DateTime  @default(now())
+  updated_at             DateTime  @updatedAt
+  last_modified_by       String    @db.VarChar(255)
+}
+
+model tblWflGtin {
+  id               Int      @id @default(autoincrement())
+  barcode          String   @db.VarChar(14) // GTIN changed to barcode
+  is_vbg_compliant Boolean
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+}
+
+model tblWflDqms {
+  id                Int      @id @default(autoincrement())
+  barcode           String   @db.VarChar(14) // GTIN changed to barcode
+  is_dqms_compliant Boolean
+  saso              String
+  tuv               String
+  qmark             String
+  iecce             String
+  hdcode            String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+}
+
+model tblWflCompliance {
+  id            Int      @id @default(autoincrement())
+  barcode       String   @db.VarChar(14) // GTIN changed to barcode
+  is_compliance Boolean
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model productRequest {
+  id                  String   @id @default(cuid())
+  brand_owner_user_id String
+  npc_user_id         String
+  status              String   @default("pending", map: "DF_paymentRequest_status") @db.VarChar(50)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  barcode             String   @db.NVarChar(50)
+}
+
