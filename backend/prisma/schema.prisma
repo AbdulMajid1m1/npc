@@ -823,9 +823,9 @@ model productStorage {
   max_humidity           Decimal?  @db.Decimal(5, 2)
   special_handling       String?   @db.Text
   brand_owner_id         String    @db.VarChar(255)
-  last_modified_by       String    @db.VarChar(255)
   created_at             DateTime  @default(now())
   updated_at             DateTime  @updatedAt
+  last_modified_by       String    @db.VarChar(255)
 }
 
 model tblDlProductContents {
@@ -842,79 +842,9 @@ model tblDlProductContents {
   nutritional_info      String?  @db.Text
   regulatory_compliance String?  @db.VarChar(255)
   brand_owner_id        String   @db.VarChar(255)
-  last_modified_by      String   @db.VarChar(255)
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
-}
-
-model tbDlAllergens {
-  id                       String   @id @default(cuid())
-  barcode                  String   @db.NVarChar(50)
-  allergen_name            String   @db.VarChar(255)
-  allergen_type            String   @db.VarChar(100)
-  contains_allergen        Boolean
-  may_contain              Boolean
-  cross_contamination_risk Boolean
-  allergen_source          String?  @db.VarChar(255)
-  brand_owner_id           String   @db.VarChar(255)
-  last_modified_by         String   @db.VarChar(255)
-  created_at               DateTime @default(now())
-  updated_at               DateTime @updatedAt
-}
-
-model tblDlIeceeCertificate {
-  id                 String    @id @default(cuid())
-  barcode            String    @db.NVarChar(50)
-  certificate_number String    @db.VarChar(255)
-  issue_date         DateTime  @db.Date
-  expiry_date        DateTime? @db.Date
-  issued_by          String    @db.VarChar(255)
-  standard_met       String    @db.VarChar(255)
-  status             String    @db.VarChar(100)
-  scope              String?   @db.Text
-  brand_owner_id     String    @db.VarChar(255)
-
-  last_modified_by String   @db.VarChar(255)
-  created_at       DateTime @default(now())
-  updated_at       DateTime @updatedAt
-}
-
-model tblDlEfficiencyLabels {
-  id               String    @id @default(cuid())
-  barcode          String    @db.NVarChar(50)
-  label_type       String    @db.VarChar(255)
-  rating           String    @db.VarChar(50)
-  issued_by        String    @db.VarChar(255)
-  issue_date       DateTime  @db.Date
-  valid_until      DateTime? @db.Date
-  scope            String?   @db.VarChar(255)
-  details          String?   @db.Text
-  brand_owner_id   String    @db.VarChar(255)
-  last_modified_by String    @db.VarChar(255)
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
-}
-
-model tblDlFoodProductSafety {
-  id                    String    @id @default(cuid())
-  barcode               String    @db.NVarChar(50)
-  batch_number          String    @db.VarChar(100)
-  manufacture_date      DateTime  @db.Date
-  expiry_date           DateTime  @db.Date
-  supplier_id           Int?
-  inspection_date       DateTime? @db.Date
-  inspection_result     String?   @db.VarChar(100)
-  issue_detected        Boolean?
-  issue_description     String?   @db.Text
-  corrective_action     String?   @db.Text
-  recall_status         String?   @db.VarChar(50)
-  recall_date           DateTime? @db.Date
-  regulatory_compliance String?   @db.VarChar(255)
-  storage_conditions    String?   @db.VarChar(255)
-  brand_owner_id        String    @db.VarChar(255)
-  last_modified_by      String    @db.VarChar(255)
-  created_at            DateTime  @default(now())
-  updated_at            DateTime  @updatedAt
+  last_modified_by      String   @db.VarChar(255)
 }
 
 model tblDlNutritionalInfo {
@@ -936,10 +866,82 @@ model tblDlNutritionalInfo {
   calcium             Decimal? @db.Decimal(10, 2)
   iron                Decimal? @db.Decimal(10, 2)
   brand_owner_id      String   @db.VarChar(255)
-  last_modified_by    String   @db.VarChar(255)
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
+  last_modified_by    String   @db.VarChar(255)
 }
+
+
+model tbDlAllergens {
+  id                       String   @id @default(cuid())
+  barcode                  String   @db.NVarChar(50)
+  allergen_name            String   @db.VarChar(255)
+  allergen_type            String   @db.VarChar(100)
+  contains_allergen        Boolean
+  may_contain              Boolean
+  cross_contamination_risk Boolean
+  allergen_source          String?  @db.VarChar(255)
+  brand_owner_id           String   @db.VarChar(255)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+  last_modified_by         String   @db.VarChar(255)
+}
+
+model tblDlIeceeCertificate {
+  id                 String    @id @default(cuid())
+  barcode            String    @db.NVarChar(50)
+  certificate_number String    @db.VarChar(255)
+  issue_date         DateTime  @db.Date
+  expiry_date        DateTime? @db.Date
+  issued_by          String    @db.VarChar(255)
+  standard_met       String    @db.VarChar(255)
+  status             String    @db.VarChar(100)
+  scope              String?   @db.Text
+  brand_owner_id     String    @db.VarChar(255)
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  last_modified_by   String    @db.VarChar(255)
+}
+
+model tblDlEfficiencyLabels {
+  id               String    @id @default(cuid())
+  barcode          String    @db.NVarChar(50)
+  label_type       String    @db.VarChar(255)
+  rating           String    @db.VarChar(50)
+  issued_by        String    @db.VarChar(255)
+  issue_date       DateTime  @db.Date
+  valid_until      DateTime? @db.Date
+  scope            String?   @db.VarChar(255)
+  details          String?   @db.Text
+  brand_owner_id   String    @db.VarChar(255)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  last_modified_by String    @db.VarChar(255)
+}
+
+model tblDlFoodProductSafety {
+  id                    String    @id @default(cuid())
+  barcode               String    @db.NVarChar(50)
+  batch_number          String    @db.VarChar(100)
+  manufacture_date      DateTime  @db.Date
+  expiry_date           DateTime  @db.Date
+  supplier_id           Int?
+  inspection_date       DateTime? @db.Date
+  inspection_result     String?   @db.VarChar(100)
+  issue_detected        Boolean?
+  issue_description     String?   @db.Text
+  corrective_action     String?   @db.Text
+  recall_status         String?   @db.VarChar(50)
+  recall_date           DateTime? @db.Date
+  regulatory_compliance String?   @db.VarChar(255)
+  storage_conditions    String?   @db.VarChar(255)
+  brand_owner_id        String    @db.VarChar(255)
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  last_modified_by      String    @db.VarChar(255)
+}
+
+
 
 model tblDlPackaging {
   id                 String   @id @default(cuid())
@@ -956,9 +958,9 @@ model tblDlPackaging {
   color              String?  @db.VarChar(50)
   labeling           String?  @db.Text
   brand_owner_id     String?  @db.VarChar(255)
-  last_modified_by   String?  @db.VarChar(255)
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
+  last_modified_by   String?  @db.VarChar(255)
 }
 
 model tblDlProductConformity {
@@ -971,9 +973,9 @@ model tblDlProductConformity {
   standard_met     String?   @db.VarChar(255)
   details          String?   @db.Text
   brand_owner_id   String    @db.VarChar(255)
-  last_modified_by String    @db.VarChar(255)
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
+  last_modified_by String    @db.VarChar(255)
 }
 
 model tblDlProductQualityMark {
@@ -986,9 +988,9 @@ model tblDlProductQualityMark {
   status            String    @db.VarChar(50)
   scope             String?   @db.VarChar(255)
   brand_owner_id    String    @db.VarChar(255)
-  last_modified_by  String    @db.VarChar(255)
   created_at        DateTime  @default(now())
   updated_at        DateTime  @updatedAt
+  last_modified_by  String    @db.VarChar(255)
 }
 
 model tblDlProductStorage {
@@ -1008,9 +1010,9 @@ model tblDlProductStorage {
   max_humidity           Decimal?  @db.Decimal(5, 2)
   special_handling       String?   @db.Text
   brand_owner_id         String    @db.VarChar(255)
-  last_modified_by       String    @db.VarChar(255)
   created_at             DateTime  @default(now())
   updated_at             DateTime  @updatedAt
+  last_modified_by       String    @db.VarChar(255)
 }
 
 model tblWflGtin {
