@@ -871,7 +871,6 @@ model tblDlNutritionalInfo {
   last_modified_by    String   @db.VarChar(255)
 }
 
-
 model tbDlAllergens {
   id                       String   @id @default(cuid())
   barcode                  String   @db.NVarChar(50)
@@ -919,7 +918,6 @@ model tblDlEfficiencyLabels {
   last_modified_by String    @db.VarChar(255)
 }
 
-
 model tblDlProductConformity {
   id               String    @id @default(cuid())
   barcode          String    @db.NVarChar(50)
@@ -947,9 +945,9 @@ model tblDlProductQualityMark {
   brand_owner_id    String    @db.VarChar(255)
   created_at        DateTime  @default(now())
   updated_at        DateTime  @updatedAt
+  images            String?   @db.NVarChar(Max) // New column to store image paths
   last_modified_by  String    @db.VarChar(255)
 }
-
 
 model tblDlFoodProductSafety {
   id                    String    @id @default(cuid())
@@ -973,8 +971,6 @@ model tblDlFoodProductSafety {
   last_modified_by      String    @db.VarChar(255)
 }
 
-
-
 model tblDlPackaging {
   id                 String   @id @default(cuid())
   barcode            String   @db.NVarChar(50)
@@ -994,7 +990,6 @@ model tblDlPackaging {
   updated_at         DateTime @updatedAt
   last_modified_by   String?  @db.VarChar(255)
 }
-
 
 model tblDlProductStorage {
   id                     String    @id @default(cuid())
@@ -1030,11 +1025,12 @@ model tblWflDqms {
   id                Int      @id @default(autoincrement())
   barcode           String   @db.VarChar(14) // GTIN changed to barcode
   is_dqms_compliant Boolean
-  saso              String
-  tuv               String
-  qmark             String
-  iecce             String
-  hdcode            String
+  saso              String?
+  tuv               String?
+  qmark             String?
+  iecce             String?
+  efficiency        String?
+  hdcode            String?
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 }
