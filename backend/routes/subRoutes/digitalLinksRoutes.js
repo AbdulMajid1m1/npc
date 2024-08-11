@@ -72,19 +72,32 @@ router.get("/qualityMarks", getProductQualityMarks);
 router.delete("/qualityMarks/:id", deleteProductQualityMark);
 
 // Efficiency Label routes
-router.post("/efficiencyLabels", createEfficiencyLabel);
+router.post(
+  "/efficiencyLabels",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createEfficiencyLabel
+);
 router.put("/efficiencyLabels/:id", updateEfficiencyLabel);
 router.get("/efficiencyLabels", getEfficiencyLabels);
 router.delete("/efficiencyLabels/:id", deleteEfficiencyLabel);
 
 // Product Conformity routes
-router.post("/productConformity", createProductConformity);
+router.post(
+  "/productConformity",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createProductConformity
+);
+
 router.put("/productConformity/:id", updateProductConformity);
 router.get("/productConformity", getProductConformities);
 router.delete("/productConformity/:id", deleteProductConformity);
 
 // Iecee Certificate routes
-router.post("/ieceeCertificates", createIeceeCertificate);
+router.post(
+  "/ieceeCertificates",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createIeceeCertificate
+);
 router.put("/ieceeCertificates/:id", updateIeceeCertificate);
 router.get("/ieceeCertificates", getIeceeCertificates);
 router.delete("/ieceeCertificates/:id", deleteIeceeCertificate);

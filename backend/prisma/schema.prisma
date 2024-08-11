@@ -900,6 +900,7 @@ model tblDlIeceeCertificate {
   created_at         DateTime  @default(now())
   updated_at         DateTime  @updatedAt
   last_modified_by   String    @db.VarChar(255)
+  images             String?   @db.NVarChar(Max) // New column to store image paths
 }
 
 model tblDlEfficiencyLabels {
@@ -916,6 +917,7 @@ model tblDlEfficiencyLabels {
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
   last_modified_by String    @db.VarChar(255)
+  images           String?   @db.NVarChar(Max) // New column to store image paths
 }
 
 model tblDlProductConformity {
@@ -931,6 +933,7 @@ model tblDlProductConformity {
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
   last_modified_by String    @db.VarChar(255)
+  images           String?   @db.NVarChar(Max) // New column to store image paths
 }
 
 model tblDlProductQualityMark {
@@ -1022,17 +1025,18 @@ model tblWflGtin {
 }
 
 model tblWflDqms {
-  id                Int      @id @default(autoincrement())
-  barcode           String   @db.VarChar(14) // GTIN changed to barcode
-  is_dqms_compliant Boolean
+  id                Int     @id @default(autoincrement())
+  barcode           String  @db.VarChar(14) // GTIN changed to barcode
+  is_dqms_compliant Boolean  
   saso              String?
   tuv               String?
   qmark             String?
   iecce             String?
   efficiency        String?
   hdcode            String?
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model tblWflCompliance {
