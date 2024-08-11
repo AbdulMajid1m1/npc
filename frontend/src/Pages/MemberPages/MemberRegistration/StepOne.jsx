@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { newRequestnpc } from "../../../utils/userRequest";
 
 const StepOne = () => {
   const { t, i18n } = useTranslation();
@@ -8,6 +9,82 @@ const StepOne = () => {
     // auto scroll to bottom
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [])
+
+  const [country, setcountry] = useState([]);
+  const [city, setcity] = useState([]);
+
+    useEffect(() =>
+  {
+    const fetchData = async () =>
+    {
+      try {
+        const response = await newRequestnpc.get("/master-data/getAllCountries",);
+        // console.log(response.data);
+          const data = response.data;
+         const countries = data.map((country) => ({
+           id: country.id,
+           name: country.name_en,
+         }));
+         
+        setcountry(countries);
+        console.log(countries);
+        setIsLoading(false)
+
+      } catch (err) {
+        // console.log(err);
+        setIsLoading(false)
+      }
+    };
+
+    fetchData(); 
+  }, []); 
+
+    useEffect(() => {
+      newRequestnpc.get("/master-data/getAllCities")
+        .then((response) => {
+          setcity(response.data);
+        })
+        .catch((error) => {
+          handleUserError(error);
+          console.error(error);
+        });
+    }, []);
+
+    const handleCountryAndState = async () => {
+    try {
+      const response = await newRequestnpc.get("/master-data/getAllCountries");
+      const statesData = await newRequestnpc.get(`/address/getAllStates`);
+      const getStatesdata = statesData.data;
+      const data = response.data;
+
+      const countries = data.map((country) => ({
+        id: country.id,
+          name: country.name_en,
+        // name: i18n.language === "ar" ? country.name_ar : country.name_en,
+      }));
+
+      const states = getStatesdata.map((state) => ({
+        id: state.id,
+        name:state.name,
+        country_id: state.country_id,
+      }));
+
+      setcountry(countries);
+      // setState(states);
+      // setCountry(countries);
+      // const defaultCountry = countries.find(
+      //   (country) => country.name == "Saudi Arabia"
+      // );
+      // setSelectedCountry(defaultCountry);
+      // const filteredStates = states.filter(
+      //   (state) => state.country_id == defaultCountry?.id
+      // );
+      // setFilteredStates(filteredStates);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   
   return (
     <div>
@@ -16,7 +93,7 @@ const StepOne = () => {
         <div
           className={`h-28 w-[97%] text-center text-white font-sans font-medium sm:text-3xl text-lg rounded-lg p-3 bg-secondary sm:gap-7 gap-4`}
         >
-           <p>National Product Catalogue (NPC)</p>
+          <p>National Product Catalogue (NPC)</p>
         </div>
       </div>
 
@@ -32,18 +109,23 @@ const StepOne = () => {
         </div>
       </div>
 
-       {/* Form Section */}
+      {/* Form Section */}
       <div className="flex justify-center items-center -mt-5">
         <div className="w-full bg-[#E6F6F8] shadow-xl rounded-md p-6">
-            <p className={`sm:text-2xl w-full font-bold text-sm text-secondary mt-5`}>
-              Company Information
-            </p>
-            <p className={`text-red-500 text-lg font-body font-medium pt-3`}>
-              **Provide Your company Certificate of Registration**
-            </p>
+          <p
+            className={`sm:text-2xl w-full font-bold text-sm text-secondary mt-5`}
+          >
+            Company Information
+          </p>
+          <p className={`text-red-500 text-lg font-body font-medium pt-3`}>
+            **Provide Your company Certificate of Registration**
+          </p>
           <div className="flex flex-col sm:flex-row justify-between items-start gap-6 mt-5">
             <div className="w-full sm:w-1/2">
-              <label htmlFor="crNumber" className="block mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="crNumber"
+                className="block mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 CR Number
               </label>
               <input
@@ -53,7 +135,10 @@ const StepOne = () => {
                 className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="email" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="email"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Email Address
               </label>
               <input
@@ -63,7 +148,10 @@ const StepOne = () => {
                 className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="companyNameEnglish" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="companyNameEnglish"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Company Name (English)
               </label>
               <input
@@ -73,7 +161,10 @@ const StepOne = () => {
                 className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="companyLandline" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="companyLandline"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Company Landline
               </label>
               <div className="flex">
@@ -88,25 +179,49 @@ const StepOne = () => {
                 />
               </div>
 
-              <label htmlFor="country" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="country"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Country
               </label>
-              <select id="country" className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary">
+              <select
+                id="country"
+                onChange={handleCountryAndState}
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
+              >
                 <option>Select country</option>
-                {/* Add options here */}
+                {country.map(({ name, id }) => (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                ))}
               </select>
 
-              <label htmlFor="city" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="city"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 City
               </label>
-              <select id="city" className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary">
+              <select
+                id="city"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
+              >
                 <option>Select city</option>
-                {/* Add options here */}
+                {city.map(({ name, id }) => (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="w-full sm:w-1/2">
-              <label htmlFor="crActivity" className="block mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="crActivity"
+                className="block mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 CR Activity
               </label>
               <input
@@ -116,7 +231,10 @@ const StepOne = () => {
                 className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="contactPerson" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="contactPerson"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Contact Person
               </label>
               <input
@@ -126,7 +244,10 @@ const StepOne = () => {
                 className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="companyNameArabic" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="companyNameArabic"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Company Name (Arabic)
               </label>
               <input
@@ -136,7 +257,10 @@ const StepOne = () => {
                 className="w-full p-2 pl-4 border border-gray-300 rounded-full text-secondary placeholder:text-secondary"
               />
 
-              <label htmlFor="mobileNumber" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="mobileNumber"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Mobile Number (Omit zero)
               </label>
               <div className="flex">
@@ -151,15 +275,24 @@ const StepOne = () => {
                 />
               </div>
 
-              <label htmlFor="province" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="province"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Province
               </label>
-              <select id="province" className="w-full p-2 pl-4 border border-gray-300 rounded-full">
+              <select
+                id="province"
+                className="w-full p-2 pl-4 border border-gray-300 rounded-full"
+              >
                 <option>Select province</option>
                 {/* Add options here */}
               </select>
 
-              <label htmlFor="zipCode" className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans">
+              <label
+                htmlFor="zipCode"
+                className="block mt-4 mb-2 ml-1 font-semibold text-secondary font-sans"
+              >
                 Zip Code
               </label>
               <input
@@ -170,7 +303,6 @@ const StepOne = () => {
               />
             </div>
           </div>
-
         </div>
       </div>
     </div>
