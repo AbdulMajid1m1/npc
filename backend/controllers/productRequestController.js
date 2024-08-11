@@ -54,3 +54,39 @@ export const createproductRequest = async (req, res, next) => {
       next(error);
     }
   };
+ 
+
+  export const updateProductRequestStatus = async (req, res, next) => {
+    try {
+      const schema = Joi.object({
+        id: Joi.string().required(),
+      });
+      const { error: idError } = schema.validate(req.params);
+      if (idError) {
+        return next(createError(400, idError.details[0].message));
+      }
+  
+      const { id } = req.params;
+  
+      const { error } = productRequest.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      const { brand_owner_user_id, npc_user_id, status,barcode } = req.body;
+      const updatedUNSPSC = await prisma.productRequest.update({
+        where: { id: id },
+        data: {
+          brand_owner_user_id,
+          npc_user_id,
+          status,
+          barcode
+        },
+      });
+  
+      res.json(updatedUNSPSC);
+    } catch (error) {
+      next(error);
+    }
+  };
+  

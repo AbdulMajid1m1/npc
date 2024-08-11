@@ -18,12 +18,13 @@ import { createunit, getAllunit, getunitById, updateunit, deleteunit,
     getRoles,updateRole,getRole,deleteRole,getNewsletterSubscriptions,sendNewsletter
 
 } from "../controllers/masterDataController.js";
-import {createproductRequest,getAllProductRequests,getProductRequestsByNpcUserId} from "../controllers/productRequestController.js"
+import {createproductRequest,getAllProductRequests,getProductRequestsByNpcUserId,updateProductRequestStatus} from "../controllers/productRequestController.js"
 
 //--------------------ProductRequest--------------------------------
 router.post("/createproductRequest", createproductRequest)
 router.get("/getAllProductRequests", getAllProductRequests)
 router.get("/getProductRequestsByNpcUserId/:npc_user_id",getProductRequestsByNpcUserId)
+router.put("/updateProductRequestStatus/:id", updateProductRequestStatus)
 //--------------NewsletterSubscriptions----------------------------
 router.post('/NewsletterSubscriptions',sendNewsletter)
 router.get('/NewsletterSubscriptions', getNewsletterSubscriptions)
