@@ -1,0 +1,1553 @@
+import Joi from "joi";
+import prisma from "../prismaClient.js";
+import { createError } from "../utils/createError.js";
+
+// Define Joi schema for validation
+const productStorageSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  gln: Joi.string().max(50).required(),
+  gln_type: Joi.string().max(100).required(),
+  quantity: Joi.number().integer().required(),
+  storage_date: Joi.date().required(),
+  expiration_date: Joi.date().optional(),
+  batch_number: Joi.string().max(100).optional(),
+  temperature_controlled: Joi.boolean().optional(),
+  min_temperature: Joi.number().precision(2).optional(),
+  max_temperature: Joi.number().precision(2).optional(),
+  humidity_controlled: Joi.boolean().optional(),
+  min_humidity: Joi.number().precision(2).optional(),
+  max_humidity: Joi.number().precision(2).optional(),
+  special_handling: Joi.string().optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).optional(),
+});
+
+export const createProductStorage = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = productStorageSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Create product storage entry
+    const newProductStorage = await prisma.productStorage.create({
+      data: value,
+    });
+
+    res.status(201).json({
+      message: "Product storage created successfully.",
+      productStorage: newProductStorage,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updateProductStorageSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  gln: Joi.string().max(50).optional(),
+  gln_type: Joi.string().max(100).optional(),
+  quantity: Joi.number().integer().optional(),
+  storage_date: Joi.date().optional(),
+  expiration_date: Joi.date().optional(),
+  batch_number: Joi.string().max(100).optional(),
+  temperature_controlled: Joi.boolean().optional(),
+  min_temperature: Joi.number().precision(2).optional(),
+  max_temperature: Joi.number().precision(2).optional(),
+  humidity_controlled: Joi.boolean().optional(),
+  min_humidity: Joi.number().precision(2).optional(),
+  max_humidity: Joi.number().precision(2).optional(),
+  special_handling: Joi.string().optional(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const updateProductStorage = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updateProductStorageSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update product storage entry
+    const updatedProductStorage = await prisma.productStorage.update({
+      where: { id },
+      data: {
+        ...value,
+        last_modified_date: new Date(),
+      },
+    });
+
+    res.json({
+      message: "Product storage updated successfully.",
+      productStorage: updatedProductStorage,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+export const getProductStorage = async (req, res, next) => {
+  try {
+    // Define allowed columns for filtering
+    const allowedColumns = {
+      barcode: Joi.string(),
+      gln: Joi.string(),
+      gln_type: Joi.string(),
+      batch_number: Joi.string(),
+      temperature_controlled: Joi.boolean(),
+      humidity_controlled: Joi.boolean(),
+      special_handling: Joi.string(),
+    };
+
+    // Pagination schema
+    const paginationSchema = Joi.object({
+      page: Joi.number().integer().min(1),
+      pageSize: Joi.number().integer().min(1),
+    }).xor("page", "pageSize"); // Require both or neither
+
+    // Combine schemas
+    const filterSchema = Joi.object({
+      ...allowedColumns,
+      page: paginationSchema.extract("page").optional(),
+      pageSize: paginationSchema.extract("pageSize").optional(),
+    }).unknown(false); // Disallows any keys not defined in the schema
+
+    // Validate the request query
+    const { error, value } = filterSchema.validate(req.query);
+    if (error) {
+      return next(
+        createError(400, `Invalid query parameter: ${error.details[0].message}`)
+      );
+    }
+
+    // Construct filter conditions for Prisma query
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let productStorages;
+    let totalProducts;
+
+    // Determine whether to apply pagination
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      // Apply pagination if both page and pageSize are provided
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      // First, get the total count of product storages that match the filter conditions
+      totalProducts = await prisma.productStorage.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      // Then, get the paginated results
+      productStorages = await prisma.productStorage.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        productStorages,
+      });
+    } else {
+      // No pagination: return all matching product storages in one page
+      productStorages = await prisma.productStorage.findMany({
+        where: filterConditions,
+        orderBy: { last_modified_date: "desc" },
+      });
+      totalProducts = productStorages.length;
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        productStorages,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deleteProductStorage = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Delete product storage entry
+    await prisma.productStorage.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Product storage deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// product Content Controller
+
+// Define Joi schema for validation
+const productContentSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  ingredient_name: Joi.string().max(255).required(),
+  ingredient_type: Joi.string().max(100).required(),
+  quantity: Joi.number().precision(2).required(),
+  unit_of_measure: Joi.string().max(50).required(),
+  source: Joi.string().max(255).optional(),
+  organic: Joi.boolean().optional(),
+  allergen: Joi.boolean().optional(),
+  gmo_status: Joi.string().max(50).optional(),
+  nutritional_info: Joi.string().optional(),
+  regulatory_compliance: Joi.string().max(255).optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const createProductContent = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = productContentSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Create product content entry
+    const newProductContent = await prisma.tblDlProductContents.create({
+      data: value,
+    });
+
+    res.status(201).json({
+      message: "Product content created successfully.",
+      productContent: newProductContent,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updateProductContentSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  ingredient_name: Joi.string().max(255).optional(),
+  ingredient_type: Joi.string().max(100).optional(),
+  quantity: Joi.number().precision(2).optional(),
+  unit_of_measure: Joi.string().max(50).optional(),
+  source: Joi.string().max(255).optional(),
+  organic: Joi.boolean().optional(),
+  allergen: Joi.boolean().optional(),
+  gmo_status: Joi.string().max(50).optional(),
+  nutritional_info: Joi.string().optional(),
+  regulatory_compliance: Joi.string().max(255).optional(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const updateProductContent = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updateProductContentSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update product content entry
+    const updatedProductContent = await prisma.tblDlProductContents.update({
+      where: { id },
+      data: {
+        ...value,
+        updated_at: new Date(),
+      },
+    });
+
+    res.json({
+      message: "Product content updated successfully.",
+      productContent: updatedProductContent,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const getProductContents = async (req, res, next) => {
+  try {
+    // Define allowed columns for filtering
+    const allowedColumns = {
+      barcode: Joi.string(),
+      ingredient_name: Joi.string(),
+      ingredient_type: Joi.string(),
+      organic: Joi.boolean(),
+      allergen: Joi.boolean(),
+    };
+
+    // Pagination schema
+    const paginationSchema = Joi.object({
+      page: Joi.number().integer().min(1),
+      pageSize: Joi.number().integer().min(1),
+    }).xor("page", "pageSize"); // Require both or neither
+
+    // Combine schemas
+    const filterSchema = Joi.object({
+      ...allowedColumns,
+      page: paginationSchema.extract("page").optional(),
+      pageSize: paginationSchema.extract("pageSize").optional(),
+    }).unknown(false); // Disallows any keys not defined in the schema
+
+    // Validate the request query
+    const { error, value } = filterSchema.validate(req.query);
+    if (error) {
+      return next(
+        createError(400, `Invalid query parameter: ${error.details[0].message}`)
+      );
+    }
+
+    // Construct filter conditions for Prisma query
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let productContents;
+    let totalProducts;
+
+    // Determine whether to apply pagination
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      // Apply pagination if both page and pageSize are provided
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      // First, get the total count of product contents that match the filter conditions
+      totalProducts = await prisma.tblDlProductContents.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      // Then, get the paginated results
+      productContents = await prisma.tblDlProductContents.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        productContents,
+      });
+    } else {
+      // No pagination: return all matching product contents in one page
+      productContents = await prisma.tblDlProductContents.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+      });
+      totalProducts = productContents.length;
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        productContents,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deleteProductContent = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Delete product content entry
+    await prisma.tblDlProductContents.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Product content deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// tblDlNutritionalInfo controller
+
+// Define Joi schema for validation
+const nutritionalInfoSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  serving_size: Joi.string().max(100).required(),
+  calories: Joi.number().precision(2).required(),
+  total_fat: Joi.number().precision(2).required(),
+  saturated_fat: Joi.number().precision(2).optional(),
+  trans_fat: Joi.number().precision(2).optional(),
+  cholesterol: Joi.number().precision(2).optional(),
+  sodium: Joi.number().precision(2).required(),
+  total_carbohydrates: Joi.number().precision(2).required(),
+  dietary_fiber: Joi.number().precision(2).optional(),
+  sugars: Joi.number().precision(2).optional(),
+  protein: Joi.number().precision(2).required(),
+  vitamin_a: Joi.number().precision(2).optional(),
+  vitamin_c: Joi.number().precision(2).optional(),
+  calcium: Joi.number().precision(2).optional(),
+  iron: Joi.number().precision(2).optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const createNutritionalInfo = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = nutritionalInfoSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Create nutritional info entry
+    const newNutritionalInfo = await prisma.tblDlNutritionalInfo.create({
+      data: value,
+    });
+
+    res.status(201).json({
+      message: "Nutritional info created successfully.",
+      nutritionalInfo: newNutritionalInfo,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updateNutritionalInfoSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  serving_size: Joi.string().max(100).optional(),
+  calories: Joi.number().precision(2).optional(),
+  total_fat: Joi.number().precision(2).optional(),
+  saturated_fat: Joi.number().precision(2).optional(),
+  trans_fat: Joi.number().precision(2).optional(),
+  cholesterol: Joi.number().precision(2).optional(),
+  sodium: Joi.number().precision(2).optional(),
+  total_carbohydrates: Joi.number().precision(2).optional(),
+  dietary_fiber: Joi.number().precision(2).optional(),
+  sugars: Joi.number().precision(2).optional(),
+  protein: Joi.number().precision(2).optional(),
+  vitamin_a: Joi.number().precision(2).optional(),
+  vitamin_c: Joi.number().precision(2).optional(),
+  calcium: Joi.number().precision(2).optional(),
+  iron: Joi.number().precision(2).optional(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const updateNutritionalInfo = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updateNutritionalInfoSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update nutritional info entry
+    const updatedNutritionalInfo = await prisma.tblDlNutritionalInfo.update({
+      where: { id },
+      data: {
+        ...value,
+        updated_at: new Date(),
+      },
+    });
+
+    res.json({
+      message: "Nutritional info updated successfully.",
+      nutritionalInfo: updatedNutritionalInfo,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const filterSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  serving_size: Joi.string().max(100).optional(),
+  calories: Joi.number().precision(2).optional(),
+  total_fat: Joi.number().precision(2).optional(),
+  protein: Joi.number().precision(2).optional(),
+  page: Joi.number().integer().min(1).optional(),
+  pageSize: Joi.number().integer().min(1).optional(),
+}).and("page", "pageSize"); // Require both or neither
+
+export const getNutritionalInfo = async (req, res, next) => {
+  try {
+    // Validate query parameters
+    const { error, value } = filterSchema.validate(req.query);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let nutritionalInfo;
+    let totalProducts;
+
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      totalProducts = await prisma.tblDlNutritionalInfo.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      nutritionalInfo = await prisma.tblDlNutritionalInfo.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        nutritionalInfo,
+      });
+    } else {
+      nutritionalInfo = await prisma.tblDlNutritionalInfo.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+      });
+      totalProducts = nutritionalInfo.length;
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        nutritionalInfo,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deleteNutritionalInfo = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Delete nutritional info entry
+    await prisma.tblDlNutritionalInfo.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Nutritional info deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// tbDlAllergens Controller
+
+// Define Joi schema for validation
+const allergenSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  allergen_name: Joi.string().max(255).required(),
+  allergen_type: Joi.string().max(100).required(),
+  contains_allergen: Joi.boolean().required(),
+  may_contain: Joi.boolean().required(),
+  cross_contamination_risk: Joi.boolean().required(),
+  allergen_source: Joi.string().max(255).optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const createAllergen = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = allergenSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Create allergen entry
+    const newAllergen = await prisma.tbDlAllergens.create({
+      data: value,
+    });
+
+    res.status(201).json({
+      message: "Allergen created successfully.",
+      allergen: newAllergen,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updateAllergenSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  allergen_name: Joi.string().max(255).optional(),
+  allergen_type: Joi.string().max(100).optional(),
+  contains_allergen: Joi.boolean().optional(),
+  may_contain: Joi.boolean().optional(),
+  cross_contamination_risk: Joi.boolean().optional(),
+  allergen_source: Joi.string().max(255).optional(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const updateAllergen = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updateAllergenSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update allergen entry
+    const updatedAllergen = await prisma.tbDlAllergens.update({
+      where: { id },
+      data: {
+        ...value,
+        updated_at: new Date(),
+      },
+    });
+
+    res.json({
+      message: "Allergen updated successfully.",
+      allergen: updatedAllergen,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const tbDlAllergensFilterSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  allergen_name: Joi.string().max(255).optional(),
+  allergen_type: Joi.string().max(100).optional(),
+  contains_allergen: Joi.boolean().optional(),
+  may_contain: Joi.boolean().optional(),
+  cross_contamination_risk: Joi.boolean().optional(),
+  page: Joi.number().integer().min(1).optional(),
+  pageSize: Joi.number().integer().min(1).optional(),
+}).and("page", "pageSize"); // Require both or neither
+
+export const getAllergens = async (req, res, next) => {
+  try {
+    // Validate query parameters
+    const { error, value } = tbDlAllergensFilterSchema.validate(req.query);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let allergens;
+    let totalProducts;
+
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      totalProducts = await prisma.tbDlAllergens.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      allergens = await prisma.tbDlAllergens.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        allergens,
+      });
+    } else {
+      allergens = await prisma.tbDlAllergens.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+      });
+      totalProducts = allergens.length;
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        allergens,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deleteAllergen = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Check if the allergen exists
+    const allergen = await prisma.tbDlAllergens.findUnique({
+      where: { id },
+    });
+
+    if (!allergen) {
+      throw createError(404, "Allergen not found for the given ID.");
+    }
+
+    // Delete allergen entry
+    await prisma.tbDlAllergens.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Allergen deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// .... certification controller ....
+
+// Define Joi schema for validation
+const productQualityMarkSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  quality_mark: Joi.string().max(255).required(),
+  issuing_authority: Joi.string().max(255).required(),
+  issue_date: Joi.date().required(),
+  expiry_date: Joi.date().optional(),
+  status: Joi.string().max(50).required(),
+  scope: Joi.string().max(255).optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const createProductQualityMark = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = productQualityMarkSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Create product quality mark entry
+    const newProductQualityMark = await prisma.tblDlProductQualityMark.create({
+      data: value,
+    });
+
+    res
+      .status(201)
+      .json({
+        message: "Product quality mark created successfully.",
+        qualityMark: newProductQualityMark,
+      });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updateProductQualityMarkSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  quality_mark: Joi.string().max(255).optional(),
+  issuing_authority: Joi.string().max(255).optional(),
+  issue_date: Joi.date().optional(),
+  expiry_date: Joi.date().optional(),
+  status: Joi.string().max(50).optional(),
+  scope: Joi.string().max(255).optional(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const updateProductQualityMark = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updateProductQualityMarkSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update product quality mark entry
+    const updatedProductQualityMark =
+      await prisma.tblDlProductQualityMark.update({
+        where: { id },
+        data: {
+          ...value,
+          updated_at: new Date(),
+        },
+      });
+
+    res.json({
+      message: "Product quality mark updated successfully.",
+      qualityMark: updatedProductQualityMark,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const tblDlProductQualityMarkFilterSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  quality_mark: Joi.string().max(255).optional(),
+  issuing_authority: Joi.string().max(255).optional(),
+  status: Joi.string().max(50).optional(),
+  page: Joi.number().integer().min(1).optional(),
+  pageSize: Joi.number().integer().min(1).optional(),
+}).and("page", "pageSize"); // Require both or neither
+
+export const getProductQualityMarks = async (req, res, next) => {
+  try {
+    // Validate query parameters
+    const { error, value } = tblDlProductQualityMarkFilterSchema.validate(
+      req.query
+    );
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let qualityMarks;
+    let totalProducts;
+
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      totalProducts = await prisma.tblDlProductQualityMark.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      qualityMarks = await prisma.tblDlProductQualityMark.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        qualityMarks,
+      });
+    } else {
+      qualityMarks = await prisma.tblDlProductQualityMark.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+      });
+      totalProducts = qualityMarks.length;
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        qualityMarks,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deleteProductQualityMark = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Check if the product quality mark exists
+    const qualityMark = await prisma.tblDlProductQualityMark.findUnique({
+      where: { id },
+    });
+
+    if (!qualityMark) {
+      return res.status(404).json({ error: "Product quality mark not found." });
+    }
+
+    // Delete product quality mark entry
+    await prisma.tblDlProductQualityMark.delete({
+      where: { id },
+    });
+
+    res
+      .status(200)
+      .json({ message: "Product quality mark deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// tblDlEfficiencyLabels Controller
+
+// Define Joi schema for validation
+const efficiencyLabelSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  label_type: Joi.string().max(255).required(),
+  rating: Joi.string().max(50).required(),
+  issued_by: Joi.string().max(255).required(),
+  issue_date: Joi.date().required(),
+  valid_until: Joi.date().optional(),
+  scope: Joi.string().max(255).optional(),
+  details: Joi.string().optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const createEfficiencyLabel = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = efficiencyLabelSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Create efficiency label entry
+    const newEfficiencyLabel = await prisma.tblDlEfficiencyLabels.create({
+      data: value,
+    });
+
+    res
+      .status(201)
+      .json({
+        message: "Efficiency label created successfully.",
+        efficiencyLabel: newEfficiencyLabel,
+      });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+
+
+
+
+const updateEfficiencyLabelSchema = Joi.object({
+    barcode: Joi.string().max(50).optional(),
+    label_type: Joi.string().max(255).optional(),
+    rating: Joi.string().max(50).optional(),
+    issued_by: Joi.string().max(255).optional(),
+    issue_date: Joi.date().optional(),
+    valid_until: Joi.date().optional(),
+    scope: Joi.string().max(255).optional(),
+    details: Joi.string().optional(),
+    last_modified_by: Joi.string().max(255).required(),
+  });
+  
+  export const updateEfficiencyLabel = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      // Validate request body
+      const { error, value } = updateEfficiencyLabelSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      // Update efficiency label entry
+      const updatedEfficiencyLabel = await prisma.tblDlEfficiencyLabels.update({
+        where: { id },
+        data: {
+          ...value,
+          updated_at: new Date(),
+        },
+      });
+  
+      res.json({ message: "Efficiency label updated successfully.", efficiencyLabel: updatedEfficiencyLabel });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
+
+
+  const tblDlEfficiencyLabelsFilterSchema = Joi.object({
+    barcode: Joi.string().max(50).optional(),
+    label_type: Joi.string().max(255).optional(),
+    rating: Joi.string().max(50).optional(),
+    issued_by: Joi.string().max(255).optional(),
+    status: Joi.string().max(50).optional(),
+    page: Joi.number().integer().min(1).optional(),
+    pageSize: Joi.number().integer().min(1).optional(),
+  }).and("page", "pageSize"); // Require both or neither
+  
+  export const getEfficiencyLabels = async (req, res, next) => {
+    try {
+      // Validate query parameters
+      const { error, value } = tblDlEfficiencyLabelsFilterSchema.validate(req.query);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      const filterConditions = {};
+      Object.keys(value).forEach((key) => {
+        if (!["page", "pageSize"].includes(key)) {
+          filterConditions[key] = value[key];
+        }
+      });
+  
+      let efficiencyLabels;
+      let totalProducts;
+  
+      if (value.page || value.pageSize) {
+        if (!value.page || !value.pageSize) {
+          return next(
+            createError(400, "Both page and pageSize must be provided together.")
+          );
+        }
+  
+        const page = value.page;
+        const pageSize = value.pageSize;
+  
+        totalProducts = await prisma.tblDlEfficiencyLabels.count({
+          where: filterConditions,
+        });
+  
+        const totalPages = Math.ceil(totalProducts / pageSize);
+  
+        efficiencyLabels = await prisma.tblDlEfficiencyLabels.findMany({
+          where: filterConditions,
+          orderBy: { updated_at: "desc" },
+          skip: (page - 1) * pageSize,
+          take: pageSize,
+        });
+  
+        return res.json({
+          currentPage: page,
+          pageSize: pageSize,
+          totalProducts: totalProducts,
+          totalPages: totalPages,
+          efficiencyLabels,
+        });
+      } else {
+        efficiencyLabels = await prisma.tblDlEfficiencyLabels.findMany({
+          where: filterConditions,
+          orderBy: { updated_at: "desc" },
+        });
+        totalProducts = efficiencyLabels.length;
+  
+        return res.json({
+          currentPage: 1,
+          pageSize: totalProducts, // The size of the entire result set
+          totalProducts: totalProducts,
+          totalPages: 1,
+          efficiencyLabels,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
+
+
+
+  export const deleteEfficiencyLabel = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      // Check if the efficiency label exists
+      const efficiencyLabel = await prisma.tblDlEfficiencyLabels.findUnique({
+        where: { id },
+      });
+  
+      if (!efficiencyLabel) {
+        return res.status(404).json({ error: "Efficiency label not found." });
+      }
+  
+      // Delete efficiency label entry
+      await prisma.tblDlEfficiencyLabels.delete({
+        where: { id },
+      });
+  
+      res.status(200).json({ message: "Efficiency label deleted successfully." });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
+
+
+
+
+
+
+
+
+// ........... tblDlProductConformity Controller ...........
+
+
+// Define Joi schema for validation
+const productConformitySchema = Joi.object({
+    barcode: Joi.string().max(50).required(),
+    certificate_name: Joi.string().max(255).required(),
+    issued_by: Joi.string().max(255).required(),
+    issue_date: Joi.date().required(),
+    expiry_date: Joi.date().optional(),
+    standard_met: Joi.string().max(255).optional(),
+    details: Joi.string().optional(),
+    brand_owner_id: Joi.string().max(255).required(),
+    last_modified_by: Joi.string().max(255).required(),
+  });
+  
+  export const createProductConformity = async (req, res, next) => {
+    try {
+      // Validate request body
+      const { error, value } = productConformitySchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      // Create product conformity entry
+      const newProductConformity = await prisma.tblDlProductConformity.create({
+        data: value,
+      });
+  
+      res.status(201).json({ message: "Product conformity created successfully.", productConformity: newProductConformity });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
+
+
+
+
+  const updateProductConformitySchema = Joi.object({
+    barcode: Joi.string().max(50).optional(),
+    certificate_name: Joi.string().max(255).optional(),
+    issued_by: Joi.string().max(255).optional(),
+    issue_date: Joi.date().optional(),
+    expiry_date: Joi.date().optional(),
+    standard_met: Joi.string().max(255).optional(),
+    details: Joi.string().optional(),
+    last_modified_by: Joi.string().max(255).required(),
+  });
+  
+  export const updateProductConformity = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      // Validate request body
+      const { error, value } = updateProductConformitySchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      // Update product conformity entry
+      const updatedProductConformity = await prisma.tblDlProductConformity.update({
+        where: { id },
+        data: {
+          ...value,
+          updated_at: new Date(),
+        },
+      });
+  
+      res.json({ message: "Product conformity updated successfully.", productConformity: updatedProductConformity });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
+
+
+  const productConformityFilterSchema = Joi.object({
+    barcode: Joi.string().max(50).optional(),
+    certificate_name: Joi.string().max(255).optional(),
+    issued_by: Joi.string().max(255).optional(),
+    standard_met: Joi.string().max(255).optional(),
+    details: Joi.string().optional(),
+    page: Joi.number().integer().min(1).optional(),
+    pageSize: Joi.number().integer().min(1).optional(),
+  }).and("page", "pageSize"); // Require both or neither
+  
+  export const getProductConformities = async (req, res, next) => {
+    try {
+      // Validate query parameters using the productConformityFilterSchema
+      const { error, value } = productConformityFilterSchema.validate(req.query);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      const filterConditions = {};
+      Object.keys(value).forEach((key) => {
+        if (!["page", "pageSize"].includes(key)) {
+          filterConditions[key] = value[key];
+        }
+      });
+  
+      let productConformities;
+      let totalProducts;
+  
+      if (value.page || value.pageSize) {
+        if (!value.page || !value.pageSize) {
+          return next(
+            createError(400, "Both page and pageSize must be provided together.")
+          );
+        }
+  
+        const page = value.page;
+        const pageSize = value.pageSize;
+  
+        totalProducts = await prisma.tblDlProductConformity.count({
+          where: filterConditions,
+        });
+  
+        const totalPages = Math.ceil(totalProducts / pageSize);
+  
+        productConformities = await prisma.tblDlProductConformity.findMany({
+          where: filterConditions,
+          orderBy: { updated_at: "desc" },
+          skip: (page - 1) * pageSize,
+          take: pageSize,
+        });
+  
+        return res.json({
+          currentPage: page,
+          pageSize: pageSize,
+          totalProducts: totalProducts,
+          totalPages: totalPages,
+          productConformities,
+        });
+      } else {
+        productConformities = await prisma.tblDlProductConformity.findMany({
+          where: filterConditions,
+          orderBy: { updated_at: "desc" },
+        });
+        totalProducts = productConformities.length;
+  
+        return res.json({
+          currentPage: 1,
+          pageSize: totalProducts, // The size of the entire result set
+          totalProducts: totalProducts,
+          totalPages: 1,
+          productConformities,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
+  
+
+
+
+  export const deleteProductConformity = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      // Check if the product conformity exists
+      const productConformity = await prisma.tblDlProductConformity.findUnique({
+        where: { id },
+      });
+  
+      if (!productConformity) {
+        return res.status(404).json({ error: "Product conformity not found." });
+      }
+  
+      // Delete product conformity entry
+      await prisma.tblDlProductConformity.delete({
+        where: { id },
+      });
+  
+      res.status(200).json({ message: "Product conformity deleted successfully." });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
+
+
+
+
+
+// ....... tblDlIeceeCertificate Controller .......
+
+
+
+// Define Joi schema for validation
+const ieceeCertificateSchema = Joi.object({
+    barcode: Joi.string().max(50).required(),
+    certificate_number: Joi.string().max(255).required(),
+    issue_date: Joi.date().required(),
+    expiry_date: Joi.date().optional(),
+    issued_by: Joi.string().max(255).required(),
+    standard_met: Joi.string().max(255).required(),
+    status: Joi.string().max(100).required(),
+    scope: Joi.string().optional(),
+    brand_owner_id: Joi.string().max(255).required(),
+    last_modified_by: Joi.string().max(255).required(),
+  });
+  
+  export const createIeceeCertificate = async (req, res, next) => {
+    try {
+      // Validate request body
+      const { error, value } = ieceeCertificateSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      // Create IECEE certificate entry
+      const newIeceeCertificate = await prisma.tblDlIeceeCertificate.create({
+        data: value,
+      });
+  
+      res.status(201).json({ message: "IECEE certificate created successfully.", ieceeCertificate: newIeceeCertificate });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
+
+
+  const updateIeceeCertificateSchema = Joi.object({
+    barcode: Joi.string().max(50).optional(),
+    certificate_number: Joi.string().max(255).optional(),
+    issue_date: Joi.date().optional(),
+    expiry_date: Joi.date().optional(),
+    issued_by: Joi.string().max(255).optional(),
+    standard_met: Joi.string().max(255).optional(),
+    status: Joi.string().max(100).optional(),
+    scope: Joi.string().optional(),
+    last_modified_by: Joi.string().max(255).required(),
+  });
+  
+  export const updateIeceeCertificate = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      // Validate request body
+      const { error, value } = updateIeceeCertificateSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      // Update IECEE certificate entry
+      const updatedIeceeCertificate = await prisma.tblDlIeceeCertificate.update({
+        where: { id },
+        data: {
+          ...value,
+          updated_at: new Date(),
+        },
+      });
+  
+      res.json({ message: "IECEE certificate updated successfully.", ieceeCertificate: updatedIeceeCertificate });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
+  
+
+  const ieceeCertificateFilterSchema = Joi.object({
+    barcode: Joi.string().max(50).optional(),
+    certificate_number: Joi.string().max(255).optional(),
+    issued_by: Joi.string().max(255).optional(),
+    standard_met: Joi.string().max(255).optional(),
+    status: Joi.string().max(100).optional(),
+    scope: Joi.string().optional(),
+    page: Joi.number().integer().min(1).optional(),
+    pageSize: Joi.number().integer().min(1).optional(),
+  }).and("page", "pageSize"); // Require both or neither
+  
+  export const getIeceeCertificates = async (req, res, next) => {
+    try {
+      // Validate query parameters using the ieceeCertificateFilterSchema
+      const { error, value } = ieceeCertificateFilterSchema.validate(req.query);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
+      const filterConditions = {};
+      Object.keys(value).forEach((key) => {
+        if (!["page", "pageSize"].includes(key)) {
+          filterConditions[key] = value[key];
+        }
+      });
+  
+      let ieceeCertificates;
+      let totalProducts;
+  
+      if (value.page || value.pageSize) {
+        if (!value.page || !value.pageSize) {
+          return next(
+            createError(400, "Both page and pageSize must be provided together.")
+          );
+        }
+  
+        const page = value.page;
+        const pageSize = value.pageSize;
+  
+        totalProducts = await prisma.tblDlIeceeCertificate.count({
+          where: filterConditions,
+        });
+  
+        const totalPages = Math.ceil(totalProducts / pageSize);
+  
+        ieceeCertificates = await prisma.tblDlIeceeCertificate.findMany({
+          where: filterConditions,
+          orderBy: { updated_at: "desc" },
+          skip: (page - 1) * pageSize,
+          take: pageSize,
+        });
+  
+        return res.json({
+          currentPage: page,
+          pageSize: pageSize,
+          totalProducts: totalProducts,
+          totalPages: totalPages,
+          ieceeCertificates,
+        });
+      } else {
+        ieceeCertificates = await prisma.tblDlIeceeCertificate.findMany({
+          where: filterConditions,
+          orderBy: { updated_at: "desc" },
+        });
+        totalProducts = ieceeCertificates.length;
+  
+        return res.json({
+          currentPage: 1,
+          pageSize: totalProducts, // The size of the entire result set
+          totalProducts: totalProducts,
+          totalPages: 1,
+          ieceeCertificates,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
+  
+
+
+  export const deleteIeceeCertificate = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      // Check if the IECEE certificate exists
+      const ieceeCertificate = await prisma.tblDlIeceeCertificate.findUnique({
+        where: { id },
+      });
+  
+      if (!ieceeCertificate) {
+        return res.status(404).json({ error: "IECEE certificate not found." });
+      }
+  
+      // Delete IECEE certificate entry
+      await prisma.tblDlIeceeCertificate.delete({
+        where: { id },
+      });
+  
+      res.status(200).json({ message: "IECEE certificate deleted successfully." });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
