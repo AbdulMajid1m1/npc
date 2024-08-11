@@ -33,6 +33,7 @@ import {
   getIeceeCertificates,
   deleteIeceeCertificate,
 } from "../../controllers/digitalLinksController.js";
+import { multipleUpload } from "../../configs/multerConfig.js";
 
 const router = express.Router();
 
@@ -60,7 +61,12 @@ router.get("/allergens", getAllergens);
 router.delete("/allergens/:id", deleteAllergen);
 
 // Product Quality Mark routes
-router.post("/qualityMarks", createProductQualityMark);
+
+router.post(
+  "/qualityMarks",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createProductQualityMark
+);
 router.put("/qualityMarks/:id", updateProductQualityMark);
 router.get("/qualityMarks", getProductQualityMarks);
 router.delete("/qualityMarks/:id", deleteProductQualityMark);
