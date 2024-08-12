@@ -806,6 +806,7 @@ model upcoming_events {
 model productStorage {
   id                     String    @id @default(cuid())
   barcode                String    @db.NVarChar(50)
+  status                 String    @default("pending", map: "DF_productStorage_status")
   gln                    String    @db.NVarChar(50)
   gln_type               String    @db.VarChar(100)
   quantity               Int
@@ -827,6 +828,7 @@ model productStorage {
 
 model tblDlProductContents {
   id                    String   @id @default(cuid())
+  status                String   @default("pending", map: "DF_tblDlProductContents_status")
   barcode               String   @db.NVarChar(50)
   ingredient_name       String   @db.VarChar(255)
   ingredient_type       String   @db.VarChar(100)
@@ -884,14 +886,15 @@ model tbDlAllergens {
 }
 
 model tblDlIeceeCertificate {
-  id                 String    @id @default(cuid())
-  barcode            String    @db.NVarChar(50)
+  id      String @id @default(cuid())
+  barcode String @db.NVarChar(50)
+
   certificate_number String    @db.VarChar(255)
   issue_date         DateTime  @db.Date
   expiry_date        DateTime? @db.Date
   issued_by          String    @db.VarChar(255)
   standard_met       String    @db.VarChar(255)
-  status             String    @db.VarChar(100)
+  status             String    @default("pending", map: "DF_iecee_certificate_status")
   scope              String?   @db.Text
   brand_owner_id     String    @db.VarChar(255)
   created_at         DateTime  @default(now())
@@ -902,6 +905,7 @@ model tblDlIeceeCertificate {
 
 model tblDlEfficiencyLabels {
   id               String    @id @default(cuid())
+  status           String    @default("pending", map: "DF_efficiency_labels_status")
   barcode          String    @db.NVarChar(50)
   label_type       String    @db.VarChar(255)
   rating           String    @db.VarChar(50)
@@ -920,6 +924,7 @@ model tblDlEfficiencyLabels {
 model tblDlProductConformity {
   id               String    @id @default(cuid())
   barcode          String    @db.NVarChar(50)
+  status           String    @default("pending", map: "DF_product_conformity_status")
   certificate_name String    @db.VarChar(255)
   issued_by        String    @db.VarChar(255)
   issue_date       DateTime  @db.Date
@@ -940,7 +945,7 @@ model tblDlProductQualityMark {
   issuing_authority String    @db.VarChar(255)
   issue_date        DateTime  @db.Date
   expiry_date       DateTime? @db.Date
-  status            String    @db.VarChar(50)
+  status            String    @default("pending", map: "DF_product_quality_mark_status")
   scope             String?   @db.VarChar(255)
   brand_owner_id    String    @db.VarChar(255)
   created_at        DateTime  @default(now())
@@ -961,7 +966,7 @@ model tblDlFoodProductSafety {
   issue_detected        Boolean?
   issue_description     String?   @db.Text
   corrective_action     String?   @db.Text
-  recall_status         String?   @db.VarChar(50)
+  status                String    @default("pending", map: "DF_food_product_safety_status")
   recall_date           DateTime? @db.Date
   regulatory_compliance String?   @db.VarChar(255)
   storage_conditions    String?   @db.VarChar(255)
@@ -973,6 +978,7 @@ model tblDlFoodProductSafety {
 
 model tblDlPackaging {
   id                 String   @id @default(cuid())
+  status             String   @default("pending", map: "DF_packaging_status")
   barcode            String   @db.NVarChar(50)
   packaging_type     String   @db.VarChar(100)
   material           String   @db.VarChar(100)
@@ -994,6 +1000,7 @@ model tblDlPackaging {
 model tblDlProductStorage {
   id                     String    @id @default(cuid())
   barcode                String    @db.NVarChar(50)
+  status                 String    @default("pending", map: "DF_product_storage_status")
   gln                    Int
   gln_type               String    @db.VarChar(100)
   quantity               Int
@@ -1016,7 +1023,7 @@ model tblDlProductStorage {
 model tblWflGtin {
   id               Int      @id @default(autoincrement())
   barcode          String   @db.VarChar(14) // GTIN changed to barcode
-  is_vbg_compliant Boolean
+  is_vbg_compliant Boolean  @default(false)
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
 }
@@ -1024,7 +1031,7 @@ model tblWflGtin {
 model tblWflDqms {
   id                Int     @id @default(autoincrement())
   barcode           String  @db.VarChar(14) // GTIN changed to barcode
-  is_dqms_compliant Boolean  
+  is_dqms_compliant Boolean @default(false)
   saso              String?
   tuv               String?
   qmark             String?
@@ -1039,7 +1046,7 @@ model tblWflDqms {
 model tblWflCompliance {
   id            Int      @id @default(autoincrement())
   barcode       String   @db.VarChar(14) // GTIN changed to barcode
-  is_compliance Boolean
+  is_compliance Boolean  @default(false)
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 }

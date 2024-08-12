@@ -38,8 +38,8 @@ import { multipleUpload } from "../../configs/multerConfig.js";
 const router = express.Router();
 
 router.post("/productStorage", createProductStorage);
-router.put("/productStorage/:id", updateProductStorage);
 router.get("/productStorage", getProductStorage);
+router.put("/productStorage/:id", updateProductStorage);
 router.delete("/productStorage/:id", deleteProductStorage);
 
 // productContent routes
