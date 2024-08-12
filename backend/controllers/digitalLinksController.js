@@ -2,6 +2,55 @@ import Joi from "joi";
 import prisma from "../prismaClient.js";
 import { createError } from "../utils/createError.js";
 
+const updateTblWflCompliance = async (barcode) => {
+  // Check if there is an existing compliance record
+  let complianceRecord = await prisma.tblWflCompliance.findFirst({
+    where: { barcode },
+  });
+
+  // Check the conditions in the related tables
+  const hasActiveProductStorage = await prisma.productStorage.findFirst({
+    where: { barcode, status: "active" },
+  });
+  const hasActiveFoodProductSafety =
+    await prisma.tblDlFoodProductSafety.findFirst({
+      where: { barcode, status: "active" },
+    });
+  const hasActiveProductContents = await prisma.tblDlProductContents.findFirst({
+    where: { barcode, status: "active" },
+  });
+  const hasActiveProductStorageTable =
+    await prisma.tblDlProductStorage.findFirst({
+      where: { barcode, status: "active" },
+    });
+
+  const isCompliant =
+    hasActiveProductStorage &&
+    hasActiveFoodProductSafety &&
+    hasActiveProductContents &&
+    hasActiveProductStorageTable;
+
+  if (!complianceRecord) {
+    // If no record is found, create a new one with is_compliance based on the condition
+    complianceRecord = await prisma.tblWflCompliance.create({
+      data: {
+        barcode,
+        is_compliance: isCompliant,
+      },
+    });
+  } else {
+    // If a record is found, update it
+    await prisma.tblWflCompliance.updateMany({
+      where: { barcode },
+      data: {
+        is_compliance: isCompliant,
+      },
+    });
+  }
+
+  return complianceRecord;
+};
+
 // Reusable function to check and update tblWflDqms
 const updateTblWflDqms = async (barcode, qualityMarkId, fieldToUpdate) => {
   // Find the first record with the matching barcode
@@ -33,7 +82,12 @@ const updateTblWflDqms = async (barcode, qualityMarkId, fieldToUpdate) => {
     });
 
     // If all required fields have values, set is_dqms_compliant to true
-    if (dqmsRecord.saso && dqmsRecord.qmark && dqmsRecord.iecce && dqmsRecord.efficiency) {
+    if (
+      dqmsRecord.saso &&
+      dqmsRecord.qmark &&
+      dqmsRecord.iecce &&
+      dqmsRecord.efficiency
+    ) {
       await prisma.tblWflDqms.updateMany({
         where: { barcode },
         data: {
@@ -74,10 +128,24 @@ export const createProductStorage = async (req, res, next) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
     // Create product storage entry
     const newProductStorage = await prisma.productStorage.create({
-      data: value,
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
     });
+
+    // Update the compliance status in tblWflCompliance
+    await updateTblWflCompliance(value.barcode);
 
     res.status(201).json({
       message: "Product storage created successfully.",
@@ -1134,7 +1202,9 @@ const tblDlEfficiencyLabelsFilterSchema = Joi.object({
 export const getEfficiencyLabels = async (req, res, next) => {
   try {
     // Validate query parameters
-    const { error, value } = tblDlEfficiencyLabelsFilterSchema.validate(req.query);
+    const { error, value } = tblDlEfficiencyLabelsFilterSchema.validate(
+      req.query
+    );
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
@@ -1151,7 +1221,9 @@ export const getEfficiencyLabels = async (req, res, next) => {
 
     if (value.page || value.pageSize) {
       if (!value.page || !value.pageSize) {
-        return next(createError(400, "Both page and pageSize must be provided together."));
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
       }
 
       const page = value.page;
@@ -1187,7 +1259,9 @@ export const getEfficiencyLabels = async (req, res, next) => {
       currentPage: value.page || 1,
       pageSize: value.pageSize || totalProducts, // The size of the entire result set if no pagination
       totalProducts: totalProducts,
-      totalPages: value.pageSize ? Math.ceil(totalProducts / value.pageSize) : 1,
+      totalPages: value.pageSize
+        ? Math.ceil(totalProducts / value.pageSize)
+        : 1,
       efficiencyLabels: parsedEfficiencyLabels,
     });
   } catch (error) {
@@ -1195,7 +1269,6 @@ export const getEfficiencyLabels = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const deleteEfficiencyLabel = async (req, res, next) => {
   try {
@@ -1389,7 +1462,6 @@ export const getProductConformities = async (req, res, next) => {
   }
 };
 
-
 export const deleteProductConformity = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -1469,7 +1541,6 @@ export const createIeceeCertificate = async (req, res, next) => {
     next(error);
   }
 };
-
 
 const updateIeceeCertificateSchema = Joi.object({
   barcode: Joi.string().max(50).optional(),
@@ -1581,7 +1652,9 @@ export const getIeceeCertificates = async (req, res, next) => {
       currentPage: value.page || 1,
       pageSize: value.pageSize || totalProducts, // The size of the entire result set if no pagination
       totalProducts: totalProducts,
-      totalPages: value.pageSize ? Math.ceil(totalProducts / value.pageSize) : 1,
+      totalPages: value.pageSize
+        ? Math.ceil(totalProducts / value.pageSize)
+        : 1,
       ieceeCertificates: parsedIeceeCertificates,
     });
   } catch (error) {
