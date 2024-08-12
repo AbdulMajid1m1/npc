@@ -1000,7 +1000,7 @@ model tblDlPackaging {
   last_modified_by   String?  @db.VarChar(255)
 }
 
-model tblDlProductStorage {
+model tblDlProductStorage { // not used yet
   id                     String    @id @default(cuid())
   barcode                String    @db.NVarChar(50)
   status                 String    @default("pending", map: "DF_product_storage_status")
