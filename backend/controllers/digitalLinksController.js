@@ -12,9 +12,11 @@ const updateTblWflCompliance = async (barcode) => {
   const productStorageRecord = await prisma.productStorage.findFirst({
     where: { barcode, status: "active" },
   });
-  const foodProductSafetyRecord = await prisma.tblDlFoodProductSafety.findFirst({
-    where: { barcode, status: "active" },
-  });
+  const foodProductSafetyRecord = await prisma.tblDlFoodProductSafety.findFirst(
+    {
+      where: { barcode, status: "active" },
+    }
+  );
   const productContentRecord = await prisma.tblDlProductContents.findFirst({
     where: { barcode, status: "active" },
   });
@@ -56,7 +58,6 @@ const updateTblWflCompliance = async (barcode) => {
 
   return complianceRecord;
 };
-
 
 // Reusable function to check and update tblWflDqms
 const updateTblWflDqms = async (barcode, qualityMarkId, fieldToUpdate) => {
@@ -105,6 +106,89 @@ const updateTblWflDqms = async (barcode, qualityMarkId, fieldToUpdate) => {
   }
 
   return dqmsRecord;
+};
+
+// NPC Barcode Documents status controller
+
+// Define the barcode validation schema
+const barcodeSchema = Joi.object({
+  barcode: Joi.string().max(14).required(),
+});
+
+export const getComplianceAndDqmsStatus = async (req, res, next) => {
+  try {
+    // Get the barcode from the query parameters
+    const { barcode } = req.query;
+
+    // Validate the barcode
+    const { error } = barcodeSchema.validate({ barcode });
+    if (error) {
+      return res.status(400).json({ error: `Invalid barcode: ${error.details[0].message}` });
+    }
+
+    // Fetch DQMS data
+    const dqmsRecord = await prisma.tblWflDqms.findFirst({
+      where: { barcode },
+    });
+
+    const isSasoCompliant = Boolean(dqmsRecord?.saso);
+    const isQmarkCompliant = Boolean(dqmsRecord?.qmark);
+    const isIecceCompliant = Boolean(dqmsRecord?.iecce);
+    const isEfficiencyCompliant = Boolean(dqmsRecord?.efficiency);
+    const isDqmsCompliant = dqmsRecord?.is_dqms_compliant || false;
+    const dqmsStatus = isDqmsCompliant ? 'Compliant' : 'Non Compliant';
+
+    // Fetch Compliance data
+    const complianceRecord = await prisma.tblWflCompliance.findFirst({
+      where: { barcode },
+    });
+
+    const isCompliant = complianceRecord?.is_compliance || false;
+    const complianceStatus = isCompliant ? 'Compliant' : 'Non Compliant';
+
+    // Fetch related data for compliance check
+    const productStorageRecord = await prisma.productStorage.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    const foodProductSafetyRecord = await prisma.tblDlFoodProductSafety.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    const productContentRecord = await prisma.tblDlProductContents.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    const packagingRecord = await prisma.tblDlPackaging.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    // Construct the response object
+    const response = {
+      dqms: {
+        is_dqms_compliant: isDqmsCompliant,
+        saso: isSasoCompliant,
+        qmark: isQmarkCompliant,
+        iecce: isIecceCompliant,
+        efficiency: isEfficiencyCompliant,
+        dqmsStatus: dqmsStatus,
+      },
+      compliance: {
+        is_compliance: isCompliant,
+        complianceStatus: complianceStatus,
+        productStorage: Boolean(productStorageRecord),
+        foodProductSafety: Boolean(foodProductSafetyRecord),
+        productContents: Boolean(productContentRecord),
+        packaging: Boolean(packagingRecord),
+      },
+    };
+
+    // Send the response
+    res.status(200).json(response);
+  } catch (err) {
+    console.error('Error fetching DQMS and Compliance status:', err.message);
+    next(err); // Pass the error to the next middleware for error handling
+  }
 };
 
 // Define Joi schema for validation

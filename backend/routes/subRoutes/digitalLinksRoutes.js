@@ -40,10 +40,15 @@ import {
   updatePackaging,
   getPackagings,
   deletePackaging,
+  getComplianceAndDqmsStatus,
 } from "../../controllers/digitalLinksController.js";
 import { multipleUpload } from "../../configs/multerConfig.js";
 
 const router = express.Router();
+
+router.get("/getComplianceAndDqmsStatus", getComplianceAndDqmsStatus);
+
+
 
 router.post(
   "/productStorage",
