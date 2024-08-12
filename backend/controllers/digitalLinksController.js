@@ -163,7 +163,7 @@ export const getComplianceAndDqmsStatus = async (req, res, next) => {
       where: { barcode, status: 'active' },
     });
 
-    // Construct the response object
+    // Construct the response object for the client
     const response = {
       dqms: {
         is_dqms_compliant: isDqmsCompliant,
