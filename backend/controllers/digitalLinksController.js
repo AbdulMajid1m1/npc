@@ -249,14 +249,7 @@ export const getProductStorage = async (req, res, next) => {
     let totalProducts;
 
     // Determine whether to apply pagination
-    if (value.page || value.pageSize) {
-      if (!value.page || !value.pageSize) {
-        return next(
-          createError(400, "Both page and pageSize must be provided together.")
-        );
-      }
-
-      // Apply pagination if both page and pageSize are provided
+    if (value.page && value.pageSize) {
       const page = value.page;
       const pageSize = value.pageSize;
 
@@ -275,27 +268,39 @@ export const getProductStorage = async (req, res, next) => {
         take: pageSize,
       });
 
+      // Parse images field if present
+      const parsedProductStorages = productStorages.map((storage) => ({
+        ...storage,
+        images: storage.images ? JSON.parse(storage.images) : [],
+      }));
+
       return res.json({
         currentPage: page,
         pageSize: pageSize,
         totalProducts: totalProducts,
         totalPages: totalPages,
-        productStorages,
+        productStorages: parsedProductStorages,
       });
     } else {
       // No pagination: return all matching product storages in one page
       productStorages = await prisma.productStorage.findMany({
         where: filterConditions,
-        orderBy: { last_modified_date: "desc" },
+        orderBy: { updated_at: "desc" },
       });
       totalProducts = productStorages.length;
+
+      // Parse images field if present
+      const parsedProductStorages = productStorages.map((storage) => ({
+        ...storage,
+        images: storage.images ? JSON.parse(storage.images) : [],
+      }));
 
       return res.json({
         currentPage: 1,
         pageSize: totalProducts, // The size of the entire result set
         totalProducts: totalProducts,
         totalPages: 1,
-        productStorages,
+        productStorages: parsedProductStorages,
       });
     }
   } catch (error) {
@@ -303,6 +308,7 @@ export const getProductStorage = async (req, res, next) => {
     next(error);
   }
 };
+
 
 export const deleteProductStorage = async (req, res, next) => {
   try {
