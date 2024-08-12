@@ -826,6 +826,7 @@ model productStorage {
   brand_owner_id         String    @db.VarChar(255)
   created_at             DateTime  @default(now())
   updated_at             DateTime  @updatedAt
+  images                 String?   @db.NVarChar(Max) // New column to store image paths
   last_modified_by       String    @db.VarChar(255)
 }
 
@@ -846,6 +847,7 @@ model tblDlProductContents {
   brand_owner_id        String   @db.VarChar(255)
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
+  images                String?  @db.NVarChar(Max)
   last_modified_by      String   @db.VarChar(255)
 }
 
@@ -976,6 +978,7 @@ model tblDlFoodProductSafety {
   brand_owner_id        String    @db.VarChar(255)
   created_at            DateTime  @default(now())
   updated_at            DateTime  @updatedAt
+  images                String?   @db.NVarChar(Max)
   last_modified_by      String    @db.VarChar(255)
 }
 
@@ -997,10 +1000,11 @@ model tblDlPackaging {
   brand_owner_id     String?  @db.VarChar(255)
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
+  images             String?  @db.NVarChar(Max)
   last_modified_by   String?  @db.VarChar(255)
 }
 
-model tblDlProductStorage { // not used yet
+model tblDlProductStorage {
   id                     String    @id @default(cuid())
   barcode                String    @db.NVarChar(50)
   status                 String    @default("pending", map: "DF_product_storage_status")
@@ -1052,7 +1056,9 @@ model tblWflCompliance {
   is_compliance Boolean  @default(false)
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
-} // check
+}
+
+// check
 
 model productRequest {
   id                  String   @id @default(cuid())

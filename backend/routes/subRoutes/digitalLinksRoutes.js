@@ -32,20 +32,37 @@ import {
   updateIeceeCertificate,
   getIeceeCertificates,
   deleteIeceeCertificate,
+  createFoodProductSafety,
+  updateFoodProductSafety,
+  getFoodProductSafeties,
+  deleteFoodProductSafety,
+  createPackaging,
+  updatePackaging,
+  getPackagings,
+  deletePackaging,
 } from "../../controllers/digitalLinksController.js";
 import { multipleUpload } from "../../configs/multerConfig.js";
 
 const router = express.Router();
 
-router.post("/productStorage", createProductStorage);
+router.post(
+  "/productStorage",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createProductStorage
+);
 router.get("/productStorage", getProductStorage);
 router.put("/productStorage/:id", updateProductStorage);
 router.delete("/productStorage/:id", deleteProductStorage);
 
 // productContent routes
-router.post("/productContents", createProductContent);
-router.put("/productContents/:id", updateProductContent);
+
+router.post(
+  "/productContents",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createProductContent
+);
 router.get("/productContents", getProductContents);
+router.put("/productContents/:id", updateProductContent);
 router.delete("/productContents/:id", deleteProductContent);
 
 //  Nutritional Info routes
@@ -101,5 +118,26 @@ router.post(
 router.put("/ieceeCertificates/:id", updateIeceeCertificate);
 router.get("/ieceeCertificates", getIeceeCertificates);
 router.delete("/ieceeCertificates/:id", deleteIeceeCertificate);
+
+// foodProductSafety routes
+
+router.post(
+  "/foodProductSafeties",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createFoodProductSafety
+);
+router.get("/foodProductSafeties", getFoodProductSafeties);
+router.put("/foodProductSafeties/:id", updateFoodProductSafety);
+router.delete("/foodProductSafeties/:id", deleteFoodProductSafety);
+
+// packaging routes
+router.post(
+  "/packagings",
+  multipleUpload("images", 5, "public/uploads/images"),
+  createPackaging
+);
+router.get("/packagings", getPackagings);
+router.put("/packagings/:id", updatePackaging);
+router.delete("/packagings/:id", deletePackaging);
 
 export default router;
