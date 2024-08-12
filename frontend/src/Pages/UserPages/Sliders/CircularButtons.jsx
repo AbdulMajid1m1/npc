@@ -18,14 +18,14 @@ const CircularButtons = () => {
 
   const buttons = [
     { name: 'GDSN', icon: gdsn, link: '/gdsn' },
-    { name: 'Data Validator', icon: data, link: '/data-validator' },
+    { name: 'Brand Owner', icon: data, link: 'http://gs1ksa.org:5021', external: true },
     { name: 'GS1', icon: gs1, link: '/admin-login' },
-    { name: 'Governance', icon: governance, link: '/governance' },
-    { name: 'Recipients', icon: receipts, link: '/recipients' },
-    { name: 'Compliance', icon: compliance, link: '/compliance' },
+    { name: 'Governance', icon: governance, link: 'http://gs1ksa.org:5025', external: true },
+    { name: 'Subscribers', icon: receipts, link: 'http://gs1ksa.org:5022', external: true },
+    { name: 'Compliance', icon: compliance, link: 'http://gs1ksa.org:5024', external: true },
     { name: 'NPC Certification', icon: certification, link: '/npc-certification' },
     { name: 'API Community', icon: apicommunity, link: '/api-community' },
-    { name: 'Data Quality Management', icon: dataquality, link: '/data-quality-management' },
+    { name: 'Data Quality Management', icon: dataquality, link: 'http://gs1ksa.org:5023', external: true },
     { name: 'Customer Support', icon: customer, link: '/customer-support' },
   ];
 
@@ -53,19 +53,27 @@ const CircularButtons = () => {
         <div
           key={index}
           className="absolute flex flex-col items-center"
-          // style={{
-          //   transform: `rotate(${index * 36}deg) translate(150px) rotate(-${index * 36}deg)`
-          // }}
           style={{
             transform: `rotate(${index * 36}deg) translate(${buttonRadius}px) rotate(-${index * 36}deg)`
           }}
         >
-          <Link
-            to={button.link}
-            className="sm:w-16 w-8 sm:h-16 h-8 bg-white hover:bg-[#DDF3F6] transition-transform transform hover:scale-90 rounded-full shadow-xl flex justify-center items-center"
-          >
-            <img src={button.icon} alt={button.name} className="sm:w-8 w-4 sm:h-8 h-4" />
-          </Link>
+          {button.external ? (
+            <a
+              href={button.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sm:w-16 w-8 sm:h-16 h-8 bg-white hover:bg-[#DDF3F6] transition-transform transform hover:scale-90 rounded-full shadow-xl flex justify-center items-center"
+            >
+              <img src={button.icon} alt={button.name} className="sm:w-8 w-4 sm:h-8 h-4" />
+            </a>
+          ) : (
+            <Link
+              to={button.link}
+              className="sm:w-16 w-8 sm:h-16 h-8 bg-white hover:bg-[#DDF3F6] transition-transform transform hover:scale-90 rounded-full shadow-xl flex justify-center items-center"
+            >
+              <img src={button.icon} alt={button.name} className="sm:w-8 w-4 sm:h-8 h-4" />
+            </Link>
+          )}
           <span className="text-center sm:text-[9px] text-[5px] text-secondary font-semibold w-16 mt-1">{button.name}</span>
         </div>
       ))}
