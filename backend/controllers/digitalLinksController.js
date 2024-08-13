@@ -1716,7 +1716,8 @@ const ieceeCertificateFilterSchema = Joi.object({
   scope: Joi.string().optional(),
   page: Joi.number().integer().min(1).optional(),
   pageSize: Joi.number().integer().min(1).optional(),
-}).and("page", "pageSize"); // Require both or neither
+}).with("page", "pageSize"); // Ensure 'page' and 'pageSize' are either both present or both absent
+
 
 export const getIeceeCertificates = async (req, res, next) => {
   try {
@@ -1736,21 +1737,14 @@ export const getIeceeCertificates = async (req, res, next) => {
     let ieceeCertificates;
     let totalProducts;
 
-    if (value.page || value.pageSize) {
-      if (!value.page || value.pageSize) {
-        return next(
-          createError(400, "Both page and pageSize must be provided together.")
-        );
-      }
-
+    if (value.page && value.pageSize) {
+      // Pagination is provided, fetch paginated data
       const page = value.page;
       const pageSize = value.pageSize;
 
       totalProducts = await prisma.tblDlIeceeCertificate.count({
         where: filterConditions,
       });
-
-      const totalPages = Math.ceil(totalProducts / pageSize);
 
       ieceeCertificates = await prisma.tblDlIeceeCertificate.findMany({
         where: filterConditions,
@@ -1759,6 +1753,7 @@ export const getIeceeCertificates = async (req, res, next) => {
         take: pageSize,
       });
     } else {
+      // No pagination provided, fetch all data
       ieceeCertificates = await prisma.tblDlIeceeCertificate.findMany({
         where: filterConditions,
         orderBy: { updated_at: "desc" },
@@ -1786,6 +1781,7 @@ export const getIeceeCertificates = async (req, res, next) => {
     next(error);
   }
 };
+
 
 export const deleteIeceeCertificate = async (req, res, next) => {
   try {
