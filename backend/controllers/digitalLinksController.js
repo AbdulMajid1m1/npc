@@ -2,30 +2,193 @@ import Joi from "joi";
 import prisma from "../prismaClient.js";
 import { createError } from "../utils/createError.js";
 
+const updateTblWflCompliance = async (barcode) => {
+  // Check if there is an existing compliance record
+  let complianceRecord = await prisma.tblWflCompliance.findFirst({
+    where: { barcode },
+  });
+
+  // Fetch the first relevant active record based on barcode
+  const productStorageRecord = await prisma.productStorage.findFirst({
+    where: { barcode, status: "active" },
+  });
+  const foodProductSafetyRecord = await prisma.tblDlFoodProductSafety.findFirst(
+    {
+      where: { barcode, status: "active" },
+    }
+  );
+  const productContentRecord = await prisma.tblDlProductContents.findFirst({
+    where: { barcode, status: "active" },
+  });
+  const packagingRecord = await prisma.tblDlPackaging.findFirst({
+    where: { barcode, status: "active" },
+  });
+
+  console.log("productStorageRecord", productStorageRecord);
+  console.log("foodProductSafetyRecord", foodProductSafetyRecord);
+  console.log("productContentRecord", productContentRecord);
+  console.log("packagingRecord", packagingRecord);
+
+  // Check if all fetched records are found (and thus active)
+  const isCompliant =
+    Boolean(productStorageRecord) &&
+    Boolean(foodProductSafetyRecord) &&
+    Boolean(productContentRecord) &&
+    Boolean(packagingRecord);
+
+  console.log("isCompliant", isCompliant);
+
+  if (!complianceRecord) {
+    // Create a new compliance record if it doesn't exist
+    complianceRecord = await prisma.tblWflCompliance.create({
+      data: {
+        barcode,
+        is_compliance: isCompliant,
+      },
+    });
+  } else {
+    // If a compliance record exists, update it based on the new conditions
+    await prisma.tblWflCompliance.update({
+      where: { id: complianceRecord.id },
+      data: {
+        is_compliance: isCompliant,
+      },
+    });
+  }
+
+  return complianceRecord;
+};
+
 // Reusable function to check and update tblWflDqms
 const updateTblWflDqms = async (barcode, qualityMarkId, fieldToUpdate) => {
+  // Find the first record with the matching barcode
   let dqmsRecord = await prisma.tblWflDqms.findFirst({
     where: { barcode },
   });
 
   if (!dqmsRecord) {
+    // If no record is found, create a new one with is_dqms_compliant set to false by default
     dqmsRecord = await prisma.tblWflDqms.create({
       data: {
         barcode,
         [fieldToUpdate]: qualityMarkId,
-        is_dqms_compliant: false, // Assuming default compliance is false
+        is_dqms_compliant: false,
       },
     });
   } else {
-    dqmsRecord = await prisma.tblWflDqms.update({
+    // Update the matching records with the new qualityMarkId
+    await prisma.tblWflDqms.updateMany({
       where: { barcode },
       data: {
         [fieldToUpdate]: qualityMarkId,
       },
     });
+
+    // Re-check the updated record to see if all required fields are non-null and non-empty
+    dqmsRecord = await prisma.tblWflDqms.findFirst({
+      where: { barcode },
+    });
+
+    // If all required fields have values, set is_dqms_compliant to true
+    if (
+      dqmsRecord.saso &&
+      dqmsRecord.qmark &&
+      dqmsRecord.iecce &&
+      dqmsRecord.efficiency
+    ) {
+      await prisma.tblWflDqms.updateMany({
+        where: { barcode },
+        data: {
+          is_dqms_compliant: true,
+        },
+      });
+    }
   }
 
   return dqmsRecord;
+};
+
+// NPC Barcode Documents status controller
+
+// Define the barcode validation schema
+const barcodeSchema = Joi.object({
+  barcode: Joi.string().max(14).required(),
+});
+
+export const getComplianceAndDqmsStatus = async (req, res, next) => {
+  try {
+    // Get the barcode from the query parameters
+    const { barcode } = req.query;
+
+    // Validate the barcode
+    const { error } = barcodeSchema.validate({ barcode });
+    if (error) {
+      return res.status(400).json({ error: `Invalid barcode: ${error.details[0].message}` });
+    }
+
+    // Fetch DQMS data
+    const dqmsRecord = await prisma.tblWflDqms.findFirst({
+      where: { barcode },
+    });
+
+    const isSasoCompliant = Boolean(dqmsRecord?.saso);
+    const isQmarkCompliant = Boolean(dqmsRecord?.qmark);
+    const isIecceCompliant = Boolean(dqmsRecord?.iecce);
+    const isEfficiencyCompliant = Boolean(dqmsRecord?.efficiency);
+    const isDqmsCompliant = dqmsRecord?.is_dqms_compliant || false;
+    const dqmsStatus = isDqmsCompliant ? 'Compliant' : 'Non Compliant';
+
+    // Fetch Compliance data
+    const complianceRecord = await prisma.tblWflCompliance.findFirst({
+      where: { barcode },
+    });
+
+    const isCompliant = complianceRecord?.is_compliance || false;
+    const complianceStatus = isCompliant ? 'Compliant' : 'Non Compliant';
+
+    // Fetch related data for compliance check
+    const productStorageRecord = await prisma.productStorage.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    const foodProductSafetyRecord = await prisma.tblDlFoodProductSafety.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    const productContentRecord = await prisma.tblDlProductContents.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    const packagingRecord = await prisma.tblDlPackaging.findFirst({
+      where: { barcode, status: 'active' },
+    });
+
+    // Construct the response object for the client
+    const response = {
+      dqms: {
+        is_dqms_compliant: isDqmsCompliant,
+        saso: isSasoCompliant,
+        qmark: isQmarkCompliant,
+        iecce: isIecceCompliant,
+        efficiency: isEfficiencyCompliant,
+        dqmsStatus: dqmsStatus,
+      },
+      compliance: {
+        is_compliance: isCompliant,
+        complianceStatus: complianceStatus,
+        productStorage: Boolean(productStorageRecord),
+        foodProductSafety: Boolean(foodProductSafetyRecord),
+        productContents: Boolean(productContentRecord),
+        packaging: Boolean(packagingRecord),
+      },
+    };
+
+    // Send the response
+    res.status(200).json(response);
+  } catch (err) {
+    console.error('Error fetching DQMS and Compliance status:', err.message);
+    next(err); // Pass the error to the next middleware for error handling
+  }
 };
 
 // Define Joi schema for validation
@@ -46,6 +209,7 @@ const productStorageSchema = Joi.object({
   special_handling: Joi.string().optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).optional(),
+  status: Joi.string().max(50).default("active"), // Default to "active"
 });
 
 export const createProductStorage = async (req, res, next) => {
@@ -56,10 +220,24 @@ export const createProductStorage = async (req, res, next) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
     // Create product storage entry
     const newProductStorage = await prisma.productStorage.create({
-      data: value,
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
     });
+
+    // Update the compliance status in tblWflCompliance
+    await updateTblWflCompliance(value.barcode);
 
     res.status(201).json({
       message: "Product storage created successfully.",
@@ -163,14 +341,7 @@ export const getProductStorage = async (req, res, next) => {
     let totalProducts;
 
     // Determine whether to apply pagination
-    if (value.page || value.pageSize) {
-      if (!value.page || !value.pageSize) {
-        return next(
-          createError(400, "Both page and pageSize must be provided together.")
-        );
-      }
-
-      // Apply pagination if both page and pageSize are provided
+    if (value.page && value.pageSize) {
       const page = value.page;
       const pageSize = value.pageSize;
 
@@ -189,27 +360,39 @@ export const getProductStorage = async (req, res, next) => {
         take: pageSize,
       });
 
+      // Parse images field if present
+      const parsedProductStorages = productStorages.map((storage) => ({
+        ...storage,
+        images: storage.images ? JSON.parse(storage.images) : [],
+      }));
+
       return res.json({
         currentPage: page,
         pageSize: pageSize,
         totalProducts: totalProducts,
         totalPages: totalPages,
-        productStorages,
+        productStorages: parsedProductStorages,
       });
     } else {
       // No pagination: return all matching product storages in one page
       productStorages = await prisma.productStorage.findMany({
         where: filterConditions,
-        orderBy: { last_modified_date: "desc" },
+        orderBy: { updated_at: "desc" },
       });
       totalProducts = productStorages.length;
+
+      // Parse images field if present
+      const parsedProductStorages = productStorages.map((storage) => ({
+        ...storage,
+        images: storage.images ? JSON.parse(storage.images) : [],
+      }));
 
       return res.json({
         currentPage: 1,
         pageSize: totalProducts, // The size of the entire result set
         totalProducts: totalProducts,
         totalPages: 1,
-        productStorages,
+        productStorages: parsedProductStorages,
       });
     }
   } catch (error) {
@@ -251,6 +434,7 @@ const productContentSchema = Joi.object({
   regulatory_compliance: Joi.string().max(255).optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  status: Joi.string().max(50).default("active"),
 });
 
 export const createProductContent = async (req, res, next) => {
@@ -261,10 +445,24 @@ export const createProductContent = async (req, res, next) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
     // Create product content entry
     const newProductContent = await prisma.tblDlProductContents.create({
-      data: value,
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
     });
+
+    // Update compliance status in tblWflCompliance
+    await updateTblWflCompliance(value.barcode);
 
     res.status(201).json({
       message: "Product content created successfully.",
@@ -390,12 +588,18 @@ export const getProductContents = async (req, res, next) => {
         take: pageSize,
       });
 
+      // Parse images field if present
+      const parsedProductContents = productContents.map((content) => ({
+        ...content,
+        images: content.images ? JSON.parse(content.images) : [],
+      }));
+
       return res.json({
         currentPage: page,
         pageSize: pageSize,
         totalProducts: totalProducts,
         totalPages: totalPages,
-        productContents,
+        productContents: parsedProductContents,
       });
     } else {
       // No pagination: return all matching product contents in one page
@@ -405,12 +609,18 @@ export const getProductContents = async (req, res, next) => {
       });
       totalProducts = productContents.length;
 
+      // Parse images field if present
+      const parsedProductContents = productContents.map((content) => ({
+        ...content,
+        images: content.images ? JSON.parse(content.images) : [],
+      }));
+
       return res.json({
         currentPage: 1,
         pageSize: totalProducts, // The size of the entire result set
         totalProducts: totalProducts,
         totalPages: 1,
-        productContents,
+        productContents: parsedProductContents,
       });
     }
   } catch (error) {
@@ -902,6 +1112,7 @@ export const updateProductQualityMark = async (req, res, next) => {
   }
 };
 
+// Define Joi schema for validation
 const tblDlProductQualityMarkFilterSchema = Joi.object({
   barcode: Joi.string().max(50).optional(),
   quality_mark: Joi.string().max(255).optional(),
@@ -953,29 +1164,29 @@ export const getProductQualityMarks = async (req, res, next) => {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
-
-      return res.json({
-        currentPage: page,
-        pageSize: pageSize,
-        totalProducts: totalProducts,
-        totalPages: totalPages,
-        qualityMarks,
-      });
     } else {
       qualityMarks = await prisma.tblDlProductQualityMark.findMany({
         where: filterConditions,
         orderBy: { updated_at: "desc" },
       });
       totalProducts = qualityMarks.length;
-
-      return res.json({
-        currentPage: 1,
-        pageSize: totalProducts, // The size of the entire result set
-        totalProducts: totalProducts,
-        totalPages: 1,
-        qualityMarks,
-      });
     }
+
+    // Parse attachments (images) if any
+    const parsedQualityMarks = qualityMarks.map((mark) => ({
+      ...mark,
+      images: mark.images ? JSON.parse(mark.images) : [],
+    }));
+
+    return res.json({
+      currentPage: value.page || 1,
+      pageSize: value.pageSize || totalProducts, // The size of the entire result set if no pagination
+      totalProducts: totalProducts,
+      totalPages: value.pageSize
+        ? Math.ceil(totalProducts / value.pageSize)
+        : 1,
+      qualityMarks: parsedQualityMarks,
+    });
   } catch (error) {
     console.error(error);
     next(error);
@@ -1011,7 +1222,6 @@ export const deleteProductQualityMark = async (req, res, next) => {
 
 // tblDlEfficiencyLabels Controller
 
-// Define Joi schema for validation
 const efficiencyLabelSchema = Joi.object({
   barcode: Joi.string().max(50).required(),
   label_type: Joi.string().max(255).required(),
@@ -1033,10 +1243,24 @@ export const createEfficiencyLabel = async (req, res, next) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
     // Create efficiency label entry
     const newEfficiencyLabel = await prisma.tblDlEfficiencyLabels.create({
-      data: value,
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
     });
+
+    // Update the efficiency column in tblWflDqms with the new efficiency label ID
+    await updateTblWflDqms(value.barcode, newEfficiencyLabel.id, "efficiency");
 
     res.status(201).json({
       message: "Efficiency label created successfully.",
@@ -1141,29 +1365,29 @@ export const getEfficiencyLabels = async (req, res, next) => {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
-
-      return res.json({
-        currentPage: page,
-        pageSize: pageSize,
-        totalProducts: totalProducts,
-        totalPages: totalPages,
-        efficiencyLabels,
-      });
     } else {
       efficiencyLabels = await prisma.tblDlEfficiencyLabels.findMany({
         where: filterConditions,
         orderBy: { updated_at: "desc" },
       });
       totalProducts = efficiencyLabels.length;
-
-      return res.json({
-        currentPage: 1,
-        pageSize: totalProducts, // The size of the entire result set
-        totalProducts: totalProducts,
-        totalPages: 1,
-        efficiencyLabels,
-      });
     }
+
+    // Parse attachments (images) if any
+    const parsedEfficiencyLabels = efficiencyLabels.map((label) => ({
+      ...label,
+      images: label.images ? JSON.parse(label.images) : [],
+    }));
+
+    return res.json({
+      currentPage: value.page || 1,
+      pageSize: value.pageSize || totalProducts, // The size of the entire result set if no pagination
+      totalProducts: totalProducts,
+      totalPages: value.pageSize
+        ? Math.ceil(totalProducts / value.pageSize)
+        : 1,
+      efficiencyLabels: parsedEfficiencyLabels,
+    });
   } catch (error) {
     console.error(error);
     next(error);
@@ -1218,17 +1442,29 @@ export const createProductConformity = async (req, res, next) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
     // Create product conformity entry
     const newProductConformity = await prisma.tblDlProductConformity.create({
-      data: value,
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
     });
 
-    res
-      .status(201)
-      .json({
-        message: "Product conformity created successfully.",
-        productConformity: newProductConformity,
-      });
+    // Update the saso column in tblWflDqms with the new product conformity ID
+    await updateTblWflDqms(value.barcode, newProductConformity.id, "saso");
+
+    res.status(201).json({
+      message: "Product conformity created successfully.",
+      productConformity: newProductConformity,
+    });
   } catch (error) {
     console.error(error);
     next(error);
@@ -1305,13 +1541,7 @@ export const getProductConformities = async (req, res, next) => {
     let productConformities;
     let totalProducts;
 
-    if (value.page || value.pageSize) {
-      if (!value.page || !value.pageSize) {
-        return next(
-          createError(400, "Both page and pageSize must be provided together.")
-        );
-      }
-
+    if (value.page && value.pageSize) {
       const page = value.page;
       const pageSize = value.pageSize;
 
@@ -1407,17 +1637,29 @@ export const createIeceeCertificate = async (req, res, next) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
     // Create IECEE certificate entry
     const newIeceeCertificate = await prisma.tblDlIeceeCertificate.create({
-      data: value,
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
     });
 
-    res
-      .status(201)
-      .json({
-        message: "IECEE certificate created successfully.",
-        ieceeCertificate: newIeceeCertificate,
-      });
+    // Update the iecce column in tblWflDqms with the new IECEE certificate ID
+    await updateTblWflDqms(value.barcode, newIeceeCertificate.id, "iecce");
+
+    res.status(201).json({
+      message: "IECEE certificate created successfully.",
+      ieceeCertificate: newIeceeCertificate,
+    });
   } catch (error) {
     console.error(error);
     next(error);
@@ -1474,7 +1716,8 @@ const ieceeCertificateFilterSchema = Joi.object({
   scope: Joi.string().optional(),
   page: Joi.number().integer().min(1).optional(),
   pageSize: Joi.number().integer().min(1).optional(),
-}).and("page", "pageSize"); // Require both or neither
+}).with("page", "pageSize"); // Ensure 'page' and 'pageSize' are either both present or both absent
+
 
 export const getIeceeCertificates = async (req, res, next) => {
   try {
@@ -1494,13 +1737,8 @@ export const getIeceeCertificates = async (req, res, next) => {
     let ieceeCertificates;
     let totalProducts;
 
-    if (value.page || value.pageSize) {
-      if (!value.page || !value.pageSize) {
-        return next(
-          createError(400, "Both page and pageSize must be provided together.")
-        );
-      }
-
+    if (value.page && value.pageSize) {
+      // Pagination is provided, fetch paginated data
       const page = value.page;
       const pageSize = value.pageSize;
 
@@ -1508,42 +1746,42 @@ export const getIeceeCertificates = async (req, res, next) => {
         where: filterConditions,
       });
 
-      const totalPages = Math.ceil(totalProducts / pageSize);
-
       ieceeCertificates = await prisma.tblDlIeceeCertificate.findMany({
         where: filterConditions,
         orderBy: { updated_at: "desc" },
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
-
-      return res.json({
-        currentPage: page,
-        pageSize: pageSize,
-        totalProducts: totalProducts,
-        totalPages: totalPages,
-        ieceeCertificates,
-      });
     } else {
+      // No pagination provided, fetch all data
       ieceeCertificates = await prisma.tblDlIeceeCertificate.findMany({
         where: filterConditions,
         orderBy: { updated_at: "desc" },
       });
       totalProducts = ieceeCertificates.length;
-
-      return res.json({
-        currentPage: 1,
-        pageSize: totalProducts, // The size of the entire result set
-        totalProducts: totalProducts,
-        totalPages: 1,
-        ieceeCertificates,
-      });
     }
+
+    // Parse attachments (images) if any
+    const parsedIeceeCertificates = ieceeCertificates.map((certificate) => ({
+      ...certificate,
+      images: certificate.images ? JSON.parse(certificate.images) : [],
+    }));
+
+    return res.json({
+      currentPage: value.page || 1,
+      pageSize: value.pageSize || totalProducts, // The size of the entire result set if no pagination
+      totalProducts: totalProducts,
+      totalPages: value.pageSize
+        ? Math.ceil(totalProducts / value.pageSize)
+        : 1,
+      ieceeCertificates: parsedIeceeCertificates,
+    });
   } catch (error) {
     console.error(error);
     next(error);
   }
 };
+
 
 export const deleteIeceeCertificate = async (req, res, next) => {
   try {
@@ -1566,6 +1804,479 @@ export const deleteIeceeCertificate = async (req, res, next) => {
     res
       .status(200)
       .json({ message: "IECEE certificate deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// tblDlFoodProductSafety Controller
+const foodProductSafetySchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  batch_number: Joi.string().max(100).required(),
+  manufacture_date: Joi.date().required(),
+  expiry_date: Joi.date().required(),
+  supplier_id: Joi.number().integer().optional(),
+  inspection_date: Joi.date().optional(),
+  inspection_result: Joi.string().max(100).optional(),
+  issue_detected: Joi.boolean().optional(),
+  issue_description: Joi.string().optional(),
+  corrective_action: Joi.string().optional(),
+  status: Joi.string().max(100).default("active"),
+  recall_date: Joi.date().optional(),
+  regulatory_compliance: Joi.string().max(255).optional(),
+  storage_conditions: Joi.string().max(255).optional(),
+  brand_owner_id: Joi.string().max(255).required(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const createFoodProductSafety = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = foodProductSafetySchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
+    // Create food product safety entry
+    const newFoodProductSafety = await prisma.tblDlFoodProductSafety.create({
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
+    });
+
+    // Update compliance status in tblWflCompliance
+    await updateTblWflCompliance(value.barcode);
+
+    res.status(201).json({
+      message: "Food product safety created successfully.",
+      foodProductSafety: newFoodProductSafety,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updateFoodProductSafetySchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  batch_number: Joi.string().max(100).optional(),
+  manufacture_date: Joi.date().optional(),
+  expiry_date: Joi.date().optional(),
+  supplier_id: Joi.number().integer().optional(),
+  inspection_date: Joi.date().optional(),
+  inspection_result: Joi.string().max(100).optional(),
+  issue_detected: Joi.boolean().optional(),
+  issue_description: Joi.string().optional(),
+  corrective_action: Joi.string().optional(),
+  status: Joi.string().max(100).optional(),
+  recall_date: Joi.date().optional(),
+  regulatory_compliance: Joi.string().max(255).optional(),
+  storage_conditions: Joi.string().max(255).optional(),
+  last_modified_by: Joi.string().max(255).required(),
+});
+
+export const updateFoodProductSafety = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updateFoodProductSafetySchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update food product safety entry
+    const updatedFoodProductSafety = await prisma.tblDlFoodProductSafety.update(
+      {
+        where: { id },
+        data: {
+          ...value,
+          updated_at: new Date(),
+        },
+      }
+    );
+
+    res.json({
+      message: "Food product safety updated successfully.",
+      foodProductSafety: updatedFoodProductSafety,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const getFoodProductSafeties = async (req, res, next) => {
+  try {
+    // Define allowed columns for filtering
+    const allowedColumns = {
+      barcode: Joi.string(),
+      batch_number: Joi.string(),
+      status: Joi.string(),
+      issue_detected: Joi.boolean(),
+    };
+
+    // Pagination schema
+    const paginationSchema = Joi.object({
+      page: Joi.number().integer().min(1),
+      pageSize: Joi.number().integer().min(1),
+    }).xor("page", "pageSize"); // Require both or neither
+
+    // Combine schemas
+    const filterSchema = Joi.object({
+      ...allowedColumns,
+      page: paginationSchema.extract("page").optional(),
+      pageSize: paginationSchema.extract("pageSize").optional(),
+    }).unknown(false); // Disallows any keys not defined in the schema
+
+    // Validate the request query
+    const { error, value } = filterSchema.validate(req.query);
+    if (error) {
+      return next(
+        createError(400, `Invalid query parameter: ${error.details[0].message}`)
+      );
+    }
+
+    // Construct filter conditions for Prisma query
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let foodProductSafeties;
+    let totalProducts;
+
+    // Determine whether to apply pagination
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      // Apply pagination if both page and pageSize are provided
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      // First, get the total count of food product safeties that match the filter conditions
+      totalProducts = await prisma.tblDlFoodProductSafety.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      // Then, get the paginated results
+      foodProductSafeties = await prisma.tblDlFoodProductSafety.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      // Parse images field if present
+      const parsedFoodProductSafeties = foodProductSafeties.map((safety) => ({
+        ...safety,
+        images: safety.images ? JSON.parse(safety.images) : [],
+      }));
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        foodProductSafeties: parsedFoodProductSafeties,
+      });
+    } else {
+      // No pagination: return all matching food product safeties in one page
+      foodProductSafeties = await prisma.tblDlFoodProductSafety.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+      });
+      totalProducts = foodProductSafeties.length;
+
+      // Parse images field if present
+      const parsedFoodProductSafeties = foodProductSafeties.map((safety) => ({
+        ...safety,
+        images: safety.images ? JSON.parse(safety.images) : [],
+      }));
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        foodProductSafeties: parsedFoodProductSafeties,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deleteFoodProductSafety = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // first check if the food product safety exists
+    const foodProductSafety = await prisma.tblDlFoodProductSafety.findUnique({
+      where: { id },
+    });
+
+    if (!foodProductSafety) {
+      throw createError(404, "Food product safety not found for the given ID.");
+    }
+
+    // Delete food product safety entry
+    await prisma.tblDlFoodProductSafety.delete({
+      where: { id },
+    });
+
+    res
+      .status(200)
+      .json({ message: "Food product safety deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// .... tblDlPackaging Controller .....
+
+const packagingSchema = Joi.object({
+  barcode: Joi.string().max(50).required(),
+  packaging_type: Joi.string().max(100).required(),
+  material: Joi.string().max(100).required(),
+  dimensions: Joi.string().max(100).optional(),
+  weight: Joi.number().precision(2).optional(),
+  capacity: Joi.string().max(100).optional(),
+  recyclable: Joi.boolean().optional(),
+  biodegradable: Joi.boolean().optional(),
+  packaging_supplier: Joi.string().max(255).optional(),
+  cost_per_unit: Joi.number().precision(2).optional(),
+  color: Joi.string().max(50).optional(),
+  labeling: Joi.string().optional(),
+  brand_owner_id: Joi.string().max(255).optional(),
+  last_modified_by: Joi.string().max(255).required(),
+  status: Joi.string().default("active"), // Set status to "active" by default
+});
+
+export const createPackaging = async (req, res, next) => {
+  try {
+    // Validate request body
+    const { error, value } = packagingSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Handle file uploads
+    const files = req.files;
+    let imagePaths = [];
+
+    if (files && files.length > 0) {
+      imagePaths = files.map((file) => file.path.replace("public", ""));
+    }
+
+    // Create packaging entry
+    const newPackaging = await prisma.tblDlPackaging.create({
+      data: {
+        ...value,
+        images: imagePaths.length > 0 ? JSON.stringify(imagePaths) : null,
+      },
+    });
+
+    // Update the compliance status in tblWflCompliance
+    await updateTblWflCompliance(value.barcode);
+    res.status(201).json({
+      message: "Packaging created successfully.",
+      packaging: newPackaging,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+const updatePackagingSchema = Joi.object({
+  barcode: Joi.string().max(50).optional(),
+  packaging_type: Joi.string().max(100).optional(),
+  material: Joi.string().max(100).optional(),
+  dimensions: Joi.string().max(100).optional(),
+  weight: Joi.number().precision(2).optional(),
+  capacity: Joi.string().max(100).optional(),
+  recyclable: Joi.boolean().optional(),
+  biodegradable: Joi.boolean().optional(),
+  packaging_supplier: Joi.string().max(255).optional(),
+  cost_per_unit: Joi.number().precision(2).optional(),
+  color: Joi.string().max(50).optional(),
+  labeling: Joi.string().optional(),
+  last_modified_by: Joi.string().max(255).required(),
+  status: Joi.string().optional().default("active"), // Status remains "active" if not provided
+});
+
+export const updatePackaging = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Validate request body
+    const { error, value } = updatePackagingSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    // Update packaging entry
+    const updatedPackaging = await prisma.tblDlPackaging.update({
+      where: { id },
+      data: {
+        ...value,
+        updated_at: new Date(),
+      },
+    });
+
+    res.json({
+      message: "Packaging updated successfully.",
+      packaging: updatedPackaging,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const getPackagings = async (req, res, next) => {
+  try {
+    // Define allowed columns for filtering
+    const allowedColumns = {
+      barcode: Joi.string(),
+      packaging_type: Joi.string(),
+      material: Joi.string(),
+      recyclable: Joi.boolean(),
+      biodegradable: Joi.boolean(),
+      status: Joi.string(),
+    };
+
+    // Pagination schema
+    const paginationSchema = Joi.object({
+      page: Joi.number().integer().min(1),
+      pageSize: Joi.number().integer().min(1),
+    }).xor("page", "pageSize"); // Require both or neither
+
+    // Combine schemas
+    const filterSchema = Joi.object({
+      ...allowedColumns,
+      page: paginationSchema.extract("page").optional(),
+      pageSize: paginationSchema.extract("pageSize").optional(),
+    }).unknown(false); // Disallows any keys not defined in the schema
+
+    // Validate the request query
+    const { error, value } = filterSchema.validate(req.query);
+    if (error) {
+      return next(
+        createError(400, `Invalid query parameter: ${error.details[0].message}`)
+      );
+    }
+
+    // Construct filter conditions for Prisma query
+    const filterConditions = {};
+    Object.keys(value).forEach((key) => {
+      if (!["page", "pageSize"].includes(key)) {
+        filterConditions[key] = value[key];
+      }
+    });
+
+    let packagings;
+    let totalProducts;
+
+    // Determine whether to apply pagination
+    if (value.page || value.pageSize) {
+      if (!value.page || !value.pageSize) {
+        return next(
+          createError(400, "Both page and pageSize must be provided together.")
+        );
+      }
+
+      // Apply pagination if both page and pageSize are provided
+      const page = value.page;
+      const pageSize = value.pageSize;
+
+      // First, get the total count of packagings that match the filter conditions
+      totalProducts = await prisma.tblDlPackaging.count({
+        where: filterConditions,
+      });
+
+      const totalPages = Math.ceil(totalProducts / pageSize);
+
+      // Then, get the paginated results
+      packagings = await prisma.tblDlPackaging.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      });
+
+      // Parse images field if present
+      const parsedPackagings = packagings.map((packaging) => ({
+        ...packaging,
+        images: packaging.images ? JSON.parse(packaging.images) : [],
+      }));
+
+      return res.json({
+        currentPage: page,
+        pageSize: pageSize,
+        totalProducts: totalProducts,
+        totalPages: totalPages,
+        packagings: parsedPackagings,
+      });
+    } else {
+      // No pagination: return all matching packagings in one page
+      packagings = await prisma.tblDlPackaging.findMany({
+        where: filterConditions,
+        orderBy: { updated_at: "desc" },
+      });
+      totalProducts = packagings.length;
+
+      // Parse images field if present
+      const parsedPackagings = packagings.map((packaging) => ({
+        ...packaging,
+        images: packaging.images ? JSON.parse(packaging.images) : [],
+      }));
+
+      return res.json({
+        currentPage: 1,
+        pageSize: totalProducts, // The size of the entire result set
+        totalProducts: totalProducts,
+        totalPages: 1,
+        packagings: parsedPackagings,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+export const deletePackaging = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Delete packaging entry
+    await prisma.tblDlPackaging.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Packaging deleted successfully." });
   } catch (error) {
     console.error(error);
     next(error);
