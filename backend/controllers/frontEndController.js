@@ -117,13 +117,14 @@ const mega_menu_categories = Joi.object({
   category_name_en: Joi.string().max(255).required(),
   category_name_ar: Joi.string().max(255).required(),
   description: Joi.string().max(255),
-  url: Joi.string().max(255).required(),
-  caption: Joi.string().max(255).required(),
-  caption_ar: Joi.string().max(255).required(),
+  url: Joi.string().max(255),
+  caption: Joi.string().max(255),
+  caption_ar: Joi.string().max(255),
   meta_title: Joi.string().max(255),
   meta_description: Joi.string().max(255),
   meta_keywords: Joi.string().max(255),
   status: Joi.number().required(),
+ 
 });
 export const getAllmega_menu_categories = async (req, res, next) => {
   try {
@@ -140,12 +141,20 @@ export const getAllmega_menu_categories = async (req, res, next) => {
 };
 export const creatmega_menu_categories = async (req, res, next) => {
     try {
+      
+      
         const { error, value } = mega_menu_categories.validate(req.body);
         if (error) {
+          console.log(error.message);
+          
           return res.status(400).json({ error: error.details[0].message });
-        }
+        }  
     
         const uploadedImage = req.files.image; // Use req.file for a single file
+       
+        
+        
+        
         if (!uploadedImage) {
           return res.status(400).json({ error: "Image is required" });
         }
@@ -166,6 +175,8 @@ export const creatmega_menu_categories = async (req, res, next) => {
     
         res.status(201).json(newCategory);
       } catch (error) {
+        console.log(error.message);
+        
     next(error);
   }
 };
