@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
-import helmet from 'helmet';
-import morgan from'morgan';
+import helmet from "helmet";
+import morgan from "morgan";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import rootRoute from "./routes/RootRoute.js";
@@ -27,23 +27,7 @@ dotenv.config();
 
 app.use(bodyParser.json({ limit: "500mb" }));
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
-const allowedOrigins = [
-  "http://localhost:3092",
-  "http://localhost:3081",
-  "http://gs1ksa.org:3092",
-  "https://gs1ksa.org:3093",
-  "http://gs1ksa.org:3091",
-  "http://localhost:3070",
-  "http://gs1ksa.org",
-  "https://gs1ksa.org",
-  "http://gs1ksa.org:82",
-  "http://gs1ksa.org:83",
-  "https://gs1ksa.org:82",
-  "https://gs1ksa.org:83",
-  "https://api.gs1ksa.org",
-  "https://www.api.gs1ksa.org",
-  "http://gs1ksa.org:3087",
-];
+app.use(cors()); // Allow all origins
 
 app.use(
   cors({
@@ -67,7 +51,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(helmet()); // Set security-related HTTP headers
-app.use(morgan('dev')); // HTTP request logger
+app.use(morgan("dev")); // HTTP request logger
 // set the view engine to ejs
 app.set("view engine", "ejs");
 
@@ -327,7 +311,7 @@ const httpServer = createServer(app);
 // socketHandler(httpServer);
 const PORT = process.env.PORT || 3082;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 // httpServer.listen(PORT, () => {
