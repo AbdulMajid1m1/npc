@@ -5,13 +5,13 @@ pipeline {
         NODE_ENV = "development"
         JWT_EXPIRATION = "90d"
         COOKIE_AGE = "90"
-        DATABASE_URL = credentials('npc_DATABASE_URL')
-        GS1DBV2_DATABASE_URL = credentials('npc_GS1DBV2_DATABASE_URL')
-        GMAIL_USERNAME = credentials('npc_EMAIL_USERNAME')
-        GMAIL_PASSWORD = credentials('npc_EMAIL_PASSWORD')
-        JWT_SECRET = credentials('npc_USER_JWT_SECRET')
-        MEMBER_JWT_SECRET = credentials('npc_MEMBER_JWT_SECRET')
-        ADMIN_JWT_SECRET = credentials('npc_ADMIN_JWT_SECRET')
+        DATABASE_URL = "${npc_DATABASE_URL}"
+        GS1DBV2_DATABASE_URL = "${npc_GS1DBV2_DATABASE_URL}"
+        GMAIL_USERNAME = "${npc_EMAIL_USERNAME}"
+        GMAIL_PASSWORD = "${npc_EMAIL_PASSWORD}"
+        JWT_SECRET = "${npc_USER_JWT_SECRET}"
+        MEMBER_JWT_SECRET = "${npc_MEMBER_JWT_SECRET}"
+        ADMIN_JWT_SECRET = "${npc_ADMIN_JWT_SECRET}"
     }
 
     stages {
