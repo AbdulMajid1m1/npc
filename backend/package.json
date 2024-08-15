@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "update:schema": "npm install && cd ./ && npx prisma generate && cd prisma/gs1Db_V2 && npx prisma generate && cd ../../ &&  npm start"
+    "update:schema": "npm install && cd ./ && npx prisma generate && cd prisma/gs1Db_V2 && npx prisma generate"
   },
   "keywords": [
     "gs1"
