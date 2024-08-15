@@ -23,21 +23,21 @@ pipeline {
         stage('Install Dependencies - Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
         stage('Build - Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
         stage('Install Dependencies - Backend') {
             steps {
                 dir('backend') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -45,20 +45,20 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        def processStatus = sh(script: 'pm2 list', returnStdout: true).trim()
+                        def processStatus = bat(script: 'pm2 list', returnStdout: true).trim()
                         if (processStatus.contains('npc_backend')) {
-                            sh 'pm2 stop npc_backend || exit 0'
-                            sh 'pm2 delete npc_backend || exit 0'
+                            bat 'pm2 stop npc_backend || exit 0'
+                            bat 'pm2 delete npc_backend || exit 0'
                         }
                     }
-                    sh 'npm run update:schema'
+                    bat 'npm run update:schema'
                 }
             }
         }
         stage('Start Backend') {
             steps {
                 dir('backend') {
-                    sh 'pm2 start ./server.js --name npc_backend'
+                    bat 'pm2 start server.js --name npc_backend'
                 }
             }
         }
