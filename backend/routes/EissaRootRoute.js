@@ -87,7 +87,7 @@ import {
   sendNewsletter,
 } from "../controllers/masterDataController.js";
 
-//--------------NewsletterSubscriptions Routes----------------------------
+//--------------NewsletterSubscriptions----------------------------
 router.post("/NewsletterSubscriptions", sendNewsletter);
 router.get("/NewsletterSubscriptions", getNewsletterSubscriptions);
 //----------------------------Roles------------------------
