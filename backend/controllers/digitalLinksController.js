@@ -24,10 +24,10 @@ const updateTblWflCompliance = async (barcode) => {
     where: { barcode, status: "active" },
   });
 
-  console.log("productStorageRecord", productStorageRecord);
-  console.log("foodProductSafetyRecord", foodProductSafetyRecord);
-  console.log("productContentRecord", productContentRecord);
-  console.log("packagingRecord", packagingRecord);
+  // console.log("productStorageRecord", productStorageRecord);
+  // console.log("foodProductSafetyRecord", foodProductSafetyRecord);
+  // console.log("productContentRecord", productContentRecord);
+  // console.log("packagingRecord", packagingRecord);
 
   // Check if all fetched records are found (and thus active)
   const isCompliant =
@@ -123,7 +123,9 @@ export const getComplianceAndDqmsStatus = async (req, res, next) => {
     // Validate the barcode
     const { error } = barcodeSchema.validate({ barcode });
     if (error) {
-      return res.status(400).json({ error: `Invalid barcode: ${error.details[0].message}` });
+      return res
+        .status(400)
+        .json({ error: `Invalid barcode: ${error.details[0].message}` });
     }
 
     // Fetch DQMS data
@@ -136,7 +138,7 @@ export const getComplianceAndDqmsStatus = async (req, res, next) => {
     const isIecceCompliant = Boolean(dqmsRecord?.iecce);
     const isEfficiencyCompliant = Boolean(dqmsRecord?.efficiency);
     const isDqmsCompliant = dqmsRecord?.is_dqms_compliant || false;
-    const dqmsStatus = isDqmsCompliant ? 'Compliant' : 'Non Compliant';
+    const dqmsStatus = isDqmsCompliant ? "Compliant" : "Non Compliant";
 
     // Fetch Compliance data
     const complianceRecord = await prisma.tblWflCompliance.findFirst({
@@ -144,23 +146,24 @@ export const getComplianceAndDqmsStatus = async (req, res, next) => {
     });
 
     const isCompliant = complianceRecord?.is_compliance || false;
-    const complianceStatus = isCompliant ? 'Compliant' : 'Non Compliant';
+    const complianceStatus = isCompliant ? "Compliant" : "Non Compliant";
 
     // Fetch related data for compliance check
     const productStorageRecord = await prisma.productStorage.findFirst({
-      where: { barcode, status: 'active' },
+      where: { barcode, status: "active" },
     });
 
-    const foodProductSafetyRecord = await prisma.tblDlFoodProductSafety.findFirst({
-      where: { barcode, status: 'active' },
-    });
+    const foodProductSafetyRecord =
+      await prisma.tblDlFoodProductSafety.findFirst({
+        where: { barcode, status: "active" },
+      });
 
     const productContentRecord = await prisma.tblDlProductContents.findFirst({
-      where: { barcode, status: 'active' },
+      where: { barcode, status: "active" },
     });
 
     const packagingRecord = await prisma.tblDlPackaging.findFirst({
-      where: { barcode, status: 'active' },
+      where: { barcode, status: "active" },
     });
 
     // Construct the response object for the client
@@ -186,7 +189,7 @@ export const getComplianceAndDqmsStatus = async (req, res, next) => {
     // Send the response
     res.status(200).json(response);
   } catch (err) {
-    console.error('Error fetching DQMS and Compliance status:', err.message);
+    console.error("Error fetching DQMS and Compliance status:", err.message);
     next(err); // Pass the error to the next middleware for error handling
   }
 };
@@ -210,6 +213,7 @@ const productStorageSchema = Joi.object({
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).optional(),
   status: Joi.string().max(50).default("active"), // Default to "active"
+  domainName: Joi.string().max(1000).required(),
 });
 
 export const createProductStorage = async (req, res, next) => {
@@ -265,6 +269,7 @@ const updateProductStorageSchema = Joi.object({
   max_humidity: Joi.number().precision(2).optional(),
   special_handling: Joi.string().optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateProductStorage = async (req, res, next) => {
@@ -435,6 +440,7 @@ const productContentSchema = Joi.object({
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
   status: Joi.string().max(50).default("active"),
+  domainName: Joi.string().required(),
 });
 
 export const createProductContent = async (req, res, next) => {
@@ -487,6 +493,7 @@ const updateProductContentSchema = Joi.object({
   nutritional_info: Joi.string().optional(),
   regulatory_compliance: Joi.string().max(255).optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateProductContent = async (req, res, next) => {
@@ -667,6 +674,7 @@ const nutritionalInfoSchema = Joi.object({
   iron: Joi.number().precision(2).optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createNutritionalInfo = async (req, res, next) => {
@@ -710,6 +718,7 @@ const updateNutritionalInfoSchema = Joi.object({
   calcium: Joi.number().precision(2).optional(),
   iron: Joi.number().precision(2).optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateNutritionalInfo = async (req, res, next) => {
@@ -849,6 +858,7 @@ const allergenSchema = Joi.object({
   allergen_source: Joi.string().max(255).optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createAllergen = async (req, res, next) => {
@@ -883,6 +893,7 @@ const updateAllergenSchema = Joi.object({
   cross_contamination_risk: Joi.boolean().optional(),
   allergen_source: Joi.string().max(255).optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateAllergen = async (req, res, next) => {
@@ -1032,6 +1043,7 @@ const productQualityMarkSchema = Joi.object({
   scope: Joi.string().max(255).optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createProductQualityMark = async (req, res, next) => {
@@ -1080,6 +1092,7 @@ const updateProductQualityMarkSchema = Joi.object({
   status: Joi.string().max(50).optional(),
   scope: Joi.string().max(255).optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateProductQualityMark = async (req, res, next) => {
@@ -1233,6 +1246,7 @@ const efficiencyLabelSchema = Joi.object({
   details: Joi.string().optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createEfficiencyLabel = async (req, res, next) => {
@@ -1282,6 +1296,7 @@ const updateEfficiencyLabelSchema = Joi.object({
   scope: Joi.string().max(255).optional(),
   details: Joi.string().optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateEfficiencyLabel = async (req, res, next) => {
@@ -1432,6 +1447,7 @@ const productConformitySchema = Joi.object({
   details: Joi.string().optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createProductConformity = async (req, res, next) => {
@@ -1480,6 +1496,7 @@ const updateProductConformitySchema = Joi.object({
   standard_met: Joi.string().max(255).optional(),
   details: Joi.string().optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateProductConformity = async (req, res, next) => {
@@ -1627,6 +1644,7 @@ const ieceeCertificateSchema = Joi.object({
   scope: Joi.string().optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createIeceeCertificate = async (req, res, next) => {
@@ -1676,6 +1694,7 @@ const updateIeceeCertificateSchema = Joi.object({
   status: Joi.string().max(100).optional(),
   scope: Joi.string().optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateIeceeCertificate = async (req, res, next) => {
@@ -1717,7 +1736,6 @@ const ieceeCertificateFilterSchema = Joi.object({
   page: Joi.number().integer().min(1).optional(),
   pageSize: Joi.number().integer().min(1).optional(),
 }).with("page", "pageSize"); // Ensure 'page' and 'pageSize' are either both present or both absent
-
 
 export const getIeceeCertificates = async (req, res, next) => {
   try {
@@ -1782,7 +1800,6 @@ export const getIeceeCertificates = async (req, res, next) => {
   }
 };
 
-
 export const deleteIeceeCertificate = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -1828,6 +1845,7 @@ const foodProductSafetySchema = Joi.object({
   storage_conditions: Joi.string().max(255).optional(),
   brand_owner_id: Joi.string().max(255).required(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().required(),
 });
 
 export const createFoodProductSafety = async (req, res, next) => {
@@ -1883,6 +1901,7 @@ const updateFoodProductSafetySchema = Joi.object({
   regulatory_compliance: Joi.string().max(255).optional(),
   storage_conditions: Joi.string().max(255).optional(),
   last_modified_by: Joi.string().max(255).required(),
+  domainName: Joi.string().optional(),
 });
 
 export const updateFoodProductSafety = async (req, res, next) => {
@@ -2071,6 +2090,7 @@ const packagingSchema = Joi.object({
   brand_owner_id: Joi.string().max(255).optional(),
   last_modified_by: Joi.string().max(255).required(),
   status: Joi.string().default("active"), // Set status to "active" by default
+  domainName: Joi.string().required(),
 });
 
 export const createPackaging = async (req, res, next) => {
@@ -2124,6 +2144,7 @@ const updatePackagingSchema = Joi.object({
   labeling: Joi.string().optional(),
   last_modified_by: Joi.string().max(255).required(),
   status: Joi.string().optional().default("active"), // Status remains "active" if not provided
+  domainName: Joi.string().optional(),
 });
 
 export const updatePackaging = async (req, res, next) => {

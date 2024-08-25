@@ -828,6 +828,7 @@ model productStorage {
   updated_at             DateTime  @updatedAt
   images                 String?   @db.NVarChar(Max) // New column to store image paths
   last_modified_by       String    @db.VarChar(255)
+  domainName             String?
 }
 
 model tblDlProductContents {
@@ -849,6 +850,7 @@ model tblDlProductContents {
   updated_at            DateTime @updatedAt
   images                String?  @db.NVarChar(Max)
   last_modified_by      String   @db.VarChar(255)
+  domainName            String?
 }
 
 model tblDlNutritionalInfo {
@@ -873,6 +875,7 @@ model tblDlNutritionalInfo {
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
   last_modified_by    String   @db.VarChar(255)
+  domainName          String?
 }
 
 model tbDlAllergens {
@@ -888,6 +891,7 @@ model tbDlAllergens {
   created_at               DateTime @default(now())
   updated_at               DateTime @updatedAt
   last_modified_by         String   @db.VarChar(255)
+   domainName             String?
 }
 
 model tblDlIeceeCertificate {
@@ -906,6 +910,7 @@ model tblDlIeceeCertificate {
   updated_at         DateTime  @updatedAt
   last_modified_by   String    @db.VarChar(255)
   images             String?   @db.NVarChar(Max) // New column to store image paths
+   domainName             String?
 }
 
 model tblDlEfficiencyLabels {
@@ -924,6 +929,7 @@ model tblDlEfficiencyLabels {
   updated_at       DateTime  @updatedAt
   last_modified_by String    @db.VarChar(255)
   images           String?   @db.NVarChar(Max) // New column to store image paths
+   domainName             String?
 }
 
 model tblDlProductConformity {
@@ -941,6 +947,7 @@ model tblDlProductConformity {
   updated_at       DateTime  @updatedAt
   last_modified_by String    @db.VarChar(255)
   images           String?   @db.NVarChar(Max) // New column to store image paths
+   domainName             String?
 }
 
 model tblDlProductQualityMark {
@@ -957,6 +964,7 @@ model tblDlProductQualityMark {
   updated_at        DateTime  @updatedAt
   images            String?   @db.NVarChar(Max) // New column to store image paths
   last_modified_by  String    @db.VarChar(255)
+   domainName             String?
 }
 
 model tblDlFoodProductSafety {
@@ -980,6 +988,7 @@ model tblDlFoodProductSafety {
   updated_at            DateTime  @updatedAt
   images                String?   @db.NVarChar(Max)
   last_modified_by      String    @db.VarChar(255)
+   domainName             String?
 }
 
 model tblDlPackaging {
@@ -1002,6 +1011,7 @@ model tblDlPackaging {
   updated_at         DateTime @updatedAt
   images             String?  @db.NVarChar(Max)
   last_modified_by   String?  @db.VarChar(255)
+   domainName             String?
 }
 
 model tblDlProductStorage {
@@ -1025,6 +1035,7 @@ model tblDlProductStorage {
   created_at             DateTime  @default(now())
   updated_at             DateTime  @updatedAt
   last_modified_by       String    @db.VarChar(255)
+   domainName             String?
 }
 
 model tblWflGtin {
