@@ -276,7 +276,7 @@ export const updateProductStorage = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    // Validate request body
+    // Validate request body.
     const { error, value } = updateProductStorageSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
