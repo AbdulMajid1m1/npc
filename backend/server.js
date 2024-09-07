@@ -17,7 +17,6 @@ import { createServer } from "http";
 // Other imports remain the same
 import bodyParser from "body-parser";
 
-// import socketHandler from "./socketHandler.js"; // Import the socket handler
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
