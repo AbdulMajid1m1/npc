@@ -10,17 +10,19 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Button from '@mui/material/Button';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import sliderbackground from '../../../Images/circular/sliderbackground.png';
-import fact from '../../../Images/circular/fact.png';
+import benefits from '../../../Images/benefits.png';
+import registertonpc from '../../../Images/registertonpc.png';
 import verified from '../../../Images/circular/verified.png';
 import CircularButtons from './CircularButtons';  // Import the new component
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sliders = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="relative h-auto w-full bg-white border-b mt-4 mb-20">
-      <div className="relative h-[420px] w-full">
+      <div className="relative md:h-[420px] h-auto w-full">
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -53,13 +55,14 @@ const Sliders = () => {
                     variant="contained"
                     style={{ backgroundColor: '#FF4308', color: '#ffffff', marginTop: '2rem'}}
                     endIcon={<ArrowRightAltIcon />}
+                    className="transition-transform transform hover:scale-90"
                     >
                     More Details
                   </Button>
                 </Link>
                 <img 
                   src={verified}
-                  className="h-auto w-80 -rotate-12"
+                  className="h-auto lg:w-80 w-40 -rotate-12"
                   alt="" />
                   </div>
               </div>
@@ -76,6 +79,24 @@ const Sliders = () => {
             </div>
           </SwiperSlide>
         </Swiper>
+
+        <div className='flex items-center space-x-2 mt-4 px-6'>
+          <Link to={`/NPC-Benefits`} className='bg-[#30CDFF] hover:bg-[#28b1da] flex justify-center items-center px-6 shadow-lg rounded-sm transition-transform transform hover:scale-90'>
+            <img src={benefits} alt='Benefits' className='h-6 w-6 ml-3'/>
+            <button className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
+              Benefits
+            </button>
+          </Link>
+
+          <div className='bg-secondary hover:bg-primary2 flex justify-center items-center px-6 shadow-lg rounded-sm transition-transform transform hover:scale-90'>
+            <img src={registertonpc} alt='Benefits' className='h-6 w-6 ml-3'/>
+            <button 
+              onClick={() => navigate('/member-registration')}
+              className='text-white font-sans rounded-full px-4 py-2 flex items-center'>
+              Register to NPC
+            </button>
+          </div>
+        </div>
         <div
           id="swiper-button-prev"
           className="absolute bottom-0 z-20 -translate-y-1/2 transform right-20"

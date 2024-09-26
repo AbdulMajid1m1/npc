@@ -28,7 +28,7 @@ const WhyChooseNpc = () => {
 
   return (
     <div>
-      <div className='h-auto w-full font-sans bg-[#DDF3F6] px-10 py-10'>
+      <div className='h-auto w-full font-sans bg-[#DDF3F6] px-6 py-10'>
         <h2 className='font-medium font-sans text-lg'>We are dedicated to enhancing the accuracy and quality of product and item data for everyone within your supply chain.</h2>
         <p className='font-sans'>By utilizing our comprehensive system, you can ensure that all data is precise and up-to-date, minimizing errors and discrepancies that can disrupt operations.</p>
 

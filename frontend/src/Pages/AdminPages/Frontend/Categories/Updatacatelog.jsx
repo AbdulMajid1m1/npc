@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import SendIcon from "@mui/icons-material/Send";
 import { useTranslation } from "react-i18next";
 import { Autocomplete, TextField } from "@mui/material";
+import imageLiveUrl from "../../../../utils/urlConverter/imageLiveUrl";
 
 const Updatacatelog = ({ isVisible, setVisibility, refreshBrandData }) => {
   const { t, i18n } = useTranslation();
@@ -40,6 +41,18 @@ const Updatacatelog = ({ isVisible, setVisibility, refreshBrandData }) => {
 
   const [Pagedropdown, setPagedropdown] = useState([]);
   const [megamenudropdown, setmegamenudropdown] = useState([]);
+  
+  const [imageshow, setimageshow] = useState(imageLiveUrl(updateBrandData?.image) || "");
+  const [imageshowupload, setimageshowupload] = useState(updateBrandData?.image);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [captionEr, setCaptionEr] = useState(updateBrandData?.caption || "");
+  const [captionAr, setCaptionAr] = useState(updateBrandData?.caption_ar || "");
+
+  function handleChangeback(e) {
+    setSelectedFile(e.target.files[0]);
+    setimageshow(e.target.files[0]);
+    setimageshowupload(e.target.files[0]);
+  }
 
   useEffect(() => {
     const getDocuments = async () => {
@@ -80,32 +93,40 @@ const Updatacatelog = ({ isVisible, setVisibility, refreshBrandData }) => {
 
   const handleUpdateBrand = async () => {
     setLoading(true);
-
+  
+    const formData = new FormData();
+    formData.append("parent_id", Categorylevel);
+    formData.append("megamenu_id", MegaMenuCategories?.id || categorydefualid);
+    formData.append("category_name_en", category_name_en);
+    formData.append("category_name_ar", category_name_ar);
+    formData.append("caption", captionEr);
+    formData.append("caption_ar", captionAr);
+    formData.append("description", Description);
+    formData.append("url", Page);
+    formData.append("meta_title", Title);
+    formData.append("meta_description", MetaDescription);
+    formData.append("meta_keywords", "khan");
+    formData.append("status", Number(status));
+    formData.append("image", imageshowupload); // Assuming `image` is the file object
+  
     try {
       const response = await newRequest.put(
         `/updatemega_menu_categories/${updateBrandData?.id}`,
+        formData,
         {
-          parent_id: Categorylevel,
-          megamenu_id: MegaMenuCategories?.id || categorydefualid,
-          category_name_en: category_name_en,
-          category_name_ar: category_name_ar,
-          description: Description,
-          url: Page,
-          meta_title: Title,
-          meta_description: MetaDescription,
-          meta_keywords: "khan",
-          status: Number(status),
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
       );
-
+  
       toast.success(
         response?.data?.message ||
-          `${t("Mega Menu")} ${"categorie"} ${"has been"} ${t(
-            "Updated Successfully"
-          )}.`
+        `${t("Mega Menu")} ${"categorie"} ${"has been"} ${t(
+          "Updated Successfully"
+        )}.`
       );
-
-      // console.log(response.data);
+  
       refreshBrandData();
       handleCloseUpdatePopup();
     } catch (error) {
@@ -117,6 +138,7 @@ const Updatacatelog = ({ isVisible, setVisibility, refreshBrandData }) => {
       setLoading(false);
     }
   };
+  
 
   const handleSelectedDocuments = (event, value) => {
     setMegaMenuCategories(value);
@@ -179,6 +201,50 @@ const Updatacatelog = ({ isVisible, setVisibility, refreshBrandData }) => {
                       onChange={(e) => setcategory_name_ar(e.target.value)}
                       placeholder={`${t("Enter")}${t("Categories")}${t(
                         "Name[Arabic]"
+                      )}`}
+                      className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    />
+                  </div>
+
+                  <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
+                    <label
+                      htmlFor="captionEr"
+                      className={`text-secondary  ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    >
+                      {t("Caption")} {t("English")}
+                    </label>
+                    <input
+                      type="text"
+                      id="captionEr"
+                      value={captionEr}
+                      onChange={(e) => setCaptionEr(e.target.value)}
+                      placeholder={`${t("Enter")} ${t("Caption")} ${t(
+                        "English"
+                      )}`}
+                      className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    />
+
+                    <label
+                      htmlFor="captionAr"
+                      className={`text-secondary  ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    >
+                      {t("Caption")} {t("Arabic")}
+                    </label>
+                    <input
+                      type="text"
+                      id="captionAr"
+                      value={captionAr}
+                      onChange={(e) => setCaptionAr(e.target.value)}
+                      placeholder={`${t("Enter")} ${t("Caption")} ${t(
+                        "Arabic"
                       )}`}
                       className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
                         i18n.language === "ar" ? "text-end" : "text-start"
@@ -391,6 +457,49 @@ const Updatacatelog = ({ isVisible, setVisibility, refreshBrandData }) => {
                     />
                   </div>
                 </div>
+
+                <div className="printerPic font-body sm:text-base text-sm flex flex-col gap-2">
+                    <label
+                      htmlFor="Image"
+                      className={`text-secondary  ${
+                        i18n.language === "ar" ? "text-end" : "text-start"
+                      }`}
+                    >
+                      {t("Image")}
+                    </label>
+                    <div className="imgesection">
+                      <img
+                        src={
+                          selectedFile
+                            ? URL.createObjectURL(selectedFile)
+                            : imageshow != null
+                            ? imageshow
+                            : ""
+                        }
+                        className="printerpic border-2"
+                        style={{
+                          width: selectedFile || imageshow ? "200px" : "200px",
+                          height: selectedFile || imageshow ? "200px" : "200px",
+                        }}
+                      />
+
+                      <div className="row " htmlFor="file-inputs">
+                        <label
+                          htmlFor="file-inputs"
+                          className="choosefile bg-secondary hover:bg-primary2 text-white font-sans px-10 py-2 ml-5"
+                        >
+                          choose file
+                        </label>
+                        <input
+                          id="file-inputs"
+                          type="file"
+                          onChange={handleChangeback}
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    </div>
+
+                  </div>
 
                 <div className="w-full flex justify-center items-center gap-8 mt-5">
                   <button

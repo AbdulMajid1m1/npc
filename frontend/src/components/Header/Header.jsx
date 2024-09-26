@@ -2,7 +2,7 @@ import React from 'react'
 import gs1logowhite from "../../Images/gs1logowhite.png"
 import { useNavigate } from 'react-router-dom'
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import LanguageSwitcher from "../../switer"
+// import LanguageSwitcher from "../../switer"
 import i18n from '../../i18n';
 
 const Header = () => {
@@ -24,8 +24,12 @@ const Header = () => {
             </div>
           </div>
 
+          <div>
+            <button className='md:text-2xl text-base bg-primary2 text-white px-5 py-1 font-sans rounded-md transition-transform transform hover:scale-90'>Your One Source of Reliable Data</button>
+          </div>
+
           {/* Buttons */}
-          <div 
+          {/* <div 
           className={`flex flex-wrap justify-center ${i18n.language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             <div className=''>
@@ -34,7 +38,7 @@ const Header = () => {
               </div>
               <div className='flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2'>
                 <button
-                  // onClick={() => navigate('/select-business-type')}
+                  onClick={() => navigate('/select-business-type')}
                   className='bg-secondary text-white px-5 py-1 font-sans rounded-md transition-transform transform hover:scale-90'
                 >
                   {t('Register to NPC')}
@@ -58,7 +62,7 @@ const Header = () => {
 
 
 
-          </div>
+          </div> */}
 
         </div>
       </div>

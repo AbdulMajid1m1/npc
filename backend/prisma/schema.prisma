@@ -709,9 +709,6 @@ model mega_menu_categories {
   status           Int?
   created_at       DateTime?      @default(now()) @db.DateTime
   updated_at       DateTime       @default(now()) @db.DateTime
-  image            String?        @db.NVarChar(Max)
-  caption          String?        @db.NVarChar(Max)
-  caption_ar       String?        @db.NVarChar(Max)
   footer_menus     footer_menus[]
   mega_menus       mega_menus?    @relation(fields: [megamenu_id], references: [id])
 }

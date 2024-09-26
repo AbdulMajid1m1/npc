@@ -26,6 +26,28 @@ dotenv.config();
 
 app.use(bodyParser.json({ limit: "500mb" }));
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
+const allowedOrigins = [
+  "http://localhost:3092",
+  "http://localhost:5022",
+  "http://localhost:5021",
+  'http://gs1ksa.org:5021/',
+  "http://gs1ksa.org:5022/",
+  "http://localhost:3081",
+  "http://gs1ksa.org:3092",
+  "https://gs1ksa.org:3093",
+  "http://gs1ksa.org:3091",
+  "http://localhost:3070",
+  "http://gs1ksa.org",
+  "https://gs1ksa.org",
+  "http://gs1ksa.org:82",
+  "http://gs1ksa.org:83",
+  "https://gs1ksa.org:82",
+  "https://gs1ksa.org:83",
+  "https://api.gs1ksa.org",
+  "https://www.api.gs1ksa.org",
+  "http://gs1ksa.org:3087",
+];
+
 app.use(
   cors({
     origin: true,

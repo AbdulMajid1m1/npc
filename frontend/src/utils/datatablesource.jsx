@@ -2726,6 +2726,9 @@ export const CategoriesDataColumn = (t, i18n) => [
     field: 'megamenu_id',
     headerName: t('Mega Menu'),
     width: 200,
+    renderCell: (params) => (
+      <Box dangerouslySetInnerHTML={{ __html: params.value }} />
+    ),
   },
   {
     field: 'description',
@@ -2736,6 +2739,26 @@ export const CategoriesDataColumn = (t, i18n) => [
     field: 'url',
     headerName: t('Url'),
     width: 260,
+  },
+  {
+    field: 'image',
+    headerName: t('Image'),
+    width: 200,
+    renderCell: (params) => (
+      < img
+        src={imageLiveUrl(params.row.image)}
+        alt="Image"
+        style={{
+          width: '90%',
+          height: '90%',
+          objectFit: 'contain',
+          cursor: 'pointer'
+        }}
+        onClick={() => {
+          window.open(imageLiveUrl(params.row.image), '_blank', 'width=400,height=300,top=0,left=0');
+        }}
+      />
+    ),
   },
   {
     field: 'meta_title',
@@ -2860,7 +2883,16 @@ export const silderDataColumn = (t) => [
 ];
 
 export const FeaturedServicesDataColumn = (t) => [
-
+  {
+    field: 'name_en',
+    headerName: t('Name[English]'),
+    width: 180,
+  },
+  {
+    field: 'name_ar',
+    headerName: t('Name[Arabic]'),
+    width: 180,
+  },
   {
     field: 'image',
     headerName: t('Image'),
@@ -2894,26 +2926,7 @@ export const FeaturedServicesDataColumn = (t) => [
       return params.value === 1 ? 'Active' : 'Inactive';
     },
   },
-  {
-    field: 'created_at',
-    headerName: t('Created At'),
-    width: 200,
-    type: 'dateTime',
-    valueGetter: (params) => {
-      // Convert the string date to a Date object
-      return params.value ? new Date(params.value) : null;
-    }
-  },
-  {
-    field: 'updated_at',
-    headerName: t('Updated At'),
-    width: 200,
-    type: 'dateTime',
-    valueGetter: (params) => {
-      // Convert the string date to a Date object
-      return params.value ? new Date(params.value) : null;
-    }
-  },
+ 
 ];
 
 export const FeaturedEventsDataColumn = (t) => [
@@ -8357,3 +8370,74 @@ export const VerifiedByCompanyColumn = (t) =>[
 
 ]
 
+
+
+export const allTemplatesColumn = (t) => [
+  {
+    field: "name",
+    headerName: t("Name"),
+    width: 180,
+  },
+  {
+    field: "name_ar",
+    headerName: t("Name Arabic"),
+    width: 180,
+  },
+  {
+    field: "slug",
+    headerName: t("Slug"),
+    width: 180,
+  },
+  {
+    field: "seo_description",
+    headerName: t("SEO Description"),
+    width: 180,
+  },
+  {
+    field: "seo_description_ar",
+    headerName: t("SEO Description Arabic"),
+    width: 180,
+  },
+  {
+    field: "status",
+    headerName: t("Status"),
+    width: 120,
+    renderCell: (params) => (
+      <div
+        style={{
+          padding: "5px",
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          borderRadius: "20px",
+          border: "2px solid",
+          borderColor: params.row.status === 1 ? "green" : "red",
+          color: params.row.status === 1 ? "green" : "red",
+        }}
+      >
+        {params.row.status === 1 ? "Active" : "Inactive"}
+      </div>
+    ),
+  },
+  {
+    field: "created_at",
+    headerName: t("Created At"),
+    width: 180,
+
+    type: "dateTime",
+    valueGetter: (params) => {
+      // Convert the string date to a Date object
+      return params.value ? new Date(params.value) : null;
+    },
+  },
+  {
+    field: "updated_at",
+    headerName: t("Updated At"),
+    width: 180,
+
+    type: "dateTime",
+    valueGetter: (params) => {
+      // Convert the string date to a Date object
+      return params.value ? new Date(params.value) : null;
+    },
+  },
+];
