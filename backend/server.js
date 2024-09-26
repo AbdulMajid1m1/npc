@@ -318,7 +318,7 @@ app.get("*", (req, res) => {
 });
 
 // Create an HTTP server from the Express app
-const httpServer = createServer(app);
+// const httpServer = createServer(app);
 
 // Pass the server to the socketHandler
 // socketHandler(httpServer);
