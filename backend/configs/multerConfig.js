@@ -2,7 +2,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-// Function to ensure directory exists
+// Function to ensure directory exists.
 const ensureDirectoryExists = (directory) => {
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
