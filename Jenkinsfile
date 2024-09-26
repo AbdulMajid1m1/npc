@@ -1,10 +1,11 @@
+// piplines script for Jenkins
 pipeline {
     agent any
 
     environment {
-        NODE_ENV = "development"
-        JWT_EXPIRATION = "90d"
-        COOKIE_AGE = "90"
+        NODE_ENV = 'development'
+        JWT_EXPIRATION = '90d'
+        COOKIE_AGE = '90'
         DATABASE_URL = "${npc_DATABASE_URL}"
         GS1DBV2_DATABASE_URL = "${npc_GS1DBV2_DATABASE_URL}"
         GMAIL_USERNAME = "${npc_EMAIL_USERNAME}"
