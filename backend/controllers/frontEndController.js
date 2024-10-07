@@ -277,6 +277,8 @@ export const updatemega_menu_categories = async (req, res, next) => {
     
         res.json(updatedCategory);
       } catch (error) {
+        console.log(error);
+        
     next(error);
   }
 };
