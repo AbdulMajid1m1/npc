@@ -50,7 +50,7 @@ const NpcSectors = () => {
                 </div>
                 <div className="w-full">
                   <div className="px-6 py-6 flex flex-col gap-2">
-                    <Link to={`/${item?.link}`} className="font-semibold font-sans text-secondary sm:text-lg text-base">
+                    <Link to={`/${item?.link}`} className="font-semibold font-sans text-secondary hover:text-primary2 sm:text-lg text-base">
                       {i18n.language === 'ar' ? item?.title_ar : item?.title}
                     </Link>
                   </div>
