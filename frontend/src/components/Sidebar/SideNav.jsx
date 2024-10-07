@@ -17,6 +17,8 @@ import GS1digitallink from "../../Images/GS1digitallink.png"
 import npcregistry from "../../Images/npcregistry.png"
 import localproduct from "../../Images/localproduct.png"
 import globalproduct from "../../Images/globalproduct.png"
+import codifications from "../../Images/codifications.png"
+import datamangement from "../../Images/datamangement.png"
 import logout from "../../Images/logout.jpeg"
 import { BiSearch } from "react-icons/bi";
 import { FaListUl } from "react-icons/fa";
@@ -124,7 +126,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg my-auto">
+                      <span className="text-secondary font-semibold text-base font-sans my-auto">
                         {t("NPC Registry")}
                       </span>
                       <span
@@ -167,7 +169,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg truncate">
+                                <span className="text-secondary font-semibold text-base font-sans truncate">
                                   {t("Global Registry")}
                                 </span>
                               </div>
@@ -194,7 +196,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg truncate">
+                                <span className="text-secondary font-semibold text-base font-sans truncate">
                                   {t("Local Registry")}
                                 </span>
                               </div>
@@ -217,12 +219,12 @@ function SideNav({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={gtinmanagment}
+                          src={datamangement}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg my-auto">
+                      <span className="text-secondary font-semibold text-base font-sans my-auto">
                         {t("Data Management")}
                       </span>
                       <span
@@ -262,7 +264,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -295,7 +297,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -328,7 +330,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -357,12 +359,12 @@ function SideNav({ isOpen, toggleSideNav }) {
                         }`}
                       >
                         <img
-                          src={recipient}
+                          src={codifications}
                           alt="logo"
                           className="w-10 h-10 object-cover"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg my-auto">
+                      <span className="text-secondary font-semibold text-base font-sans my-auto">
                         {t("Codification")}
                       </span>
                       <span
@@ -401,11 +403,11 @@ function SideNav({ isOpen, toggleSideNav }) {
                                 }`}
                               >
                                 <img
-                                  src={language}
+                                  src={recipient}
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("GPC")}
                                 </span>
                               </div>
@@ -432,7 +434,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("HS-CODE")}
                                 </span>
                               </div>
@@ -459,7 +461,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("UNSPSC")}
                                 </span>
                               </div>
@@ -486,7 +488,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("GS1 GMN")}
                                 </span>
                               </div>
@@ -513,7 +515,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   alt="logo"
                                   className="w-10 h-10 object-cover"
                                 />
-                                <span className="text-secondary font-semibold text-lg">
+                                <span className="text-secondary font-semibold text-base font-sans">
                                   {t("GMDN")}
                                 </span>
                               </div>
@@ -546,7 +548,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -579,7 +581,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -612,7 +614,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -645,7 +647,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                                   className="w-10 h-10 object-cover rounded-full bg-white"
                                 />
                                 <span
-                                  className={`text-secondary font-semibold text-lg ${
+                                  className={`text-secondary font-semibold text-base font-sans ${
                                     i18n.language === "ar"
                                       ? "text-end"
                                       : "text-start"
@@ -678,7 +680,7 @@ function SideNav({ isOpen, toggleSideNav }) {
                           className="w-10 h-10 object-cover rounded-full bg-white"
                         />
                       </span>
-                      <span className="text-secondary font-semibold text-lg -ml-3">{t("Log-out")}</span>
+                      <span className="text-secondary font-semibold text-base font-sans -ml-3">{t("Log-out")}</span>
                     </Link>
                   </li>
                 </ul>

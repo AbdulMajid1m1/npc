@@ -701,9 +701,6 @@ model mega_menu_categories {
   megamenu_id      String?
   category_name_en String?        @db.NVarChar(Max)
   category_name_ar String?        @db.NVarChar(Max)
-  image            String?        @db.NVarChar(Max)
-  caption            String?        @db.NVarChar(Max)
-  caption_ar            String?        @db.NVarChar(Max)
   description      String?        @db.NVarChar(Max)
   url              String?        @db.NVarChar(Max)
   meta_title       String?        @db.NVarChar(Max)
@@ -1069,4 +1066,3 @@ model productRequest {
   updated_at          DateTime @updatedAt
   barcode             String   @db.NVarChar(50)
 }
-

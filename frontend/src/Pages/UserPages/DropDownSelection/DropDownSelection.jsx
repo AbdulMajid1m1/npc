@@ -4,6 +4,8 @@ import newRequest from "../../../utils/userRequest";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
+import gdsn from "../../../Images/circular/gdsn.png";
+import imageLiveUrl from "../../../utils/urlConverter/imageLiveUrl";
 
 const DropDownSelection = () => {
   const { t, i18n } = useTranslation();
@@ -102,7 +104,7 @@ const DropDownSelection = () => {
                       <i className="fa fa-angle-down"></i>
                     </Link>
                     <div
-                      className={`sub-menu mega-menu mega-menu-column-4 text-blue-600 `}
+                      className={`sub-menu mega-menu mega-menu-column-4 text-blue-600`}
                       style={{
                         direction: i18n.language === "ar" ? "rtl" : "ltr",
                       }}
@@ -112,17 +114,22 @@ const DropDownSelection = () => {
                           <div
                             key={catIndex}
                             className="list-item"
-                            style={{ textAlign: "justify" }}
+                            style={{ display: 'flex', alignItems: 'center', gap: "5px" }}
                           >
-                            {/* <Link to={category.url} style={{ textDecoration: 'none' }}> */}
+                             <img src={imageLiveUrl(category?.image)} alt={category.category_name_en} className="category-icon" />
                             <Link
                               to={`/${category.url}`}
-                              style={{ textDecoration: "none" }}
+                              style={{ textDecoration: "none", marginTop: '5px', fontWeight: '600' }}
                             >
                               {/* {category.category_name_en} */}
                               {i18n.language === "ar"
                                 ? category?.category_name_ar
                                 : category?.category_name_en}
+                            <p style={{ fontWeight: '400', marginTop: '-22px', color: '#021F69', fontSize: '14px', whiteSpace: 'nowrap' }}>
+                              {i18n.language === "ar"
+                                ? category?.category_caption_ar
+                                : category?.caption}
+                            </p>
                             </Link>
                             <ul>
                               {category.footer_menus.map(

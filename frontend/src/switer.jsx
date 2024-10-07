@@ -39,7 +39,7 @@ const LanguageSwitcher = () => {
 
     return (
         <div>
-            <div className="wrapper">
+            <div className="wrapper" style={{ position: 'relative', zIndex: 999 }}>
                 <div className="select_wrap relative">
                     <ul
                         className={`default_option bg-transparent border-1 rounded-md cursor-pointer`}

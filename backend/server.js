@@ -29,7 +29,10 @@ app.use(bodyParser.json({ limit: "500mb" }));
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
 const allowedOrigins = [
   "http://localhost:3092",
-  "http://localhost:3082",
+  "http://localhost:5022",
+  "http://localhost:5021",
+  'http://gs1ksa.org:5021/',
+  "http://gs1ksa.org:5022/",
   "http://localhost:3081",
   "http://gs1ksa.org:3092",
   "https://gs1ksa.org:3093",
