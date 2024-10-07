@@ -38,9 +38,9 @@ const HelpResources = () => {
         ) : (
           featuresData.map((item) => (
           <div className={`bg-white border border-gray-300 rounded-lg shadow-md transition-transform transform hover:scale-105 flex items-center p-5 ${i18n.language === 'ar'? 'text-end' : 'text-start'}`}>
-            <img src={imageLiveUrl(item?.image)} alt="Barcode Verification" className="w-16 h-16 mr-4"/>
+            <img src={imageLiveUrl(item?.image)} alt="Barcode Verification" className="w-16 h-16 mr-4 transform hover:scale-90 hover:cursor-pointer"/>
               <Link to={`/${item?.link}`}>
-                <h3 className="text-lg font-semibold font-sans text-secondary">{i18n.language === 'ar' ? item?.name_ar : item?.name_en}</h3>
+                <h3 className="text-lg font-semibold font-sans text-secondary hover:text-primary2">{i18n.language === 'ar' ? item?.name_ar : item?.name_en}</h3>
               </Link>
           </div>
          ))
