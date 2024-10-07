@@ -89,4 +89,55 @@ export const createproductRequest = async (req, res, next) => {
       next(error);
     }
   };
+  export const searchproductRequest = async (req, res, next) => {
+    try {
+        const { query } = req.query;
+    
+        // Ensure the query parameter is provided
+        if (!query) {
+          return res.status(400).json({ message: 'Query parameter is required' });
+        }
+    
+        const productRequests = await gs1Prisma.products.findMany({
+          where: {
+            OR: [
+              {
+                productnameenglish: {
+                  contains: query,
+                },
+              },
+              {
+                productnamearabic: {
+                  contains: query,
+                },
+              },
+              {
+                BrandName: {
+                  contains: query,
+                },
+              },
+              {
+                BrandNameAr: {
+                  contains: query,
+                },
+              },
+              {
+                HsDescription: {
+                  contains: query,
+                },
+              },
+            ],
+          },
+        });
+    
+        if (productRequests.length === 0) {
+          return res.status(404).json({ message: 'No product found' });
+        }
+    
+        res.status(200).json(productRequests);
+      }  catch (error) {
+      next(error);
+    }
+  };
+  
   
