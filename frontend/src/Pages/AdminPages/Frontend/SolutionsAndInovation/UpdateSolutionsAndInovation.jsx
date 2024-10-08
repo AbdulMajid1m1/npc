@@ -26,6 +26,8 @@ const Updatafeaturedservice = ({
     updateBrandData?.description_ar || ""
   );
   const { t, i18n } = useTranslation();
+  const [isManualPage, setIsManualPage] = useState(false);
+
   useEffect(() => {
     const getpagedata = async () => {
       try {
@@ -92,6 +94,10 @@ const Updatafeaturedservice = ({
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCheckboxChange = () => {
+    setIsManualPage((prev) => !prev); // Toggle the manual page input state
   };
 
   return (
@@ -163,24 +169,48 @@ const Updatafeaturedservice = ({
                     >
                       {t("Set Page")}
                     </label>
-                    <select
-                      id="status"
-                      value={Page}
-                      onChange={(e) => setPage(e.target.value)}
-                      className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
-                        i18n.language === "ar" ? "text-end" : "text-start"
-                      }`}
-                    >
-                      <option value="Select">-- {t("Select")} --</option>
-                      {Pagedropdown &&
-                        Pagedropdown.map((itme, index) => {
-                          return (
-                            <option key={index} value={itme.slug}>
-                              {itme.name}
+
+                    <div className="space-x-2">
+                      <input
+                        type="checkbox"
+                        id="manualPage"
+                        checked={isManualPage}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label htmlFor="manualPage">
+                        {t("Enter page URL manually")}
+                      </label>
+                    </div>
+
+                    {!isManualPage ? (
+                      <select
+                        id="status"
+                        value={Page}
+                        onChange={(e) => setPage(e.target.value)}
+                        className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      >
+                        <option value="Select">-- {t("Select")} --</option>
+                        {Pagedropdown &&
+                          Pagedropdown.map((item, index) => (
+                            <option key={index} value={item.slug}>
+                              {item.name}
                             </option>
-                          );
-                        })}
-                    </select>
+                          ))}
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        id="page"
+                        value={Page}
+                        onChange={(e) => setPage(e.target.value)}
+                        placeholder={`${t("Enter")} ${t("Page URL")}`}
+                        className={`border-[1px] w-full rounded-sm border-[#8E9CAB] p-2 mb-3 ${
+                          i18n.language === "ar" ? "text-end" : "text-start"
+                        }`}
+                      />
+                    )}
                   </div>
                   <div className="w-full font-body sm:text-base text-sm flex flex-col gap-2">
                     <label
